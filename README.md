@@ -189,7 +189,7 @@ ANTHROPIC_API_KEY=… node scripts/eval.mjs --checks accuracy,stability
 ## Файлы
 
 ```
-index.html                  вся страница
+public/index.html           вся страница; публикуется только папка public/
 netlify.toml                сборка, заголовки, файлы для функций
 netlify/functions/          тонкие обёртки над engine/app.mjs
 engine/rubric.json          сигналы, оси, веса, пороги, типы

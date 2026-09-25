@@ -20,7 +20,7 @@ test('список запретных слов не пустой', () => {
 });
 
 test('index.html: ни одного запретного слова', () => {
-    const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+    const html = readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
     assert.deepEqual(findBanned(html), []);
 });
 
@@ -40,7 +40,7 @@ test('промпт разметки тоже чистый: модель не д�
 });
 
 test('в интерфейсе нет поля для имени, ника или ссылки на автора', () => {
-    const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8').toLowerCase();
+    const html = readFileSync(new URL('../public/index.html', import.meta.url), 'utf8').toLowerCase();
     for (const bad of ['name="author', 'id="author', 'placeholder="имя', 'placeholder="ник', 'type="url"']) {
         assert.ok(html.indexOf(bad) === -1, bad);
     }
