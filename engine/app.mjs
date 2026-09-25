@@ -40,6 +40,7 @@ function messageFor(status, env, reason) {
         const n = numberEnv(env, 'HOURLY_PER_IP', 10);
         return (n === 10 ? 'Десять' : String(n)) + ' разборов за час. Выйди на орбиту, подыши';
     }
+    if (status === 503 && reason === 'billing') return 'Разборы на паузе: у сервиса кончился баланс. Загляни позже';
     if (status === 503) return 'Перерыв на кофе: лимит разборов на сегодня кончился. Завтра продолжим';
     if (status === 502) return 'Модель занята, попробуй через минуту';
     if (status === 400) return 'Что-то не так с запросом: ' + (reason || 'проверь тексты');
@@ -211,7 +212,7 @@ export function createApp(deps) {
             return done(json(202, { status: rec.status, poll_ms: 2000 }));
         }
 
-        if (rec.status === 'error') return done(fail(rec.code || 502));
+        if (rec.status === 'error') return done(fail(rec.code || 502, rec.reason));
 
         const ex = await stores.extractions.getJSON(rec.key);
         if (!ex) return done(fail(404));
@@ -247,9 +248,10 @@ export function createApp(deps) {
         rec.status = 'running';
         await stores.jobs.setJSON('job:' + job, rec);
 
-        async function finishWithError(code, why) {
+        async function finishWithError(code, why, reason) {
             rec.status = 'error';
             rec.code = code;
+            if (reason) rec.reason = reason;
             await stores.jobs.setJSON('job:' + job, rec);
             await stores.jobs.delete('inflight:' + rec.key);
             return done(json(200, { ok: false }), ['error=' + why, 'texts=' + texts.length]);
@@ -272,7 +274,13 @@ export function createApp(deps) {
         }));
 
         const bad = results.find(function (r) { return !r.ok; });
-        if (bad) return finishWithError(502, bad.kind + ':' + bad.status);
+        if (bad) {
+            // Баланс и ключ не чинятся ожиданием: у них свой код и своя
+            // фраза, чтобы «модель занята» не прятало проблему с деньгами.
+            if (bad.kind === 'billing') return finishWithError(503, 'billing:' + bad.status, 'billing');
+            if (bad.kind === 'auth') return finishWithError(500, 'auth:' + bad.status);
+            return finishWithError(502, bad.kind + ':' + bad.status);
+        }
 
         let allFindings = [];
         const templateLike = [];

@@ -107,6 +107,19 @@ export function buildRequest(batch, rubric, system, effort) {
     };
 }
 
+// Ошибки, которые чинятся не повтором, а руками в Console: пустой
+// баланс и неверный ключ. У них свои имена, чтобы в логе функции
+// и на странице их нельзя было спутать с перегрузкой модели.
+// О балансе API отвечает 402 billing_error, но встречается и 400
+// с текстом про credit balance: ловим оба.
+function errorKind(status, json) {
+    const err = (json && json.error) || {};
+    if (status === 402 || err.type === 'billing_error') return 'billing';
+    if (status === 400 && /credit balance/i.test(String(err.message || ''))) return 'billing';
+    if (status === 401 || err.type === 'authentication_error') return 'auth';
+    return err.type || 'http';
+}
+
 // Один вызов с одним повтором через 2 секунды. onAttempt вызывается
 // перед каждой попыткой: из него считается бюджет, потому что каждая
 // попытка может стоить денег.
@@ -137,7 +150,7 @@ export async function callModel(deps) {
         try { json = await res.json(); } catch (e) { json = null; }
 
         if (!res.ok) {
-            last = { ok: false, status: res.status, kind: (json && json.error && json.error.type) || 'http' };
+            last = { ok: false, status: res.status, kind: errorKind(res.status, json) };
             if (RETRYABLE.has(res.status)) continue;
             return last;
         }

@@ -257,3 +257,34 @@ test('опрос без IP_SALT: 500, частота не считается', a
     assert.equal(res.status, 500);
     assert.deepEqual(h.stores.ratelimit.dump(), {});
 });
+
+// Пустой баланс не должен выглядеть как занятая модель: иначе по
+// странице и логу не понять, что дело в деньгах.
+for (const c of [
+    { name: '402 billing_error', status: 402, error: { type: 'billing_error', message: 'Billing issue' } },
+    { name: '400 про низкий баланс', status: 400, error: { type: 'invalid_request_error', message: 'Your credit balance is too low to access the Anthropic API.' } },
+]) {
+    test('ошибка оплаты (' + c.name + '): без повтора, 503 своей фразой, в логе error=billing', async () => {
+        const h = makeHarness({ model: function () { return { status: c.status, body: { type: 'error', error: c.error } }; } });
+        const started = await h.app.analyze(analyzeRequest(body3()));
+        const { job } = await started.json();
+        const res = await h.app.status(statusRequest(job));
+
+        assert.equal(res.status, 503);
+        const body = await res.json();
+        assert.match(body.message, /баланс/);
+        assert.doesNotMatch(body.message, /Модель занята|Перерыв на кофе/);
+        assert.equal(h.modelCalls.length, 1, 'оплату повтором не починить');
+        assert.ok(h.logs.some(function (l) { return /background .*error=billing/.test(l); }), h.logs.join('\n'));
+    });
+}
+
+test('неверный ключ API: 500 «сломалось у нас», в логе error=auth, без повтора', async () => {
+    const h = makeHarness({ model: function () { return { status: 401, body: { type: 'error', error: { type: 'authentication_error', message: 'invalid x-api-key' } } }; } });
+    const started = await h.app.analyze(analyzeRequest(body3()));
+    const { job } = await started.json();
+    const res = await h.app.status(statusRequest(job));
+    assert.equal(res.status, 500);
+    assert.equal(h.modelCalls.length, 1);
+    assert.ok(h.logs.some(function (l) { return /background .*error=auth/.test(l); }));
+});
