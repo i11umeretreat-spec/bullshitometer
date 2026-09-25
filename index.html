@@ -8,7 +8,7 @@
 <meta name="color-scheme" content="light dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 /* ── Палитра. Новых цветов не добавлять: всё, что рисуется, берёт
       цвет отсюда, включая canvas и карточку. ───────────────────── */
@@ -36,7 +36,8 @@
 }
 
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scrollbar-color: color-mix(in srgb, var(--ink) 35%, transparent) transparent; }
+::selection { background: color-mix(in srgb, var(--attract) 30%, transparent); color: var(--ink); }
 body {
   margin: 0;
   background-color: var(--bg);
@@ -200,6 +201,11 @@ ul.plain li { margin: 6px 0; }
 .final-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 footer { margin-top: 48px; font-size: 15px; color: var(--muted); border-top: 1px solid color-mix(in srgb, var(--ink) 22%, transparent); padding-top: 12px; }
 
+/* Снять верхний отступ у первого элемента панели. Стоит после
+   .hint и h2, чтобы перебить их по порядку, а не весом. */
+.flush { margin-top: 0; }
+.actions .flush { margin: 0; }
+
 [hidden] { display: none !important; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -226,7 +232,7 @@ footer { margin-top: 48px; font-size: 15px; color: var(--muted); border-top: 1px
     </section>
 
     <section class="panel">
-      <h2 style="margin-top:0">Тексты</h2>
+      <h2 class="flush">Тексты</h2>
       <p class="hint">Вставь публичные посты, анонсы, расшифровки. Можно пачкой: строка из трёх дефисов <span class="mono">---</span> разделит её на отдельные тексты.</p>
       <div id="blocks"></div>
       <button type="button" class="link" id="add-block">Добавить текст</button>
@@ -238,7 +244,7 @@ footer { margin-top: 48px; font-size: 15px; color: var(--muted); border-top: 1px
 
       <div class="actions">
         <button type="button" class="btn" id="run" disabled>Разобрать</button>
-        <span class="hint" id="run-hint" style="margin:0">Нужно хотя бы 300 знаков</span>
+        <span class="hint flush" id="run-hint">Нужно хотя бы 300 знаков</span>
       </div>
       <p class="error" id="input-error" role="alert"></p>
     </section>
@@ -255,7 +261,6 @@ footer { margin-top: 48px; font-size: 15px; color: var(--muted); border-top: 1px
     <div class="hero">
       <canvas id="type-canvas" width="560" height="560" role="img" aria-label="Анимация типа поля"></canvas>
       <div>
-        <p class="caption" style="margin:0">Тип поля</p>
         <h2 class="type-title" id="type-title"></h2>
         <p class="type-line" id="type-line"></p>
         <p class="type-check"><i>Что проверить:</i> <span id="type-check"></span></p>
@@ -264,13 +269,13 @@ footer { margin-top: 48px; font-size: 15px; color: var(--muted); border-top: 1px
     <p class="confidence">Уверенность: <b id="conf-level"></b>. <span id="conf-reason"></span></p>
 
     <div class="panel">
-      <h2 style="margin-top:0">Семь осей</h2>
+      <h2 class="flush">Семь осей</h2>
       <div id="axes"></div>
     </div>
 
     <div class="panel">
-      <h2 style="margin-top:0">Находки</h2>
-      <p class="hint" style="margin-top:0">Цитаты свёрнуты. Открой, чтобы увидеть, на чём держится разбор.</p>
+      <h2 class="flush">Находки</h2>
+      <p class="hint flush">Цитаты свёрнуты. Открой, чтобы увидеть, на чём держится разбор.</p>
       <div id="findings"></div>
     </div>
 
@@ -280,7 +285,7 @@ footer { margin-top: 48px; font-size: 15px; color: var(--muted); border-top: 1px
     </details>
 
     <section class="panel">
-      <h2 style="margin-top:0">Чего мы не знаем</h2>
+      <h2 class="flush">Чего мы не знаем</h2>
       <ul class="plain" id="unknowns"></ul>
     </section>
 
@@ -297,7 +302,7 @@ footer { margin-top: 48px; font-size: 15px; color: var(--muted); border-top: 1px
     </details>
 
     <section class="panel game">
-      <h2 style="margin-top:0">Запусти себя</h2>
+      <h2 class="flush">Запусти себя</h2>
       <p class="caption">Иллюстрация, а не прогноз. В разбор не входит.</p>
       <canvas id="game-canvas" width="840" height="840" aria-label="Мини-игра: полёт частицы в поле"></canvas>
       <label class="slider">Сколько готов потратить <input type="range" id="g-spend" min="0" max="1" step="0.01" value="0.3"></label>
@@ -355,16 +360,6 @@ function plural(n, one, few, many) {
 function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
 function css(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
 var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-// ── Встроенный браузер Telegram: та же страница ────────────────
-try {
-  var tg = window.Telegram && window.Telegram.WebApp;
-  if (tg) {
-    tg.ready();
-    tg.expand();
-    if (tg.colorScheme === 'dark' || tg.colorScheme === 'light') document.documentElement.setAttribute('data-theme', tg.colorScheme);
-  }
-} catch (e) {}
 
 // ── События метрики ─────────────────────────────────────────────
 // Каждое событие шлётся один раз на разбор: метрика — доля разборов,
