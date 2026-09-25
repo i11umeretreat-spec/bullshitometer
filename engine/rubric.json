@@ -1,0 +1,167 @@
+{
+  "version": "2026-09-25.1",
+
+  "axes": {
+    "pressure":      { "label": "Давление",         "polarity": "neg", "k": 4 },
+    "promises":      { "label": "Обещания",         "polarity": "neg", "k": 4 },
+    "exclusivity":   { "label": "Эксклюзивность",   "polarity": "neg", "k": 4 },
+    "commerce":      { "label": "Коммерция",        "polarity": "neg", "k": 4 },
+    "verifiability": { "label": "Проверяемость",    "polarity": "pos", "k": 3 },
+    "integrity":     { "label": "Добросовестность", "polarity": "pos", "k": 3 },
+    "autonomy":      { "label": "Автономия",        "polarity": "pos", "k": 3 }
+  },
+
+  "signals": {
+    "urgency":             { "axis": "pressure",      "weight": 2,    "label": "дедлайн",                    "definition": "Срок, после которого станет хуже или дороже. Пример: «цена вырастет сегодня вечером»." },
+    "scarcity":            { "axis": "pressure",      "weight": 2,    "label": "дефицит",                    "definition": "Мест, копий или времени якобы почти не осталось. Пример: «осталось 3 места»." },
+    "shame_doubt":         { "axis": "pressure",      "weight": 3,    "label": "стыдит за сомнения",         "definition": "Сомнение подаётся как слабость или неготовность. Пример: «сомневаешься, значит, не готов меняться»." },
+    "fear_loss":           { "axis": "pressure",      "weight": 2,    "label": "страх упустить",             "definition": "Пугает жизнью, которая пройдёт мимо без покупки или решения. Пример: «ещё год ты проживёшь так же»." },
+
+    "outcome_promise":     { "axis": "promises",      "weight": 2,    "label": "обещание результата",        "definition": "Обещан конкретный результат для читателя. Пример: «через месяц ты выйдешь на доход 300 тысяч»." },
+    "miracle_claim":       { "axis": "promises",      "weight": 4,    "label": "чудо",                        "definition": "Абсолютное или сверхъестественное обещание: навсегда, на 100%, исцеление. Пример: «уйдёт навсегда, гарантирую»." },
+
+    "only_me":             { "axis": "exclusivity",   "weight": 3,    "label": "только я",                    "definition": "Автор называет себя единственным, кто может помочь или объяснить. Пример: «никто больше вам этого не объяснит»." },
+    "secret_knowledge":    { "axis": "exclusivity",   "weight": 2,    "label": "тайное знание",              "definition": "Знание подаётся как скрытое, для посвящённых. Пример: «то, что годами скрывали от обычных людей»." },
+    "forbid_others":       { "axis": "exclusivity",   "weight": 4,    "label": "запрет на других",           "definition": "Запрещает, высмеивает или обесценивает других специалистов и источники. Пример: «не ходите к психологам, они только вредят»." },
+    "enemy_frame":         { "axis": "exclusivity",   "weight": 2,    "label": "образ врага",                "definition": "Есть «они», которые скрывают правду или мешают. Пример: «они вам этого никогда не скажут»." },
+    "dependency":          { "axis": "exclusivity",   "weight": 3,    "label": "зависимость",                "definition": "Читателю внушают, что без автора он не справится. Пример: «сам ты это не вытянешь, нужен проводник»." },
+
+    "price_ladder":        { "axis": "commerce",      "weight": 2,    "label": "ступени",                     "definition": "Путь разбит на платные ступени, следующая всегда главная. Пример: «это только первый уровень, настоящая работа на наставничестве»." },
+    "upsell":              { "axis": "commerce",      "weight": 1.5,  "label": "допродажа",                   "definition": "Внутри бесплатного или купленного ведут к следующей покупке. Пример: «полный разбор в закрытом клубе»." },
+    "hidden_terms":        { "axis": "commerce",      "weight": 2,    "label": "скрытые условия",            "definition": "Цена, условия или возврат не названы открыто. Пример: «условия расскажу в личке»." },
+    "vague_social_proof":  { "axis": "commerce",      "weight": 1,    "label": "непроверяемые масштабы",     "definition": "Большие числа учеников или отзывов без возможности проверить. Пример: «уже тысячи людей изменили жизнь»." },
+
+    "named_source":        { "axis": "verifiability", "weight": 2,    "label": "названный источник",         "definition": "Источник, который можно найти: автор, издание, исследование, год. Пример: «по данным ВОЗ за 2023 год»." },
+    "checkable_claim":     { "axis": "verifiability", "weight": 1.5,  "label": "проверяемое утверждение",    "definition": "Утверждение, которое читатель может проверить сам. Пример: «замерьте пульс до и после упражнения»." },
+    "vague_source":        { "axis": "verifiability", "weight": -2,   "label": "источник без имени",         "definition": "Ссылка на исследования или учёных без названия и возможности найти. Пример: «учёные доказали»." },
+    "unfalsifiable":       { "axis": "verifiability", "weight": -3,   "label": "неопровержимое",             "definition": "Любой исход объясняется в пользу метода, неудача всегда вина читателя. Пример: «не сработало, значит, ты не готов»." },
+    "pseudo_science":      { "axis": "verifiability", "weight": -2,   "label": "псевдонаука",                "definition": "Научные слова в роли, которой у них нет: квантовое, вибрации, частоты как физика. Пример: «поднимаем вибрации на квантовом уровне»." },
+
+    "limitation_stated":   { "axis": "integrity",     "weight": 2,    "label": "названы ограничения",        "definition": "Автор говорит, кому и когда метод не подходит, есть ли противопоказания. Пример: «при депрессии сначала к врачу, а не ко мне»." },
+    "conditions_stated":   { "axis": "integrity",     "weight": 1.5,  "label": "названы условия",            "definition": "Сказано, при каких условиях работает и сколько усилий требует. Пример: «результат будет, если заниматься три раза в неделю два месяца»." },
+    "self_correction":     { "axis": "integrity",     "weight": 2,    "label": "признание ошибки",           "definition": "Автор признаёт свою ошибку и говорит, в чём конкретно она была. Пример: «я два года советовал так делать, и это было неправильно, потому что…»." },
+    "negative_case":       { "axis": "integrity",     "weight": 2,    "label": "неудачный случай",           "definition": "Рассказ о случае, когда не помогло или стало хуже. Пример: «у клиентки это не сработало, и вот почему»." },
+    "handles_objection":   { "axis": "integrity",     "weight": 1,    "label": "разбор возражения",          "definition": "Возражение разобрано по существу, а не высмеяно. Пример: «вы правы, что это дорого, вот из чего складывается цена»." },
+
+    "referral":            { "axis": "autonomy",      "weight": 2,    "label": "отправляет к другим",        "definition": "Отправляет к другим специалистам или источникам. Пример: «с этим лучше к эндокринологу»." },
+    "verification_invite": { "axis": "autonomy",      "weight": 2,    "label": "предлагает проверить",       "definition": "Предлагает читателю проверить сказанное самостоятельно. Пример: «не верьте мне на слово, вот где посмотреть»." },
+    "open_method":         { "axis": "autonomy",      "weight": 1.5,  "label": "метод открыт",               "definition": "Метод раскрыт настолько, что им можно воспользоваться без покупки. Пример: «вот упражнение целиком, делайте сами»." },
+    "exit_ok":             { "axis": "autonomy",      "weight": 2,    "label": "уйти можно",                  "definition": "Уход и самостоятельность нормальны и даже желательны. Пример: «дальше вы справитесь сами, и это хороший итог»." }
+  },
+
+  "strength":  { "1": 0.5, "2": 1, "3": 1.5 },
+  "modifiers": { "guaranteed": 1.5, "timebound": 1.3, "conditional": 0.5, "specific": 1, "nonspecific": 0.3 },
+
+  "genres": {
+    "sale":     { "label": "продажа или анонс" },
+    "post":     { "label": "пост" },
+    "lecture":  { "label": "лекция или расшифровка" },
+    "answer":   { "label": "ответ на вопрос" },
+    "personal": { "label": "личное" }
+  },
+  "genre": {
+    "sale": { "urgency": 0.5, "scarcity": 0.5, "price_ladder": 0.7 }
+  },
+
+  "scenario": {
+    "course":    { "commerce": 1.2, "promises": 1.2 },
+    "therapist": { "promises": 1.5, "verifiability": 1.3 },
+    "teacher":   { "exclusivity": 1.3, "autonomy": 1.3 },
+    "ad":        { "pressure": 1.2 }
+  },
+  "scenario_meta": {
+    "course":    { "label": "покупаю курс",       "order": ["commerce", "promises", "pressure", "exclusivity", "verifiability", "integrity", "autonomy"] },
+    "therapist": { "label": "выбираю психолога",  "order": ["promises", "verifiability", "integrity", "pressure", "exclusivity", "autonomy", "commerce"] },
+    "teacher":   { "label": "читаю наставника",   "order": ["exclusivity", "autonomy", "integrity", "verifiability", "promises", "pressure", "commerce"] },
+    "ad":        { "label": "проверяю рекламу",   "order": ["pressure", "promises", "commerce", "verifiability", "exclusivity", "integrity", "autonomy"] }
+  },
+
+  "cap_per_signal_per_text": 3,
+  "template_jaccard": 0.8,
+  "levels": [0.25, 0.6],
+  "level_labels": ["низкий", "средний", "высокий"],
+
+  "confidence": {
+    "low_if":  { "n_eff_lt": 3, "words_lt": 800 },
+    "high_if": { "n_eff_gte": 8, "words_gte": 3000, "sale_share_lte": 0.6 },
+    "dropped_share_gt": 0.3,
+    "labels": ["низкая", "средняя", "высокая"]
+  },
+
+  "counts": {
+    "promises":  ["outcome_promise", "miracle_claim"],
+    "deadlines": ["urgency", "scarcity"],
+    "sources":   ["named_source"]
+  },
+
+  "types": [
+    { "key": "dark_matter", "title": "Тёмная материя",
+      "when": { "confidence_lte": 0 },
+      "line": "По этим текстам почти ничего не видно. Дай больше, или смирись, что словами это не ловится.",
+      "check": "Дать от 8 текстов разных жанров" },
+
+    { "key": "black_hole", "title": "Чёрная дыра",
+      "when": { "all": [
+        { "axis": "exclusivity", "gte": 2 },
+        { "axis": "autonomy", "lte": 0 },
+        { "any": [ { "axis": "pressure", "gte": 1 }, { "axis": "commerce", "gte": 2 } ] }
+      ] },
+      "line": "Все дороги ведут внутрь, наружу информация не выходит.",
+      "check": "Можно ли уйти и что говорят ушедшие" },
+
+    { "key": "pulsar", "title": "Пульсар",
+      "when": { "all": [
+        { "signals": ["enemy_frame", "shame_doubt"], "count_gte": 3 },
+        { "axis": "exclusivity", "gte": 1 }
+      ] },
+      "line": "Громко, в ритме и с врагами. Это заряд, а не масса.",
+      "check": "Что остаётся, если убрать врагов" },
+
+    { "key": "feeder", "title": "Кормушка на орбите",
+      "when": { "all": [
+        { "axis": "commerce", "gte": 2 },
+        { "axis": "autonomy", "lte": 0 }
+      ] },
+      "line": "Тебя не тащат, тебя кормят по кругу. Следующая ступень всегда главная.",
+      "check": "Сколько стоит весь путь, а не первая ступень" },
+
+    { "key": "nebula", "title": "Туманность",
+      "when": { "any": [
+        { "all": [ { "axis": "verifiability", "lte": 0 }, { "axis": "promises", "gte": 1 } ] },
+        { "signals": ["pseudo_science", "unfalsifiable", "vague_source"], "count_gte": 3 }
+      ] },
+      "line": "Красиво светится, почти ничего не весит. Проверить нечего.",
+      "check": "Какое утверждение можно проверить завтра" },
+
+    { "key": "maneuver", "title": "Гравитационный манёвр",
+      "when": { "all": [
+        { "axis": "autonomy", "gte": 1 },
+        { "axis": "integrity", "gte": 1 },
+        { "axis": "pressure", "lte": 1 },
+        { "axis": "exclusivity", "lte": 0 }
+      ] },
+      "line": "Разгоняет и отпускает: говорит об ограничениях и отправляет к другим.",
+      "check": "Совпадают ли тексты с тем, что внутри курса" },
+
+    { "key": "main_sequence", "title": "Звезда главной последовательности",
+      "when": { "always": true },
+      "line": "Обычная звезда: светит, продаёт в меру, чудес не обещает. Скучно, и это комплимент.",
+      "check": "Условия покупки и возврата" }
+  ],
+
+  "advocate": {
+    "sale_share": "Половина текстов продающие. Давление там в природе жанра.",
+    "templates": "Часть текстов написана под копирку. Считали их за один.",
+    "always": "Мы не видели лендинг, условия возврата и результаты учеников."
+  },
+
+  "unknowns": [
+    "Работает ли метод на самом деле",
+    "Какая у автора квалификация",
+    "Что в отзывах и судах",
+    "Кто писал тексты: автор или копирайтер",
+    "Какие условия покупки"
+  ],
+
+  "banned_words": ["лжец", "мошенник", "шарлатан", "лже-гуру", "лжегуру", "развод", "обман", "аферист", "секта"]
+}

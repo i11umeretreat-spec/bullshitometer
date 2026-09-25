@@ -1,0 +1,32 @@
+# Булшитометр. Отдельный сайт Netlify, ни с чем из проектов студии не делит
+# ни домена, ни функций.
+
+[build]
+  publish   = "."
+  functions = "netlify/functions"
+  command   = "node --test"
+
+[build.environment]
+  # Функции написаны под Node 20. @netlify/blobs закреплён на 10.x:
+  # с 11.x пакет требует Node 22.12, и деплой на Node 20 упал бы.
+  NODE_VERSION = "20"
+
+[functions]
+  node_bundler = "esbuild"
+  # Рубрика и промпт читаются с диска во время работы функции.
+  # Без этой строки они не попадут в архив, и разбор упадёт на первом же
+  # вызове, а локальные тесты этого не покажут.
+  included_files = ["engine/rubric.json", "prompts/extract.md"]
+
+# Функции объявляют свои адреса сами (config.path), поэтому
+# отдельного редиректа /api/* здесь нет: два способа назвать один адрес
+# рано или поздно разойдутся.
+
+# Страница и её шрифты. Трекеров и сторонних скриптов нет, поэтому
+# политика короткая, и нарушение видно сразу в консоли.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; frame-ancestors 'self' https://web.telegram.org"
+    Referrer-Policy = "no-referrer"
+    X-Content-Type-Options = "nosniff"

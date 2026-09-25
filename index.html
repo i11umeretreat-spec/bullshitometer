@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Булшитометр: разбор давления и обещаний в текстах</title>
+<meta name="description" content="Вставь публичные тексты автора и посмотри, какие приёмы в них работают: где давят, что обещают, что можно проверить. Разбор текстов, а не людей.">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── Палитра. Новых цветов не добавлять: всё, что рисуется, берёт
+      цвет отсюда, включая canvas и карточку. ───────────────────── */
+:root {
+  --bg: #dde1da;
+  --sheet: #e8ebe5;
+  --ink: #1a232b;
+  --muted: #56615c;
+  --attract: #875614;
+  --expand: #1c6b62;
+  --hot: #c2331c;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1719; --sheet: #141e21; --ink: #d6ddd5; --muted: #8e9b95;
+    --attract: #d9a55a; --expand: #6cc2b3; --hot: #ff6a4d;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1719; --sheet: #141e21; --ink: #d6ddd5; --muted: #8e9b95;
+  --attract: #d9a55a; --expand: #6cc2b3; --hot: #ff6a4d;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background-color: var(--bg);
+  /* Стеклянная пластинка: едва заметная сетка. Сгущение к массе рисует
+     canvas типа, здесь только ровный фон. */
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--ink) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--ink) 5%, transparent) 1px, transparent 1px);
+  background-size: 32px 32px;
+  color: var(--ink);
+  font-family: "Old Standard TT", Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  line-height: 1.55;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+.wrap { max-width: 720px; margin: 0 auto; padding: 28px 18px 64px; }
+.mono { font-family: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; }
+
+h1 { font-size: clamp(34px, 8vw, 48px); font-weight: 400; line-height: 1.1; margin: 0; letter-spacing: 0.01em; }
+.sub { color: var(--muted); font-style: italic; margin: 6px 0 0; }
+.disclaimer {
+  margin: 18px 0 0; padding: 12px 0 0;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 25%, transparent);
+  font-size: 16px; color: var(--muted);
+}
+h2 { font-size: 24px; font-weight: 400; margin: 36px 0 12px; }
+h3 { font-size: 19px; font-weight: 700; margin: 0 0 6px; }
+p { margin: 0 0 12px; }
+
+.panel {
+  background: var(--sheet);
+  border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+  padding: 18px;
+  margin-top: 18px;
+}
+
+/* ── Кнопки и поля: цель пальца от 44px ───────────────────────── */
+button, select, textarea, input { font: inherit; color: inherit; }
+.btn {
+  min-height: 48px; padding: 10px 20px;
+  background: var(--ink); color: var(--bg);
+  border: 1px solid var(--ink); border-radius: 2px;
+  cursor: pointer; font-size: 18px;
+  transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn:focus-visible, .link:focus-visible, select:focus-visible, textarea:focus-visible, input:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--expand); outline-offset: 2px;
+}
+@media (hover: hover) {
+  .btn:not(:disabled):hover { opacity: 0.86; }
+  .btn.ghost:not(:disabled):hover { background: color-mix(in srgb, var(--ink) 8%, transparent); opacity: 1; }
+  .link:hover { color: var(--ink); }
+}
+.link {
+  background: none; border: none; padding: 10px 0; min-height: 44px;
+  color: var(--muted); text-decoration: underline; text-underline-offset: 4px;
+  cursor: pointer; font-size: 16px; transition: color 0.2s ease;
+}
+
+/* ── Экран ввода ───────────────────────────────────────────────── */
+fieldset { border: none; padding: 0; margin: 0; }
+legend { font-size: 16px; color: var(--muted); padding: 0; margin-bottom: 8px; }
+.scenarios { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.scenario {
+  display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 8px 12px;
+  border: 1px solid color-mix(in srgb, var(--ink) 25%, transparent); cursor: pointer;
+  font-size: 16px; line-height: 1.3;
+}
+.scenario input { width: 20px; height: 20px; margin: 0; accent-color: var(--expand); flex: none; }
+.scenario:has(input:checked) { border-color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+
+.block { margin-top: 14px; border-top: 1px solid color-mix(in srgb, var(--ink) 22%, transparent); padding-top: 12px; }
+.block-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.block-num { font-size: 16px; color: var(--muted); }
+.block select {
+  min-height: 44px; padding: 6px 10px; background: var(--bg);
+  border: 1px solid color-mix(in srgb, var(--ink) 30%, transparent); border-radius: 2px; font-size: 16px;
+  max-width: 100%;
+}
+.block textarea {
+  width: 100%; min-height: 140px; padding: 12px; resize: vertical;
+  background: var(--bg); border: 1px solid color-mix(in srgb, var(--ink) 30%, transparent); border-radius: 2px;
+  font-size: 16px; line-height: 1.5;
+}
+.block .link { margin-left: auto; }
+.hint { font-size: 15px; color: var(--muted); margin: 10px 0 0; }
+.meters { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 16px 0; font-size: 14px; color: var(--muted); }
+.meters .over { color: var(--hot); }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.error { color: var(--hot); margin-top: 14px; min-height: 1em; }
+
+/* ── Ожидание ──────────────────────────────────────────────────── */
+.waiting { text-align: center; padding: 48px 0; }
+.waiting canvas { width: 140px; height: 140px; }
+.wait-line { font-size: 22px; font-style: italic; min-height: 1.6em; margin-top: 18px; transition: opacity 0.4s ease; }
+
+/* ── Результат ─────────────────────────────────────────────────── */
+.hero { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: center; margin-top: 12px; }
+.hero canvas { width: 280px; height: 280px; max-width: 100%; justify-self: center; }
+.type-title { font-size: clamp(40px, 11vw, 60px); line-height: 1.02; margin: 0; font-weight: 400; }
+.type-line { font-size: 20px; margin: 10px 0 0; }
+.type-check { font-size: 16px; color: var(--muted); margin: 10px 0 0; }
+.confidence { margin-top: 18px; font-size: 17px; }
+.confidence b { font-weight: 700; }
+@media (min-width: 680px) {
+  .hero { grid-template-columns: 280px 1fr; gap: 28px; }
+}
+
+.axis { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 10px 0; border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent); }
+.axis:first-child { border-top: none; }
+.axis-name { font-size: 18px; }
+.axis-level { font-size: 17px; font-style: italic; text-align: right; }
+.axis-scale { grid-column: 1 / -1; height: 3px; background: color-mix(in srgb, var(--ink) 14%, transparent); position: relative; }
+.axis-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--muted); }
+.axis.neg.l1 .axis-level { color: var(--attract); }
+.axis.neg.l1 .axis-fill { background: var(--attract); }
+/* --hot текстом только на панелях --sheet: в светлой теме на фоне --bg
+   его контраст 4.19, ниже 4.5, а новых цветов палитра не допускает. */
+.axis.neg.l2 .axis-level { color: var(--hot); }
+.axis.neg.l2 .axis-fill { background: var(--hot); }
+.axis.pos .axis-fill { background: var(--expand); }
+.axis.pos.l2 .axis-level { color: var(--expand); }
+.axis-note { grid-column: 1 / -1; font-size: 14px; color: var(--muted); }
+
+.finding-group { margin-top: 16px; }
+.finding-group h3 { font-weight: 400; font-style: italic; color: var(--muted); font-size: 16px; }
+.finding { border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent); padding: 6px 0; }
+.finding-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.finding-sig { font-size: 17px; }
+.finding-src { font-size: 14px; color: var(--muted); }
+.quote {
+  margin: 6px 0 8px; padding: 8px 0 8px 14px;
+  border-left: 2px solid var(--attract); font-style: italic;
+}
+.finding.good .quote { border-left-color: var(--expand); }
+.quote-note { display: block; font-style: normal; font-size: 14px; color: var(--muted); margin-top: 4px; }
+
+details { margin-top: 18px; border-top: 1px solid color-mix(in srgb, var(--ink) 22%, transparent); }
+summary { cursor: pointer; min-height: 48px; display: flex; align-items: center; font-size: 22px; list-style: none; }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: "+"; font-family: "IBM Plex Mono", monospace; width: 1.4em; color: var(--muted); }
+details[open] > summary::before { content: "−"; }
+ul.plain { margin: 6px 0 0; padding-left: 20px; }
+ul.plain li { margin: 6px 0; }
+
+.honest pre {
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 14px; line-height: 1.6;
+  white-space: pre-wrap; overflow-wrap: anywhere; margin: 8px 0 14px;
+}
+.honest .row { font-size: 14px; border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); padding: 8px 0; }
+
+/* ── Игра ──────────────────────────────────────────────────────── */
+.game canvas { width: 100%; max-width: 420px; aspect-ratio: 1; display: block; margin: 12px auto; }
+.slider { display: grid; grid-template-columns: 1fr; gap: 4px; margin: 10px 0; font-size: 16px; }
+.slider input { width: 100%; min-height: 44px; accent-color: var(--attract); }
+.outcome { font-size: 20px; min-height: 1.6em; margin-top: 8px; }
+.caption { font-size: 14px; color: var(--muted); font-style: italic; }
+
+.final-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+footer { margin-top: 48px; font-size: 15px; color: var(--muted); border-top: 1px solid color-mix(in srgb, var(--ink) 22%, transparent); padding-top: 12px; }
+
+[hidden] { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Булшитометр</h1>
+    <p class="sub">разбор давления и обещаний в текстах</p>
+    <p class="disclaimer">Приложение не определяет, врёт ли человек. Оно показывает, какие приёмы используют тексты.</p>
+  </header>
+
+  <!-- ── Ввод ─────────────────────────────────────────────────── -->
+  <main id="screen-input">
+    <section class="panel">
+      <fieldset>
+        <legend>Что делаешь</legend>
+        <div class="scenarios" id="scenarios"></div>
+      </fieldset>
+    </section>
+
+    <section class="panel">
+      <h2 style="margin-top:0">Тексты</h2>
+      <p class="hint">Вставь публичные посты, анонсы, расшифровки. Можно пачкой: строка из трёх дефисов <span class="mono">---</span> разделит её на отдельные тексты.</p>
+      <div id="blocks"></div>
+      <button type="button" class="link" id="add-block">Добавить текст</button>
+
+      <div class="meters mono" aria-live="polite">
+        <span id="meter-chars">0 из 40 000 знаков</span>
+        <span id="meter-texts">1 текст из 30</span>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn" id="run" disabled>Разобрать</button>
+        <span class="hint" id="run-hint" style="margin:0">Нужно хотя бы 300 знаков</span>
+      </div>
+      <p class="error" id="input-error" role="alert"></p>
+    </section>
+  </main>
+
+  <!-- ── Ожидание ─────────────────────────────────────────────── -->
+  <section id="screen-wait" class="waiting" hidden aria-live="polite">
+    <canvas id="wait-canvas" width="280" height="280" aria-hidden="true"></canvas>
+    <p class="wait-line" id="wait-line">Считаем дедлайны</p>
+  </section>
+
+  <!-- ── Результат ────────────────────────────────────────────── -->
+  <section id="screen-result" hidden>
+    <div class="hero">
+      <canvas id="type-canvas" width="560" height="560" role="img" aria-label="Анимация типа поля"></canvas>
+      <div>
+        <p class="caption" style="margin:0">Тип поля</p>
+        <h2 class="type-title" id="type-title"></h2>
+        <p class="type-line" id="type-line"></p>
+        <p class="type-check"><i>Что проверить:</i> <span id="type-check"></span></p>
+      </div>
+    </div>
+    <p class="confidence">Уверенность: <b id="conf-level"></b>. <span id="conf-reason"></span></p>
+
+    <div class="panel">
+      <h2 style="margin-top:0">Семь осей</h2>
+      <div id="axes"></div>
+    </div>
+
+    <div class="panel">
+      <h2 style="margin-top:0">Находки</h2>
+      <p class="hint" style="margin-top:0">Цитаты свёрнуты. Открой, чтобы увидеть, на чём держится разбор.</p>
+      <div id="findings"></div>
+    </div>
+
+    <details id="advocate">
+      <summary>Адвокат автора</summary>
+      <ul class="plain" id="advocate-list"></ul>
+    </details>
+
+    <section class="panel">
+      <h2 style="margin-top:0">Чего мы не знаем</h2>
+      <ul class="plain" id="unknowns"></ul>
+    </section>
+
+    <details class="honest" id="honest">
+      <summary>Честный язык</summary>
+      <p class="hint">Внутренние баллы и формулы. Веса — экспертная оценка версии рубрики, они не измерены на выборке.</p>
+      <pre class="mono">балл находки   c = w · m(сила) · Π m(модификатор) · m(жанр)
+насыщение      S = знак(w) · min( Σ |c_k| / k , 3·|w| )
+ось            raw = m(сценарий) · (1 / n_eff) · Σ S
+шкала          v = 1 − e^(−max(raw, 0) / k)
+уровни         v &lt; 0.25 низкий · v &lt; 0.6 средний · иначе высокий</pre>
+      <div id="honest-axes"></div>
+      <p class="hint mono" id="honest-stats"></p>
+    </details>
+
+    <section class="panel game">
+      <h2 style="margin-top:0">Запусти себя</h2>
+      <p class="caption">Иллюстрация, а не прогноз. В разбор не входит.</p>
+      <canvas id="game-canvas" width="840" height="840" aria-label="Мини-игра: полёт частицы в поле"></canvas>
+      <label class="slider">Сколько готов потратить <input type="range" id="g-spend" min="0" max="1" step="0.01" value="0.3"></label>
+      <label class="slider">Насколько горит <input type="range" id="g-burn" min="0" max="1" step="0.01" value="0.5"></label>
+      <label class="slider">Скепсис <input type="range" id="g-doubt" min="0" max="1" step="0.01" value="0.4"></label>
+      <button type="button" class="btn ghost" id="g-run">Запустить</button>
+      <p class="outcome" id="g-outcome" aria-live="polite"></p>
+    </section>
+
+    <div class="final-actions">
+      <button type="button" class="btn" id="share">Поделиться карточкой</button>
+      <button type="button" class="btn ghost" id="again">Разобрать другое</button>
+    </div>
+  </section>
+
+  <footer>Разбор текстов, а не людей. Имена и ники не нужны и нигде не сохраняются.</footer>
+</div>
+
+<script>
+(function () {
+'use strict';
+
+// ── Константы и справочники ─────────────────────────────────────
+var MAX_CHARS = 40000, MIN_CHARS = 300, MAX_TEXTS = 30;
+
+var SCENARIOS = [
+  { key: 'course', label: 'покупаю курс' },
+  { key: 'therapist', label: 'выбираю психолога' },
+  { key: 'teacher', label: 'читаю наставника' },
+  { key: 'ad', label: 'проверяю рекламу' }
+];
+var GENRES = [
+  { key: 'post', label: 'пост' },
+  { key: 'sale', label: 'продажа или анонс' },
+  { key: 'lecture', label: 'лекция или расшифровка' },
+  { key: 'answer', label: 'ответ на вопрос' },
+  { key: 'personal', label: 'личное' }
+];
+var WAIT_LINES = ['Считаем дедлайны', 'Ищем источники. Пока безуспешно', 'Сверяем цитаты с оригиналом', 'Взвешиваем обещания'];
+var GOOD_AXES = { verifiability: 1, integrity: 1, autonomy: 1 };
+
+function $(id) { return document.getElementById(id); }
+function el(tag, cls, text) {
+  var e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+function plural(n, one, few, many) {
+  var m10 = n % 10, m100 = n % 100;
+  if (m10 === 1 && m100 !== 11) return one;
+  if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
+  return many;
+}
+function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+function css(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ── Встроенный браузер Telegram: та же страница ────────────────
+try {
+  var tg = window.Telegram && window.Telegram.WebApp;
+  if (tg) {
+    tg.ready();
+    tg.expand();
+    if (tg.colorScheme === 'dark' || tg.colorScheme === 'light') document.documentElement.setAttribute('data-theme', tg.colorScheme);
+  }
+} catch (e) {}
+
+// ── События метрики ─────────────────────────────────────────────
+// Каждое событие шлётся один раз на разбор: метрика — доля разборов,
+// где открыли хотя бы одну цитату, а не число щелчков.
+var sentForThis = {};
+function track(type) {
+  if (sentForThis[type]) return;
+  sentForThis[type] = true;
+  try {
+    fetch('/api/event', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ type: type }), keepalive: true }).catch(function () {});
+  } catch (e) {}
+}
+
+// ── Экран ввода ─────────────────────────────────────────────────
+var scenarioBox = $('scenarios');
+SCENARIOS.forEach(function (s, i) {
+  var label = el('label', 'scenario');
+  var input = document.createElement('input');
+  input.type = 'radio'; input.name = 'scenario'; input.value = s.key;
+  if (i === 0) input.checked = true;
+  label.appendChild(input);
+  label.appendChild(document.createTextNode(s.label));
+  scenarioBox.appendChild(label);
+});
+
+var blocksBox = $('blocks');
+
+function makeBlock(text, genre) {
+  var b = el('div', 'block');
+  var head = el('div', 'block-head');
+  var num = el('span', 'block-num');
+  var sel = document.createElement('select');
+  sel.setAttribute('aria-label', 'Жанр текста');
+  GENRES.forEach(function (g) {
+    var o = document.createElement('option');
+    o.value = g.key; o.textContent = g.label;
+    sel.appendChild(o);
+  });
+  sel.value = genre || 'post';
+  var rm = el('button', 'link', 'Убрать');
+  rm.type = 'button';
+  rm.addEventListener('click', function () {
+    if (blocksBox.children.length > 1) b.remove(); else ta.value = '';
+    refresh();
+  });
+  head.appendChild(num); head.appendChild(sel); head.appendChild(rm);
+
+  var ta = document.createElement('textarea');
+  ta.setAttribute('aria-label', 'Текст');
+  ta.placeholder = 'Текст поста, анонса или расшифровки';
+  ta.value = text || '';
+  ta.addEventListener('input', function () { splitIfNeeded(b); refresh(); });
+
+  b.appendChild(head); b.appendChild(ta);
+  return b;
+}
+
+// Пачка из Telegram: строки «---» делят вставку на отдельные блоки
+// того же жанра, сразу за текущим.
+function splitIfNeeded(block) {
+  var ta = block.querySelector('textarea');
+  var parts = ta.value.split(/\n[ \t]*-{3,}[ \t]*(?:\n|$)/);
+  if (parts.length < 2) return;
+  var genre = block.querySelector('select').value;
+  ta.value = parts[0].trim();
+  var after = block;
+  for (var i = 1; i < parts.length; i++) {
+    var t = parts[i].trim();
+    if (!t) continue;
+    var nb = makeBlock(t, genre);
+    after.after(nb);
+    after = nb;
+  }
+}
+
+function collect() {
+  var out = [];
+  var blocks = blocksBox.querySelectorAll('.block');
+  for (var i = 0; i < blocks.length; i++) {
+    var text = blocks[i].querySelector('textarea').value.trim();
+    if (!text) continue;
+    out.push({ block: blocks[i], genre: blocks[i].querySelector('select').value, text: text });
+  }
+  return out;
+}
+
+function refresh() {
+  var blocks = blocksBox.querySelectorAll('.block');
+  for (var i = 0; i < blocks.length; i++) blocks[i].querySelector('.block-num').textContent = 'Текст ' + (i + 1);
+  var items = collect();
+  var chars = items.reduce(function (s, x) { return s + x.text.length; }, 0);
+  var n = items.length;
+
+  var mc = $('meter-chars');
+  mc.textContent = fmt(chars) + ' из 40 000 знаков';
+  mc.classList.toggle('over', chars > MAX_CHARS);
+  var mt = $('meter-texts');
+  mt.textContent = n + ' ' + plural(n, 'текст', 'текста', 'текстов') + ' из 30';
+  mt.classList.toggle('over', n > MAX_TEXTS);
+
+  var hint = '';
+  if (chars < MIN_CHARS) hint = 'Нужно хотя бы 300 знаков';
+  else if (chars > MAX_CHARS) hint = 'Больше 40 000 знаков, сократи';
+  else if (n > MAX_TEXTS) hint = 'Больше 30 текстов, убери лишние';
+  $('run-hint').textContent = hint;
+  $('run').disabled = hint !== '';
+  $('add-block').disabled = blocks.length >= MAX_TEXTS;
+}
+
+$('add-block').addEventListener('click', function () {
+  var nb = makeBlock('', 'post');
+  blocksBox.appendChild(nb);
+  nb.querySelector('textarea').focus();
+  refresh();
+});
+
+blocksBox.appendChild(makeBlock('', 'post'));
+refresh();
+
+// ── Экраны ──────────────────────────────────────────────────────
+function show(id) {
+  ['screen-input', 'screen-wait', 'screen-result'].forEach(function (s) { $(s).hidden = s !== id; });
+  window.scrollTo(0, 0);
+}
+
+var waitTimer = null;
+function startWaiting() {
+  show('screen-wait');
+  var i = 0;
+  $('wait-line').textContent = WAIT_LINES[0];
+  clearInterval(waitTimer);
+  waitTimer = setInterval(function () {
+    i = (i + 1) % WAIT_LINES.length;
+    $('wait-line').textContent = WAIT_LINES[i];
+  }, 3500);
+  scene.start($('wait-canvas'), 'dark_matter', { size: 280 });
+}
+function stopWaiting() { clearInterval(waitTimer); }
+
+function inputError(msg) {
+  stopWaiting();
+  show('screen-input');
+  $('input-error').textContent = msg;
+}
+
+// ── Запуск разбора и опрос ──────────────────────────────────────
+var lastSubmitted = null;
+
+async function readJson(res) {
+  try { return await res.json(); } catch (e) { return {}; }
+}
+
+$('run').addEventListener('click', async function () {
+  var items = collect();
+  var scenario = document.querySelector('input[name="scenario"]:checked').value;
+  var texts = items.map(function (x, i) { return { id: 't' + (i + 1), genre: x.genre, text: x.text }; });
+  lastSubmitted = { scenario: scenario, texts: texts };
+  $('input-error').textContent = '';
+  startWaiting();
+
+  var res, body;
+  try {
+    res = await fetch('/api/analyze', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(lastSubmitted) });
+    body = await readJson(res);
+  } catch (e) {
+    return inputError('Нет связи. Проверь интернет и попробуй ещё раз');
+  }
+
+  if (res.status === 200) return showResult(body);
+  if (res.status !== 202) return inputError(body.message || 'Что-то сломалось на нашей стороне');
+
+  var deadline = Date.now() + 3 * 60 * 1000;
+  var wait = body.poll_ms || 2000;
+  var job = body.job;
+  while (Date.now() < deadline) {
+    await new Promise(function (r) { setTimeout(r, wait); });
+    try {
+      res = await fetch('/api/analyze?job=' + encodeURIComponent(job));
+      body = await readJson(res);
+    } catch (e) { continue; }
+    if (res.status === 200) return showResult(body);
+    if (res.status !== 202) return inputError(body.message || 'Что-то сломалось на нашей стороне');
+  }
+  inputError('Модель занята, попробуй через минуту');
+});
+
+// ── Результат ───────────────────────────────────────────────────
+var current = null;
+
+function textLabel(id) {
+  var i = parseInt(String(id).slice(1), 10);
+  var t = lastSubmitted && lastSubmitted.texts[i - 1];
+  var g = t && GENRES.filter(function (x) { return x.key === t.genre; })[0];
+  return 'текст ' + i + (g ? ', ' + g.label : '');
+}
+
+function showResult(r) {
+  stopWaiting();
+  current = r;
+  sentForThis = {};
+  track('analysis');
+
+  $('type-title').textContent = r.type.title;
+  $('type-line').textContent = r.type.line;
+  $('type-check').textContent = r.type.check;
+  $('conf-level').textContent = r.confidence.label;
+  $('conf-reason').textContent = r.confidence.reason;
+
+  // Оси: уровень словом и тонкая шкала. Чисел здесь нет.
+  var axes = $('axes');
+  axes.textContent = '';
+  r.axes.forEach(function (a) {
+    var row = el('div', 'axis ' + (a.polarity === 'neg' ? 'neg' : 'pos') + ' l' + a.level);
+    row.appendChild(el('span', 'axis-name', a.label));
+    row.appendChild(el('span', 'axis-level', a.level_label));
+    var scale = el('div', 'axis-scale');
+    var fill = el('div', 'axis-fill');
+    fill.style.width = Math.round(Math.max(0.02, a.v) * 100) + '%';
+    scale.appendChild(fill);
+    row.appendChild(scale);
+    if (a.polarity === 'pos') row.appendChild(el('span', 'axis-note', 'здесь высокий уровень — хороший знак'));
+    axes.appendChild(row);
+  });
+
+  // Находки по осям, в порядке осей сценария. Один сигнал в оси — одна
+  // строка: «ступени, в 9 текстах». Иначе повторы одного приёма
+  // растягивают список на десятки строк, и адвокат с тем, чего мы
+  // не знаем, уезжают туда, куда уже не долистывают.
+  var box = $('findings');
+  box.textContent = '';
+  if (!r.findings.length) box.appendChild(el('p', 'hint', 'Модель не нашла ни одного приёма из списка. Так тоже бывает.'));
+  r.axes.forEach(function (a) {
+    var list = r.findings.filter(function (f) { return f.axis === a.key; });
+    if (!list.length) return;
+    var bySignal = {}, order = [];
+    list.forEach(function (f) {
+      if (!bySignal[f.signal]) { bySignal[f.signal] = { label: f.signal_label, items: [], weight: 0 }; order.push(f.signal); }
+      bySignal[f.signal].items.push(f);
+      bySignal[f.signal].weight += Math.abs(f.points);
+    });
+    order.sort(function (x, y) { return (bySignal[y].weight - bySignal[x].weight) || (x < y ? -1 : 1); });
+
+    var g = el('div', 'finding-group');
+    g.appendChild(el('h3', null, a.label));
+    order.forEach(function (sig) {
+      var grp = bySignal[sig];
+      var good = GOOD_AXES[a.key] && grp.items[0].points > 0;
+      var item = el('div', 'finding' + (good ? ' good' : ''));
+      var row = el('div', 'finding-row');
+      var left = el('div');
+      left.appendChild(el('div', 'finding-sig', grp.label));
+      var texts = {};
+      grp.items.forEach(function (f) { texts[f.text_id] = 1; });
+      var nt = Object.keys(texts).length;
+      left.appendChild(el('div', 'finding-src', nt === 1 ? textLabel(grp.items[0].text_id) : 'в ' + nt + ' ' + plural(nt, 'тексте', 'текстах', 'текстах')));
+      var many = grp.items.length > 1;
+      var btn = el('button', 'link', many ? 'Цитаты' : 'Цитата');
+      btn.type = 'button';
+      btn.setAttribute('aria-expanded', 'false');
+      var quotes = el('div');
+      quotes.hidden = true;
+      grp.items.forEach(function (f) {
+        var q = el('blockquote', 'quote', '«' + f.quote + '»');
+        var note = textLabel(f.text_id) + (f.context_note ? ', ' + f.context_note : '');
+        q.appendChild(el('span', 'quote-note', note));
+        quotes.appendChild(q);
+      });
+      btn.addEventListener('click', function () {
+        quotes.hidden = !quotes.hidden;
+        btn.setAttribute('aria-expanded', String(!quotes.hidden));
+        btn.textContent = quotes.hidden ? (many ? 'Цитаты' : 'Цитата') : 'Свернуть';
+        if (!quotes.hidden) track('quote_open');
+      });
+      row.appendChild(left); row.appendChild(btn);
+      item.appendChild(row); item.appendChild(quotes);
+      g.appendChild(item);
+    });
+    box.appendChild(g);
+  });
+
+  var adv = $('advocate');
+  adv.open = false;
+  var al = $('advocate-list');
+  al.textContent = '';
+  r.advocate.forEach(function (t) { al.appendChild(el('li', null, t)); });
+
+  var un = $('unknowns');
+  un.textContent = '';
+  r.unknowns.forEach(function (t) { un.appendChild(el('li', null, t)); });
+
+  // Честный язык: единственное место с числами, и все они подписаны.
+  var ha = $('honest-axes');
+  ha.textContent = '';
+  r.axes.forEach(function (a) {
+    var tops = a.top.map(function (t) { return t.label + ' ' + t.points; }).join(', ');
+    var line = a.label + ': ' + a.raw + ' ' + plural(Math.round(Math.abs(a.raw)), 'балл', 'балла', 'баллов') +
+      ', v = ' + a.v + ', множитель сценария ' + a.multiplier + (tops ? '. Главное: ' + tops : '');
+    ha.appendChild(el('div', 'row mono', line));
+  });
+  var s = r.stats;
+  $('honest-stats').textContent = 'текстов ' + s.n + ', разных по сути ' + s.n_eff + ', слов ' + s.words +
+    ', доля продающих ' + s.sale_share + ', выброшено цитат ' + s.dropped_quotes +
+    '. Рубрика ' + r.versions.rubric + ', промпт ' + r.versions.prompt + ', модель ' + r.versions.model;
+
+  show('screen-result');
+  scene.start($('type-canvas'), r.type.key, { size: 280 });
+  game.reset(r);
+  card.prepare(r);
+}
+
+$('advocate').addEventListener('toggle', function () { if (this.open) track('advocate_open'); });
+$('again').addEventListener('click', function () {
+  scene.stop();
+  show('screen-input');
+});
+
+// ── Анимация типа поля ──────────────────────────────────────────
+// Частицы в поле одной массы. У каждого типа своё правило движения.
+// При prefers-reduced-motion рисуется один кадр после прогона.
+var scene = (function () {
+  var raf = 0, canvas = null, ctx = null, type = null, parts = [], t = 0, W = 280;
+
+  function rng(seed) { return function () { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }; }
+
+  function init(kind) {
+    var r = rng(7);
+    parts = [];
+    var n = kind === 'nebula' ? 140 : 70;
+    for (var i = 0; i < n; i++) {
+      var a = r() * Math.PI * 2, d = 40 + r() * 90;
+      parts.push({ a: a, d: d, x: Math.cos(a) * d, y: Math.sin(a) * d, vx: 0, vy: 0, s: 0.6 + r() * 1.4, k: r(), frozen: false, ring: Math.floor(r() * 3) });
+    }
+    t = 0;
+  }
+
+  function grid(c, mass) {
+    // Сетка стягивается к центру: чем больше масса, тем сильнее.
+    c.strokeStyle = css('--ink');
+    c.globalAlpha = 0.08;
+    c.lineWidth = 1;
+    var step = W / 10;
+    for (var gx = -W / 2; gx <= W / 2; gx += step) {
+      c.beginPath();
+      for (var gy = -W / 2; gy <= W / 2; gy += 4) {
+        var d = Math.sqrt(gx * gx + gy * gy) + 1;
+        var pull = mass * 900 / (d * d + 900);
+        var x = gx * (1 - pull), y = gy * (1 - pull);
+        if (gy === -W / 2) c.moveTo(x, y); else c.lineTo(x, y);
+      }
+      c.stroke();
+    }
+    for (var gy2 = -W / 2; gy2 <= W / 2; gy2 += step) {
+      c.beginPath();
+      for (var gx2 = -W / 2; gx2 <= W / 2; gx2 += 4) {
+        var d2 = Math.sqrt(gx2 * gx2 + gy2 * gy2) + 1;
+        var pull2 = mass * 900 / (d2 * d2 + 900);
+        var x2 = gx2 * (1 - pull2), y2 = gy2 * (1 - pull2);
+        if (gx2 === -W / 2) c.moveTo(x2, y2); else c.lineTo(x2, y2);
+      }
+      c.stroke();
+    }
+    c.globalAlpha = 1;
+  }
+
+  function dot(c, x, y, r, color, alpha) {
+    c.globalAlpha = alpha;
+    c.fillStyle = color;
+    c.beginPath(); c.arc(x, y, r, 0, Math.PI * 2); c.fill();
+    c.globalAlpha = 1;
+  }
+
+  function step() {
+    t += 1;
+    parts.forEach(function (p) {
+      if (type === 'dark_matter') {
+        p.a += 0.004 + 0.3 / p.d;
+        p.x = Math.cos(p.a) * p.d; p.y = Math.sin(p.a) * p.d * 0.85;
+      } else if (type === 'black_hole') {
+        if (!p.frozen) {
+          p.a += 0.02 + 0.8 / (p.d + 5);
+          p.d -= 0.12 + 6 / (p.d + 10);
+          if (p.d < 30) { p.d = 30; p.frozen = true; }
+        }
+        p.x = Math.cos(p.a) * p.d; p.y = Math.sin(p.a) * p.d;
+      } else if (type === 'feeder') {
+        var target = 45 + p.ring * 30;
+        p.d += (target - p.d) * 0.05;
+        p.a += 0.6 / p.d;
+        if ((t + Math.floor(p.k * 400)) % 400 === 0 && p.ring > 0) p.ring -= 1;
+        if (p.ring === 0 && (t + Math.floor(p.k * 900)) % 900 === 0) p.ring = 2;
+        p.x = Math.cos(p.a) * p.d; p.y = Math.sin(p.a) * p.d;
+      } else if (type === 'pulsar') {
+        var pulse = Math.sin(t / 12);
+        p.a += 0.01;
+        var d = p.d + pulse * 18 * (0.5 + p.k);
+        p.x = Math.cos(p.a) * d; p.y = Math.sin(p.a) * d;
+      } else if (type === 'nebula') {
+        p.x = Math.cos(p.a) * p.d * 0.9 + Math.sin(t / 90 + p.k * 9) * 12;
+        p.y = Math.sin(p.a) * p.d * 0.6 + Math.cos(t / 110 + p.k * 7) * 10;
+        p.a += 0.0015;
+      } else if (type === 'maneuver') {
+        var phase = ((t * (0.6 + p.k * 0.6)) + p.k * 600) % 600;
+        var sx = -160 + phase * 0.55;
+        var bend = 60 / (Math.abs(sx) + 40);
+        p.x = sx + (sx > 0 ? sx * 0.4 : 0);
+        p.y = (p.k - 0.5) * 120 - (sx > -20 ? (sx + 20) * bend * (p.k > 0.5 ? 1 : -1) : 0);
+      } else {
+        // главная последовательность: спокойные орбиты и редкие пролёты
+        if (p.ring < 2) { p.a += 0.5 / (60 + p.ring * 40); p.x = Math.cos(p.a) * (60 + p.ring * 40); p.y = Math.sin(p.a) * (60 + p.ring * 40) * 0.7; }
+        else { var ph = ((t * 0.7) + p.k * 700) % 700; p.x = -170 + ph * 0.5; p.y = (p.k - 0.5) * 200 + Math.sin(ph / 80) * 6; }
+      }
+    });
+  }
+
+  function draw() {
+    var c = ctx, attract = css('--attract'), ink = css('--ink'), hot = css('--hot'), expand = css('--expand');
+    c.setTransform(canvas.width / W, 0, 0, canvas.height / W, canvas.width / 2, canvas.height / 2);
+    c.clearRect(-W / 2, -W / 2, W, W);
+    var mass = { dark_matter: 0.35, black_hole: 0.9, feeder: 0.5, pulsar: 0.45, nebula: 0.15, maneuver: 0.45, main_sequence: 0.3 }[type] || 0.3;
+    grid(c, mass);
+    // Сетка гаснет к краям: без этого поле обрывалось бы ровным
+    // квадратом, а пластинка не имеет краёв.
+    c.globalCompositeOperation = 'destination-out';
+    var fade = c.createRadialGradient(0, 0, W * 0.3, 0, 0, W * 0.5);
+    fade.addColorStop(0, 'rgba(0,0,0,0)');
+    fade.addColorStop(1, 'rgba(0,0,0,1)');
+    c.fillStyle = fade;
+    c.fillRect(-W / 2, -W / 2, W, W);
+    c.globalCompositeOperation = 'source-over';
+
+    if (type === 'black_hole') {
+      dot(c, 0, 0, 26, ink, 1);
+      c.strokeStyle = hot; c.lineWidth = 2; c.globalAlpha = 0.9;
+      c.beginPath(); c.arc(0, 0, 30, 0, Math.PI * 2); c.stroke(); c.globalAlpha = 1;
+    } else if (type === 'pulsar') {
+      var r = 10 + (t % 24) * 4;
+      c.strokeStyle = attract; c.globalAlpha = Math.max(0, 1 - (t % 24) / 24); c.lineWidth = 1.5;
+      c.beginPath(); c.arc(0, 0, r, 0, Math.PI * 2); c.stroke(); c.globalAlpha = 1;
+      dot(c, 0, 0, 6, attract, 1);
+    } else if (type === 'feeder') {
+      [45, 75, 105].forEach(function (rr) { c.strokeStyle = ink; c.globalAlpha = 0.15; c.beginPath(); c.arc(0, 0, rr, 0, Math.PI * 2); c.stroke(); });
+      c.globalAlpha = 1;
+      dot(c, 0, 0, 12, attract, 1);
+    } else if (type === 'main_sequence' || type === 'maneuver') {
+      dot(c, 0, 0, type === 'maneuver' ? 10 : 16, attract, 0.9);
+    }
+
+    parts.forEach(function (p) {
+      var flyby = type === 'maneuver' || (type === 'main_sequence' && p.ring === 2);
+      var color = flyby ? expand : ((type === 'nebula' || type === 'dark_matter') ? ink : attract);
+      var alpha = type === 'nebula' ? 0.25 : (type === 'dark_matter' ? 0.45 : 0.8);
+      if (p.frozen) { color = hot; alpha = 0.5; }
+      dot(c, p.x, p.y, p.s, color, alpha);
+    });
+  }
+
+  function loop() { step(); draw(); raf = requestAnimationFrame(loop); }
+
+  return {
+    start: function (cv, kind, opts) {
+      cancelAnimationFrame(raf);
+      canvas = cv; ctx = cv.getContext('2d'); type = kind;
+      init(kind);
+      if (reduceMotion) { for (var i = 0; i < 240; i++) step(); draw(); return; }
+      loop();
+    },
+    stop: function () { cancelAnimationFrame(raf); },
+    // Один кадр для карточки: тот же прогон, что при reduced-motion.
+    frame: function (cv, kind) {
+      var saved = [canvas, ctx, type, parts, t];
+      canvas = cv; ctx = cv.getContext('2d'); type = kind;
+      init(kind);
+      for (var i = 0; i < 240; i++) step();
+      draw();
+      canvas = saved[0]; ctx = saved[1]; type = saved[2]; parts = saved[3]; t = saved[4];
+    }
+  };
+})();
+
+// ── Запусти себя ────────────────────────────────────────────────
+// Одна частица, одна масса, 8 секунд. Физика как в прототипе:
+//   a = G·M·Δr / (|Δr|² + ε²)^1.5
+// Шаг фиксированный, поэтому одни и те же ползунки дают один исход.
+var game = (function () {
+  var result = null, raf = 0;
+  var cv = $('game-canvas'), c = cv.getContext('2d'), W = 420;
+
+  function level(key) {
+    var a = result && result.axes.filter(function (x) { return x.key === key; })[0];
+    return a ? a.v : 0;
+  }
+
+  function simulate(spend, burn, doubt) {
+    var G = 900, eps = 12, dt = 1 / 60, steps = 8 * 60;
+    var M = (0.4 + level('pressure') + level('exclusivity')) * (1 + 1.5 * burn);
+    var type = result ? result.type.key : 'main_sequence';
+    var horizon = type === 'black_hole' ? 22 : 8;
+    var capture = type === 'feeder' ? 60 * (1 + spend) : 0;
+    var speed = 55 + 90 * doubt;
+    var angle = doubt * 1.2;              // скепсис уводит с лобового курса на касательную
+    var x = -185, y = 0;
+    var vx = speed * Math.cos(angle), vy = -speed * Math.sin(angle);
+    var path = [[x, y]], outcome = null, v0 = speed;
+    for (var i = 0; i < steps; i++) {
+      var d2 = x * x + y * y, d = Math.sqrt(d2);
+      if (d < horizon) { outcome = 'Упал в центр'; break; }
+      if (capture && d < capture && Math.sqrt(vx * vx + vy * vy) < 120) { vx *= 0.985; vy *= 0.985; }
+      var k = G * M / Math.pow(d2 + eps * eps, 1.5);
+      vx += -x * k * dt; vy += -y * k * dt;
+      x += vx * dt; y += vy * dt;
+      path.push([x, y]);
+      if (d > 320) break;
+    }
+    if (!outcome) {
+      var v = Math.sqrt(vx * vx + vy * vy), d3 = Math.sqrt(x * x + y * y);
+      var energy = 0.5 * v * v - G * M / Math.sqrt(d3 * d3 + eps * eps);
+      if (d3 > 200 && v > v0 * 1.05) outcome = 'Гравитационный манёвр: ушёл быстрее, чем пришёл';
+      else if (energy < 0 && d3 < 220) outcome = 'Вышел на орбиту — надолго';
+      else outcome = 'Пролетел мимо';
+    }
+    return { path: path, outcome: outcome, horizon: horizon, capture: capture, M: M };
+  }
+
+  function drawField(sim) {
+    c.setTransform(cv.width / W, 0, 0, cv.height / W, cv.width / 2, cv.height / 2);
+    c.clearRect(-W / 2, -W / 2, W, W);
+    c.strokeStyle = css('--ink'); c.globalAlpha = 0.08;
+    for (var r = 30; r < 220; r += 30) { c.beginPath(); c.arc(0, 0, r * (1 - 0.15 * sim.M / (1 + sim.M)), 0, Math.PI * 2); c.stroke(); }
+    c.globalAlpha = 1;
+    if (sim.capture) { c.strokeStyle = css('--attract'); c.globalAlpha = 0.4; c.setLineDash([4, 4]); c.beginPath(); c.arc(0, 0, sim.capture, 0, Math.PI * 2); c.stroke(); c.setLineDash([]); c.globalAlpha = 1; }
+    c.fillStyle = css('--ink'); c.beginPath(); c.arc(0, 0, Math.max(6, sim.horizon), 0, Math.PI * 2); c.fill();
+    if (result && result.type.key === 'black_hole') { c.strokeStyle = css('--hot'); c.lineWidth = 2; c.beginPath(); c.arc(0, 0, sim.horizon + 3, 0, Math.PI * 2); c.stroke(); c.lineWidth = 1; }
+  }
+
+  function drawPath(sim, upto) {
+    c.strokeStyle = css('--expand'); c.lineWidth = 1.5; c.beginPath();
+    for (var i = 0; i < upto && i < sim.path.length; i++) {
+      if (i === 0) c.moveTo(sim.path[i][0], sim.path[i][1]); else c.lineTo(sim.path[i][0], sim.path[i][1]);
+    }
+    c.stroke(); c.lineWidth = 1;
+    var p = sim.path[Math.min(upto, sim.path.length) - 1];
+    if (p) { c.fillStyle = css('--expand'); c.beginPath(); c.arc(p[0], p[1], 4, 0, Math.PI * 2); c.fill(); }
+  }
+
+  function run() {
+    cancelAnimationFrame(raf);
+    var sim = simulate(+$('g-spend').value, +$('g-burn').value, +$('g-doubt').value);
+    $('g-outcome').textContent = '';
+    if (reduceMotion) { drawField(sim); drawPath(sim, sim.path.length); $('g-outcome').textContent = sim.outcome; return; }
+    var i = 0;
+    (function frame() {
+      i += 4;
+      drawField(sim); drawPath(sim, i);
+      if (i < sim.path.length) raf = requestAnimationFrame(frame);
+      else $('g-outcome').textContent = sim.outcome;
+    })();
+  }
+
+  $('g-run').addEventListener('click', run);
+
+  return {
+    reset: function (r) {
+      result = r;
+      $('g-outcome').textContent = '';
+      drawField(simulate(+$('g-spend').value, +$('g-burn').value, +$('g-doubt').value));
+    }
+  };
+})();
+
+// ── Карточка ────────────────────────────────────────────────────
+// PNG 1080×1350 в текущей теме. Собирается заранее, чтобы в обработчике
+// нажатия вызвать share сразу: после асинхронной паузы Safari считает,
+// что жест пользователя уже кончился, и отказывает.
+var card = (function () {
+  var blob = null, file = null;
+
+  function counterLines(r) {
+    var p = r.counts.promises, d = r.counts.deadlines, s = r.counts.sources;
+    return [
+      p + ' ' + plural(p, 'обещание', 'обещания', 'обещаний'),
+      d + ' ' + plural(d, 'дедлайн', 'дедлайна', 'дедлайнов'),
+      s + ' ' + plural(s, 'источник', 'источника', 'источников')
+    ];
+  }
+
+  function wrapText(c, text, x, y, maxW, lineH) {
+    var words = text.split(' '), line = '';
+    for (var i = 0; i < words.length; i++) {
+      var test = line ? line + ' ' + words[i] : words[i];
+      if (c.measureText(test).width > maxW && line) { c.fillText(line, x, y); y += lineH; line = words[i]; }
+      else line = test;
+    }
+    if (line) c.fillText(line, x, y);
+    return y + lineH;
+  }
+
+  function render(r) {
+    var W = 1080, H = 1350;
+    var cv = document.createElement('canvas');
+    cv.width = W; cv.height = H;
+    var c = cv.getContext('2d');
+    c.fillStyle = css('--bg'); c.fillRect(0, 0, W, H);
+    c.strokeStyle = css('--ink'); c.globalAlpha = 0.05;
+    for (var gx = 0; gx <= W; gx += 54) { c.beginPath(); c.moveTo(gx, 0); c.lineTo(gx, H); c.stroke(); }
+    for (var gy = 0; gy <= H; gy += 54) { c.beginPath(); c.moveTo(0, gy); c.lineTo(W, gy); c.stroke(); }
+    c.globalAlpha = 1;
+
+    c.fillStyle = css('--muted');
+    c.font = '36px "Old Standard TT", Georgia, serif';
+    c.fillText('Булшитометр', 80, 110);
+
+    var frame = document.createElement('canvas');
+    frame.width = 560; frame.height = 560;
+    scene.frame(frame, r.type.key);
+    c.drawImage(frame, (W - 560) / 2, 160);
+
+    c.fillStyle = css('--ink');
+    c.font = '84px "Old Standard TT", Georgia, serif';
+    var y = wrapText(c, r.type.title, 80, 820, W - 160, 92);
+    c.font = 'italic 38px "Old Standard TT", Georgia, serif';
+    y = wrapText(c, r.type.line, 80, y + 6, W - 160, 50);
+
+    c.font = '40px "IBM Plex Mono", Menlo, monospace';
+    counterLines(r).forEach(function (line, i) { c.fillText(line, 80, y + 40 + i * 56); });
+
+    c.fillStyle = css('--muted');
+    c.font = '34px "Old Standard TT", Georgia, serif';
+    c.fillText('Разбор текстов, а не людей', 80, H - 110);
+    c.font = '30px "IBM Plex Mono", Menlo, monospace';
+    c.fillText(location.host, 80, H - 64);
+    return cv;
+  }
+
+  return {
+    prepare: function (r) {
+      blob = null; file = null;
+      var cv = render(r);
+      cv.toBlob(function (b) {
+        blob = b;
+        try { file = new File([b], 'bullshitometer.png', { type: 'image/png' }); } catch (e) { file = null; }
+      }, 'image/png');
+    },
+    share: function () {
+      if (!blob) return;
+      track('card_share');
+      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+        navigator.share({ files: [file], title: 'Булшитометр' }).catch(function () {});
+        return;
+      }
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'bullshitometer.png';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 5000);
+    },
+    _render: render
+  };
+})();
+
+$('share').addEventListener('click', function () { card.share(); });
+
+// Для проверки качества в браузере: собрать карточку без экрана результата.
+window.__bsm = { showResult: showResult, card: card };
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "bullshitometer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Булшитометр: разбор давления и обещаний в текстах",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test",
+    "eval": "node scripts/eval.mjs"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^10.7.13"
+  }
+}
