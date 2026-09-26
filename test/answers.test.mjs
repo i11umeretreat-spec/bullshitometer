@@ -197,3 +197,12 @@ test('выбор вопросов: дубли и незнакомые отвер
     assert.equal(normalizeSelection(['q_zzz'], rubric).ok, false);
     assert.equal(normalizeSelection('q_now', rubric).ok, false);
 });
+
+test('нижние шаблоны осей говорят «почти»: нижний уровень бывает и при слабых находках', () => {
+    for (const q of rubric.questions) {
+        const t = q.templates['0'];
+        if (!t) continue;
+        assert.match(t.text, /почти/i, q.id + ': ' + t.text);
+        assert.match(t.label, /почти/i, q.id + ': ' + t.label);
+    }
+});
