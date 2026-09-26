@@ -14,6 +14,7 @@
 import { loadRubric, loadPrompt } from './assets.mjs';
 import { bump } from './store.mjs';
 import { score } from './score.mjs';
+import { answers, normalizeSelection } from './answers.mjs';
 import { verifyFindings, buildTextsMeta, splitBatches } from './verify.mjs';
 import { MODEL, buildSystem, buildRequest, callModel, effortFrom } from './model.mjs';
 import {
@@ -27,7 +28,7 @@ const JOB_STALE_MS = 15 * 60 * 1000;
 const BATCH_CHARS = 12000;
 const POLLS_PER_HOUR = 900;
 const EVENTS_PER_HOUR = 120;
-const EVENT_TYPES = ['analysis', 'quote_open', 'advocate_open', 'card_share'];
+const EVENT_TYPES = ['analysis', 'quote_open', 'advocate_open', 'card_share', 'answer_open', 'seller_questions_copied'];
 
 function numberEnv(env, key, fallback) {
     const n = parseInt(env[key], 10);
@@ -99,7 +100,11 @@ export function createApp(deps) {
 
     // Разметка в кэше хранит тексты по порядковому номеру, а не по id:
     // одни и те же тексты с другими id должны попадать в тот же кэш.
-    function scoreExtraction(ex, ids, scenario) {
+    //
+    // Ответы на вопросы до оплаты считаются здесь же, поверх результата.
+    // Выбор вопросов, как и сценарий, в ключ кэша не входит: от него
+    // зависит только порядок вопросов продавцу.
+    function scoreExtraction(ex, ids, scenario, questions) {
         const findings = ex.findings.map(function (f) { return Object.assign({}, f, { text_id: ids[f.i] }); });
         const meta = ex.texts_meta.map(function (t) { return { id: ids[t.i], genre: t.genre, words: t.words, cluster: t.cluster }; });
         const result = score({
@@ -110,7 +115,7 @@ export function createApp(deps) {
             dropped_quotes: ex.dropped_quotes,
             raw_findings: ex.raw_findings,
         });
-        return Object.assign({ versions: versions }, result);
+        return Object.assign({ versions: versions }, result, answers(result, rubric, questions));
     }
 
     async function rateOk(prefix, ip, limit) {
@@ -143,6 +148,8 @@ export function createApp(deps) {
         const checked = validateAnalyzeBody(body, rubric);
         if (!checked.ok) return done(fail(checked.status, checked.reason));
         const input = checked.input;
+        const selection = normalizeSelection(body.questions, rubric);
+        if (!selection.ok) return done(fail(400, selection.reason));
         texts = input.texts.length;
         chars = checked.chars;
 
@@ -155,7 +162,7 @@ export function createApp(deps) {
         const ex = await stores.extractions.getJSON(key);
         if (ex && deps.now() - ex.created < CACHE_TTL_MS) {
             cache = 'HIT';
-            return done(json(200, scoreExtraction(ex, ids, input.scenario), { 'x-cache': 'HIT' }));
+            return done(json(200, scoreExtraction(ex, ids, input.scenario, selection.ids), { 'x-cache': 'HIT' }));
         }
 
         cache = 'MISS';
@@ -173,7 +180,7 @@ export function createApp(deps) {
         }
 
         const job = deps.uuid();
-        await stores.jobs.setJSON('job:' + job, { key: key, ids: ids, scenario: input.scenario, status: 'pending', created: deps.now() });
+        await stores.jobs.setJSON('job:' + job, { key: key, ids: ids, scenario: input.scenario, questions: selection.ids, status: 'pending', created: deps.now() });
         await stores.jobs.setJSON('inflight:' + key, { job: job, created: deps.now() });
 
         // Не дозвонились до фоновой функции: задание сразу помечается
@@ -216,7 +223,7 @@ export function createApp(deps) {
 
         const ex = await stores.extractions.getJSON(rec.key);
         if (!ex) return done(fail(404));
-        return done(json(200, scoreExtraction(ex, rec.ids, rec.scenario), { 'x-cache': 'MISS' }), 'MISS');
+        return done(json(200, scoreExtraction(ex, rec.ids, rec.scenario, rec.questions), { 'x-cache': 'MISS' }), 'MISS');
     }
 
     // ── Фоновая разметка ────────────────────────────────────────────

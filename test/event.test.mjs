@@ -45,3 +45,13 @@ test('без IP_SALT событие не считается: 500, счётчик
     assert.deepEqual(h.stores.counters.dump(), {});
     assert.deepEqual(h.stores.ratelimit.dump(), {});
 });
+
+test('новые события среза «вопросы до оплаты»: answer_open и seller_questions_copied', async () => {
+    const h = makeHarness();
+    for (const t of ['answer_open', 'seller_questions_copied', 'answer_open']) {
+        assert.equal((await h.app.event(ev(t))).status, 204, t);
+    }
+    const c = h.stores.counters.dump();
+    assert.equal(c['events:2026-09-25:answer_open'], 2);
+    assert.equal(c['events:2026-09-25:seller_questions_copied'], 1);
+});

@@ -288,3 +288,49 @@ test('неверный ключ API: 500 «сломалось у нас», в л
     assert.equal(h.modelCalls.length, 1);
     assert.ok(h.logs.some(function (l) { return /background .*error=auth/.test(l); }));
 });
+
+// ── Вопросы до оплаты ──────────────────────────────────────────────
+
+test('результат содержит семь ответов, вопросы продавцу и «в пользу»; ссылки ведут на findings', async () => {
+    const h = makeHarness();
+    const res = await runAnalysis(h, Object.assign(body3(), { questions: ['q_cost', 'q_now'] }));
+    assert.equal(res.status, 200);
+    const r = await res.json();
+    assert.equal(r.answers.length, 7);
+    assert.ok(r.seller_questions.length >= 3 && r.seller_questions.length <= 5);
+    assert.ok(Array.isArray(r.in_favor));
+    for (const a of r.answers) {
+        for (const id of a.evidence) assert.ok(r.findings[Number(id.slice(1))], a.id + ' ' + id);
+    }
+    // Модель по умолчанию в стенде метит всё дедлайном: давление есть.
+    const now = r.answers.find(function (a) { return a.id === 'q_now'; });
+    assert.equal(now.count, 3);
+});
+
+test('выбор вопросов не входит в ключ кэша: другой выбор пересчитывается без модели', async () => {
+    const h = makeHarness();
+    const a = await (await runAnalysis(h, Object.assign(body3(), { questions: ['q_now'] }))).json();
+    const res = await h.app.analyze(analyzeRequest(Object.assign(body3(), { questions: ['q_fail', 'q_now'] })));
+    assert.equal(res.status, 200);
+    assert.equal(res.headers.get('x-cache'), 'HIT');
+    const b = await res.json();
+    assert.equal(h.modelCalls.length, 1);
+    assert.deepEqual(a.answers, b.answers, 'ответы от выбора не зависят');
+});
+
+test('незнакомый, повторный или пустой выбор вопросов: 400 до частоты и модели', async () => {
+    for (const q of [['q_zzz'], ['q_now', 'q_now'], [], 'q_now']) {
+        const h = makeHarness();
+        const res = await h.app.analyze(analyzeRequest(Object.assign(body3(), { questions: q })));
+        assert.equal(res.status, 400, JSON.stringify(q));
+        assert.equal(h.modelCalls.length, 0);
+        assert.deepEqual(h.stores.ratelimit.dump(), {});
+    }
+});
+
+test('без поля questions: вопросы по умолчанию, ответ как раньше плюс новые поля', async () => {
+    const h = makeHarness();
+    const r = await (await runAnalysis(h, body3())).json();
+    assert.equal(r.answers.length, 7);
+    assert.ok(r.type && r.axes && r.findings, 'старые поля на месте');
+});

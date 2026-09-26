@@ -45,3 +45,30 @@ test('в интерфейсе нет поля для имени, ника или
         assert.ok(html.indexOf(bad) === -1, bad);
     }
 });
+
+test('вопросы, ответы и вопросы продавцу из рубрики: без запретных слов, длинных тире и чужих подстановок', () => {
+    const visible = rubric.seller_fallback.slice();
+    for (const q of rubric.questions) {
+        visible.push(q.text, q.ask_seller.text);
+        for (const k of Object.keys(q.templates)) visible.push(q.templates[k].label, q.templates[k].text);
+    }
+    const all = visible.join('\n');
+    assert.deepEqual(findBanned(all), []);
+    assert.equal(all.indexOf('—'), -1, 'длинное тире');
+    const subs = all.match(/\{[^}]*\}/g) || [];
+    assert.deepEqual(subs.filter(function (x) { return x !== '{n}'; }), [], 'подстановки, кроме {n}');
+});
+
+test('вопросы продавцу звучат как вопросы: заканчиваются знаком вопроса', () => {
+    const asks = rubric.questions.map(function (q) { return q.ask_seller.text; }).concat(rubric.seller_fallback);
+    for (const a of asks) assert.match(a, /\?$/, a);
+});
+
+test('копия вопросов на странице совпадает с рубрикой: id, тексты, выбор по умолчанию, вступление', () => {
+    const html = readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
+    const m = html.match(/<script type="application\/json" id="questions-data">([\s\S]*?)<\/script>/);
+    assert.ok(m, 'нет блока questions-data');
+    const data = JSON.parse(m[1]);
+    assert.equal(data.intro, rubric.seller_intro);
+    assert.deepEqual(data.questions, rubric.questions.map(function (q) { return { id: q.id, text: q.text, default: q.default }; }));
+});

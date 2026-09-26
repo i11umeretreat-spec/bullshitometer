@@ -103,9 +103,18 @@ button, select, textarea, input { font: inherit; color: inherit; }
 }
 
 /* ── Экран ввода ───────────────────────────────────────────────── */
-fieldset { border: none; padding: 0; margin: 0; }
+fieldset { border: none; padding: 0; margin: 0; min-width: 0; }
 legend { font-size: 16px; color: var(--muted); padding: 0; margin-bottom: 8px; }
-.scenarios { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.scenarios { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+/* «покупаю курс» главный сценарий среза: своя строка, остальные во
+   второй. Трём сценариям в одну строку на телефоне не хватает места
+   на кружок радиокнопки: выбор у них виден рамкой, кружок скрыт
+   только визуально и остаётся радиокнопкой для клавиатуры. */
+.scenarios .scenario:first-child { grid-column: 1 / -1; }
+.scenario.alt { position: relative; justify-content: center; text-align: center; padding: 8px 6px; font-size: 15px; }
+.scenario.alt input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.scenario:has(input:focus-visible) { outline: 2px solid var(--expand); outline-offset: 2px; }
+@media (max-width: 359px) { .scenarios { grid-template-columns: minmax(0, 1fr); } }
 .scenario {
   display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 8px 12px;
   border: 1px solid color-mix(in srgb, var(--ink) 25%, transparent); cursor: pointer;
@@ -113,6 +122,24 @@ legend { font-size: 16px; color: var(--muted); padding: 0; margin-bottom: 8px; }
 }
 .scenario input { width: 20px; height: 20px; margin: 0; accent-color: var(--expand); flex: none; }
 .scenario:has(input:checked) { border-color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+
+/* Вопросы до оплаты: обычные кнопки с aria-pressed. Отметка рисуется
+   рамкой, а не символом, чтобы совпадать по толщине с остальным. */
+.qchips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.qchip {
+  display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 12px;
+  background: transparent; border: 1px solid color-mix(in srgb, var(--ink) 25%, transparent); border-radius: 2px;
+  cursor: pointer; font-size: 16px; line-height: 1.3; text-align: left;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.qchip::before {
+  content: ""; flex: none; width: 14px; height: 14px;
+  border: 1px solid color-mix(in srgb, var(--ink) 45%, transparent); border-radius: 2px;
+}
+.qchip[aria-pressed="true"] { border-color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.qchip[aria-pressed="true"]::before { background: var(--expand); border-color: var(--expand); }
+.qchip:focus-visible { outline: 2px solid var(--expand); outline-offset: 2px; }
+@media (hover: hover) { .qchip:hover { border-color: var(--ink); } }
 
 .block { margin-top: 14px; border-top: 1px solid color-mix(in srgb, var(--ink) 22%, transparent); padding-top: 12px; }
 .block-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
@@ -209,6 +236,34 @@ footer { margin-top: 48px; font-size: 15px; color: var(--muted); border-top: 1px
 .flush { margin-top: 0; }
 .actions .flush { margin: 0; }
 
+/* ── Ответы до оплаты ─────────────────────────────────────────── */
+.answer { border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent); padding: 14px 0 12px; }
+.answer:first-child { border-top: none; padding-top: 4px; }
+.answer h3 { font-size: 19px; }
+.answer-text { margin: 0 0 6px; }
+.answer-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0 14px; font-size: 15px; color: var(--muted); }
+.answer-level { font-style: italic; }
+.answer.a2 .answer-level { color: var(--hot); }
+.answer.a1 .answer-level { color: var(--attract); }
+.answer.a0 .answer-level { color: var(--expand); }
+.answer.a0 .quote { border-left-color: var(--expand); }
+.prelim { font-size: 14px; color: var(--muted); font-style: italic; margin: 6px 0 0; }
+.ask { margin: 8px 0 0; font-size: 16px; }
+.ask i { color: var(--muted); }
+.more-item { margin-top: 0; }
+.more-item summary { font-size: 17px; padding: 6px 0; }
+.more-head { display: flex; flex-direction: column; }
+.more-head .answer-level { font-size: 15px; font-style: italic; }
+.more-item summary.a2 .answer-level { color: var(--hot); }
+.more-item summary.a1 .answer-level { color: var(--attract); }
+.more-item summary.a0 .answer-level { color: var(--expand); }
+.more-item .answer { border-top: none; padding-top: 0; }
+ol.seller { margin: 6px 0 14px; padding-left: 22px; }
+ol.seller li { margin: 6px 0; }
+.copy-status { min-height: 1.4em; }
+.result-type { margin-top: 36px; }
+.offscreen { position: fixed; left: -9999px; top: 0; width: 1px; height: 1px; opacity: 0; }
+
 [hidden] { display: none !important; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -232,6 +287,12 @@ footer { margin-top: 48px; font-size: 15px; color: var(--muted); border-top: 1px
         <legend>Что делаешь</legend>
         <div class="scenarios" id="scenarios"></div>
       </fieldset>
+    </section>
+
+    <section class="panel">
+      <h2 class="flush">Что хочешь понять до оплаты?</h2>
+      <p class="hint flush">Раз ты здесь, тебя что-то зацепило. Это нормально. Ответим по тем же текстам</p>
+      <div class="qchips" id="qchips" role="group" aria-label="Вопросы до оплаты"></div>
     </section>
 
     <section class="panel">
@@ -261,7 +322,30 @@ footer { margin-top: 48px; font-size: 15px; color: var(--muted); border-top: 1px
 
   <!-- ── Результат ────────────────────────────────────────────── -->
   <section id="screen-result" hidden>
-    <div class="hero">
+    <section class="panel">
+      <h2 class="flush">Ответы</h2>
+      <p class="hint flush" id="answers-prelim" hidden></p>
+      <div id="answers"></div>
+    </section>
+
+    <section class="panel">
+      <h2 class="flush">Что говорит в пользу</h2>
+      <div id="in-favor"></div>
+    </section>
+
+    <section class="panel">
+      <h2 class="flush">Спроси до оплаты</h2>
+      <ol class="seller" id="seller"></ol>
+      <button type="button" class="btn" id="copy-seller">Скопировать вопросы</button>
+      <p class="hint copy-status" id="copy-status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel" id="more-panel">
+      <h2 class="flush">Ещё мы заметили</h2>
+      <div id="more"></div>
+    </section>
+
+    <div class="hero result-type">
       <canvas id="type-canvas" width="560" height="560" role="img" aria-label="Анимация типа поля"></canvas>
       <div>
         <h2 class="type-title" id="type-title"></h2>
@@ -324,6 +408,9 @@ footer { margin-top: 48px; font-size: 15px; color: var(--muted); border-top: 1px
   <footer>Разбор текстов, а не людей. Имена и ники не нужны и нигде не сохраняются.</footer>
 </div>
 
+<!-- Копия вопросов из engine/rubric.json: рубрика наружу не
+     публикуется. test/copy.test.mjs сверяет эту копию с рубрикой. -->
+<script type="application/json" id="questions-data">{"intro": "Здравствуйте! Перед оплатой хочу уточнить несколько вещей:", "questions": [{"id": "q_now", "text": "Почему решать нужно сегодня?", "default": true}, {"id": "q_promise", "text": "Что мне на самом деле обещают?", "default": true}, {"id": "q_fit", "text": "Сработает ли это для меня?", "default": false}, {"id": "q_check", "text": "Можно ли это проверить заранее?", "default": false}, {"id": "q_cost", "text": "Сколько это будет стоить в итоге?", "default": true}, {"id": "q_after", "text": "Смогу ли я потом без него?", "default": false}, {"id": "q_fail", "text": "Что будет, если не получится?", "default": false}]}</script>
 <script>
 (function () {
 'use strict';
@@ -346,6 +433,7 @@ var GENRES = [
 ];
 var WAIT_LINES = ['Считаем дедлайны', 'Ищем источники. Пока безуспешно', 'Сверяем цитаты с оригиналом', 'Взвешиваем обещания'];
 var GOOD_AXES = { verifiability: 1, integrity: 1, autonomy: 1 };
+var QDATA = JSON.parse(document.getElementById('questions-data').textContent);
 
 function $(id) { return document.getElementById(id); }
 function el(tag, cls, text) {
@@ -379,13 +467,30 @@ function track(type) {
 // ── Экран ввода ─────────────────────────────────────────────────
 var scenarioBox = $('scenarios');
 SCENARIOS.forEach(function (s, i) {
-  var label = el('label', 'scenario');
+  var label = el('label', i === 0 ? 'scenario' : 'scenario alt');
   var input = document.createElement('input');
   input.type = 'radio'; input.name = 'scenario'; input.value = s.key;
   if (i === 0) input.checked = true;
   label.appendChild(input);
   label.appendChild(document.createTextNode(s.label));
   scenarioBox.appendChild(label);
+});
+
+// ── Вопросы до оплаты ───────────────────────────────────────────
+// Порядок выбора и есть порядок ответов на экране результата.
+var picked = QDATA.questions.filter(function (q) { return q.default; }).map(function (q) { return q.id; });
+var chipsBox = $('qchips');
+QDATA.questions.forEach(function (q) {
+  var b = el('button', 'qchip', q.text);
+  b.type = 'button';
+  b.setAttribute('aria-pressed', picked.indexOf(q.id) !== -1 ? 'true' : 'false');
+  b.addEventListener('click', function () {
+    var i = picked.indexOf(q.id);
+    if (i === -1) picked.push(q.id); else picked.splice(i, 1);
+    b.setAttribute('aria-pressed', i === -1 ? 'true' : 'false');
+    refresh();
+  });
+  chipsBox.appendChild(b);
 });
 
 var blocksBox = $('blocks');
@@ -464,7 +569,8 @@ function refresh() {
   mt.classList.toggle('over', n > MAX_TEXTS);
 
   var hint = '';
-  if (chars < MIN_CHARS) hint = 'Нужно хотя бы 300 знаков';
+  if (!picked.length) hint = 'Выбери хотя бы один вопрос';
+  else if (chars < MIN_CHARS) hint = 'Нужно хотя бы 300 знаков';
   else if (chars > MAX_CHARS) hint = 'Больше 40 000 знаков, сократи';
   else if (n > MAX_TEXTS) hint = 'Больше 30 текстов, убери лишние';
   $('run-hint').textContent = hint;
@@ -519,7 +625,7 @@ $('run').addEventListener('click', async function () {
   var items = collect();
   var scenario = document.querySelector('input[name="scenario"]:checked').value;
   var texts = items.map(function (x, i) { return { id: 't' + (i + 1), genre: x.genre, text: x.text }; });
-  lastSubmitted = { scenario: scenario, texts: texts };
+  lastSubmitted = { scenario: scenario, texts: texts, questions: picked.slice() };
   $('input-error').textContent = '';
   startWaiting();
 
@@ -564,6 +670,8 @@ function showResult(r) {
   current = r;
   sentForThis = {};
   track('analysis');
+
+  renderAnswers(r);
 
   $('type-title').textContent = r.type.title;
   $('type-line').textContent = r.type.line;
@@ -672,6 +780,127 @@ function showResult(r) {
   game.reset(r);
   card.prepare(r);
 }
+
+// ── Ответы до оплаты ────────────────────────────────────────────
+// Всё содержимое приходит с сервера. Страница только раскладывает:
+// выбранные вопросы наверх в порядке выбора, остальные ниже.
+function findingOf(r, id) { return r.findings[Number(String(id).slice(1))]; }
+
+function quoteBlock(f) {
+  var q = el('blockquote', 'quote', '«' + f.quote + '»');
+  q.appendChild(el('span', 'quote-note', f.signal_label + ', ' + textLabel(f.text_id)));
+  return q;
+}
+
+function answerBlock(r, a, inSummary) {
+  var box = el('div', 'answer a' + a.alarm);
+  if (!inSummary) box.appendChild(el('h3', null, a.question));
+  box.appendChild(el('p', 'answer-text', a.text));
+  var meta = el('div', 'answer-meta');
+  if (!inSummary) meta.appendChild(el('span', 'answer-level', a.level_word));
+  meta.appendChild(el('span', null, 'подтверждений: ' + a.count));
+  var quotes = el('div');
+  quotes.hidden = true;
+  if (a.evidence.length) {
+    a.evidence.forEach(function (id) { var f = findingOf(r, id); if (f) quotes.appendChild(quoteBlock(f)); });
+    if (a.count > a.evidence.length) quotes.appendChild(el('p', 'hint flush', 'Показаны самые весомые ' + a.evidence.length + ' из ' + a.count));
+    var btn = el('button', 'link', a.evidence.length > 1 ? 'Цитаты' : 'Цитата');
+    btn.type = 'button';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.addEventListener('click', function () {
+      quotes.hidden = !quotes.hidden;
+      btn.setAttribute('aria-expanded', String(!quotes.hidden));
+      btn.textContent = quotes.hidden ? (a.evidence.length > 1 ? 'Цитаты' : 'Цитата') : 'Свернуть';
+      if (!quotes.hidden) track('answer_open');
+    });
+    meta.appendChild(btn);
+  }
+  box.appendChild(meta);
+  box.appendChild(quotes);
+  if (a.preliminary) box.appendChild(el('p', 'prelim', 'По такому объёму текстов ответ предварительный'));
+  if (a.ask_seller) {
+    var ask = el('p', 'ask');
+    ask.appendChild(el('i', null, 'Спроси продавца: '));
+    ask.appendChild(document.createTextNode(a.ask_seller));
+    box.appendChild(ask);
+  }
+  return box;
+}
+
+var sellerText = '';
+
+function renderAnswers(r) {
+  var chosen = (lastSubmitted && lastSubmitted.questions) || [];
+  var byId = {};
+  r.answers.forEach(function (a) { byId[a.id] = a; });
+
+  var prelim = $('answers-prelim');
+  prelim.hidden = r.confidence.level !== 0;
+  prelim.textContent = r.confidence.level === 0 ? 'Ответы предварительные: ' + r.confidence.reason + '.' : '';
+
+  var box = $('answers');
+  box.textContent = '';
+  chosen.forEach(function (id) { if (byId[id]) box.appendChild(answerBlock(r, byId[id])); });
+
+  var fav = $('in-favor');
+  fav.textContent = '';
+  if (r.in_favor.length) {
+    r.in_favor.forEach(function (id) { var f = findingOf(r, id); if (f) { var item = el('div', 'finding good'); item.appendChild(quoteBlock(f)); fav.appendChild(item); } });
+  } else {
+    fav.appendChild(el('p', 'flush', 'В текстах мы не нашли, что говорит в пользу. Это не значит, что этого нет: просто в текстах этого не видно'));
+  }
+
+  var list = $('seller');
+  list.textContent = '';
+  r.seller_questions.forEach(function (q) { list.appendChild(el('li', null, q)); });
+  sellerText = QDATA.intro + '\n' + r.seller_questions.map(function (q, i) { return (i + 1) + '. ' + q; }).join('\n');
+  $('copy-status').textContent = '';
+
+  var more = $('more');
+  more.textContent = '';
+  var rest = r.answers.filter(function (a) { return chosen.indexOf(a.id) === -1; });
+  $('more-panel').hidden = rest.length === 0;
+  rest.forEach(function (a) {
+    var d = el('details', 'more-item');
+    var sum = el('summary', 'a' + a.alarm);
+    var head = el('span', 'more-head');
+    head.appendChild(el('span', null, a.question));
+    head.appendChild(el('span', 'answer-level', a.level_word));
+    sum.appendChild(head);
+    d.appendChild(sum);
+    d.appendChild(answerBlock(r, a, true));
+    d.addEventListener('toggle', function () { if (d.open) track('answer_open'); });
+    more.appendChild(d);
+  });
+}
+
+// Копирование: буфер обмена, а если его нет (старый WebView, http),
+// выделение текста во временном поле.
+function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+  return new Promise(function (resolve, reject) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.className = 'offscreen';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    ta.remove();
+    if (ok) resolve(); else reject(new Error('copy'));
+  });
+}
+
+$('copy-seller').addEventListener('click', function () {
+  if (!sellerText) return;
+  copyText(sellerText).then(function () {
+    $('copy-status').textContent = 'Скопировано. Можно вставлять в чат с продавцом';
+    track('seller_questions_copied');
+  }, function () {
+    $('copy-status').textContent = 'Не получилось скопировать. Выдели вопросы выше и скопируй вручную';
+  });
+});
 
 $('advocate').addEventListener('toggle', function () { if (this.open) track('advocate_open'); });
 $('again').addEventListener('click', function () {
