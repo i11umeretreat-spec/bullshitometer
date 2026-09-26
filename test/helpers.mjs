@@ -85,6 +85,7 @@ export function makeHarness(opts) {
     };
 
     const app = createApp({
+        packRoots: opts.packRoots,
         stores: stores,
         fetch: fakeFetch,
         env: env,

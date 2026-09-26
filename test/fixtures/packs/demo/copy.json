@@ -1,0 +1,33 @@
+{
+  "input": {
+    "questions_title": "Что проверить?",
+    "questions_sub": "Игрушечная подпись",
+    "questions_aria": "Вопросы игрушки",
+    "questions_none": "Отметь вопрос",
+    "texts_hint": "Вставь заметки. Разделитель {sep} режет пачку.",
+    "text_placeholder": "Заметка",
+    "wait_lines": ["Смотрим"]
+  },
+  "result": {
+    "answers_title": "Ответы игрушки",
+    "answers_prelim": "Предварительно: ",
+    "answer_prelim": "Предварительный ответ",
+    "answer_ask": "Спроси автора: ",
+    "in_favor_title": "Опора",
+    "in_favor_empty": "Опоры не нашли",
+    "seller_title": "Спроси автора",
+    "seller_intro": "Привет! Есть вопросы:",
+    "seller_copy": "Скопировать",
+    "seller_copied": "Готово",
+    "seller_copy_failed": "Не вышло",
+    "more_title": "Остальное",
+    "axes_title": "Две оси"
+  },
+  "card": { "counters": [{ "key": "boasts", "forms": ["похвала", "похвалы", "похвал"] }] },
+  "types": {
+    "loud": { "title": "Громко", "line": "Много шума.", "check": "Где примеры" },
+    "calm": { "title": "Тихо", "line": "Спокойно.", "check": "Что внутри" }
+  },
+  "advocate": { "sale_share": "Много объявлений.", "templates": "Есть копии.", "always": "Мы не видели оригинал." },
+  "unknowns": ["Что за пределами заметок"]
+}

@@ -5,9 +5,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { loadRubric } from '../engine/assets.mjs';
+import { loadPack } from '../engine/packs.mjs';
 
-const rubric = loadRubric();
+const pack = loadPack('courses');
+const rubric = pack.rubric;
+const copy = pack.copy;
 const banned = rubric.banned_words;
 
 function findBanned(text) {
@@ -26,9 +28,13 @@ test('index.html: ни одного запретного слова', () => {
 
 test('строки типов, адвоката и «чего мы не знаем» из рубрики: ни одного запретного слова', () => {
     const visible = [];
-    for (const t of rubric.types) visible.push(t.title, t.line, t.check);
-    for (const k of Object.keys(rubric.advocate)) visible.push(rubric.advocate[k]);
-    for (const u of rubric.unknowns) visible.push(u);
+    // Все строки copy.json пакета: типы, адвокат, «чего мы не знаем»,
+    // строки входа и результата.
+    (function walk(x) {
+        if (typeof x === 'string') visible.push(x);
+        else if (Array.isArray(x)) x.forEach(walk);
+        else if (x && typeof x === 'object') Object.keys(x).forEach(function (k) { walk(x[k]); });
+    })(copy);
     for (const s of Object.values(rubric.signals)) visible.push(s.label);
     for (const a of Object.values(rubric.axes)) visible.push(a.label);
     assert.deepEqual(findBanned(visible.join('\n')), []);
@@ -69,6 +75,6 @@ test('копия вопросов на странице совпадает с р
     const m = html.match(/<script type="application\/json" id="questions-data">([\s\S]*?)<\/script>/);
     assert.ok(m, 'нет блока questions-data');
     const data = JSON.parse(m[1]);
-    assert.equal(data.intro, rubric.seller_intro);
+    assert.equal(data.intro, copy.result.seller_intro);
     assert.deepEqual(data.questions, rubric.questions.map(function (q) { return { id: q.id, text: q.text, default: q.default }; }));
 });

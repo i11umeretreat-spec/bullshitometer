@@ -16,7 +16,7 @@
 // сайте: чего нет в тексте дословно, то выбрасывается.
 
 import { readFileSync } from 'node:fs';
-import { loadRubric, loadPrompt } from '../engine/assets.mjs';
+import { loadPack } from '../engine/packs.mjs';
 import { buildSystem, textsXml, toolSchema } from '../engine/model.mjs';
 import { verifyFindings, buildTextsMeta } from '../engine/verify.mjs';
 import { score } from '../engine/score.mjs';
@@ -52,7 +52,7 @@ function extractJson(raw) {
 }
 
 function promptFor(input, rubric) {
-    const system = buildSystem(rubric, loadPrompt().template);
+    const system = buildSystem(rubric, loadPack('courses').prompt.template);
     const schema = toolSchema(rubric).input_schema;
     return [
         system,
@@ -88,7 +88,8 @@ function report(result, checked) {
 
 function main(argv) {
     const mode = argv[0];
-    const rubric = loadRubric();
+    const pack = loadPack('courses');
+    const rubric = pack.rubric;
 
     if (mode === 'prompt' && argv[1]) {
         process.stdout.write(promptFor(loadInput(argv[1], rubric), rubric) + '\n');
@@ -109,6 +110,7 @@ function main(argv) {
             texts_meta: buildTextsMeta(input.texts, templateLike, rubric),
             scenario: input.scenario,
             rubric: rubric,
+            copy: pack.copy,
             dropped_quotes: checked.dropped,
             raw_findings: checked.raw,
         });

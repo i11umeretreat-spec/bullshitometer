@@ -31,7 +31,7 @@ import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { randomUUID, randomBytes } from 'node:crypto';
 import { createApp } from '../engine/app.mjs';
 import { memoryStore } from '../engine/store.mjs';
-import { loadRubric, loadPrompt } from '../engine/assets.mjs';
+import { loadPack } from '../engine/packs.mjs';
 import { MODEL, effortFrom } from '../engine/model.mjs';
 
 const SITE = 'http://eval.local';
@@ -184,7 +184,8 @@ async function main() {
         return 2;
     }
 
-    const rubric = loadRubric();
+    const pack = loadPack('courses');
+    const rubric = pack.rubric;
     const fixtures = loadFixtures();
     const env = {
         URL: SITE,
@@ -336,7 +337,7 @@ async function main() {
 
     const report = {
         at: new Date().toISOString(),
-        versions: { rubric: rubric.version, prompt: loadPrompt().version, model: MODEL, effort: effortFrom(env) },
+        versions: { pack: pack.id + '@' + pack.version, rubric: rubric.version, prompt: pack.prompt.version, model: MODEL, effort: effortFrom(env) },
         summary: summary,
         timing: timing,
         rows: rows,

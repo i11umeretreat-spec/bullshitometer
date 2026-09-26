@@ -1,0 +1,28 @@
+{
+  "id": "courses",
+  "version": "1",
+  "title": "Курсы и наставники",
+  "language": "ru",
+  "evidence": {
+    "kind": "quote"
+  },
+  "scenarios": [
+    {
+      "id": "course",
+      "label": "покупаю курс",
+      "default": true
+    },
+    {
+      "id": "therapist",
+      "label": "выбираю психолога"
+    },
+    {
+      "id": "teacher",
+      "label": "читаю наставника"
+    },
+    {
+      "id": "ad",
+      "label": "проверяю рекламу"
+    }
+  ]
+}

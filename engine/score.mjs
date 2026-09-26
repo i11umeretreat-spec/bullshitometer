@@ -1,7 +1,8 @@
 // Подсчёт. Чистая функция: одинаковый вход всегда даёт одинаковый
 // выход, без случайности, без часов и без сети. Всё знание о весах,
-// порогах и типах лежит в rubric.json; здесь только его применение.
-// Новый сигнал это строка в рубрике, а не новая ветка в этом файле.
+// порогах и типах лежит в rubric.json пакета, строки для экрана в его
+// copy.json; здесь только их применение. Новый сигнал это строка в
+// рубрике, а не новая ветка в этом файле.
 
 function round(x, digits) {
     const p = Math.pow(10, digits);
@@ -95,6 +96,7 @@ function evalCondition(cond, ctx) {
 
 export function score(input) {
     const rubric = input.rubric;
+    const copy = input.copy;
     const scenario = input.scenario;
     const texts = input.texts_meta;
     const findings = input.findings || [];
@@ -240,12 +242,12 @@ export function score(input) {
             .sort(function (a, b) { return (Math.abs(b.c) - Math.abs(a.c)) || (textIndex.get(a.f.text_id) - textIndex.get(b.f.text_id)) || cmp(a.f.quote, b.f.quote); })[0];
         if (best && advocate.indexOf(best.f.alt_explanation) === -1) advocate.push(best.f.alt_explanation);
     }
-    if (stats.sale_share >= 0.5) advocate.push(rubric.advocate.sale_share);
-    if (nEff < texts.length) advocate.push(rubric.advocate.templates);
-    const advocateOut = advocate.slice(0, 4).concat([rubric.advocate.always]);
+    if (stats.sale_share >= 0.5) advocate.push(copy.advocate.sale_share);
+    if (nEff < texts.length) advocate.push(copy.advocate.templates);
+    const advocateOut = advocate.slice(0, 4).concat([copy.advocate.always]);
 
     // Шаг 8. Чего мы не знаем.
-    const unknowns = rubric.unknowns.concat(['Уверенность ' + confidence.label + ': ' + confidence.reason]);
+    const unknowns = copy.unknowns.concat(['Уверенность ' + confidence.label + ': ' + confidence.reason]);
 
     // Счётчики карточки.
     const counts = {};
@@ -254,7 +256,7 @@ export function score(input) {
     }
 
     return {
-        type: { key: typeRule.key, title: typeRule.title, line: typeRule.line, check: typeRule.check },
+        type: { key: typeRule.key, title: copy.types[typeRule.key].title, line: copy.types[typeRule.key].line, check: copy.types[typeRule.key].check },
         confidence: confidence,
         axes: axes,
         findings: scored.map(function (s) {

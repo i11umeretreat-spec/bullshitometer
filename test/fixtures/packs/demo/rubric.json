@@ -1,0 +1,49 @@
+{
+  "version": "demo-rubric-1",
+  "axes": {
+    "claims": { "label": "Громкость", "polarity": "neg", "k": 2 },
+    "proof":  { "label": "Опора",     "polarity": "pos", "k": 2 }
+  },
+  "signals": {
+    "boast": { "axis": "claims", "weight": 2,   "label": "хвастовство", "definition": "Автор хвалит сам себя без примеров." },
+    "hype":  { "axis": "claims", "weight": 1.5, "label": "шум",         "definition": "Восклицания вместо сведений." },
+    "cite":  { "axis": "proof",  "weight": 2,   "label": "ссылка",      "definition": "Названо, где проверить." }
+  },
+  "strength": { "1": 0.5, "2": 1, "3": 1.5 },
+  "modifiers": { "specific": 1 },
+  "genres": { "note": { "label": "заметка" }, "sale": { "label": "объявление" } },
+  "genre": {},
+  "scenario": { "look": {} },
+  "scenario_meta": { "look": { "order": ["claims", "proof"] } },
+  "cap_per_signal_per_text": 3,
+  "template_jaccard": 0.8,
+  "levels": [0.25, 0.6],
+  "level_labels": ["низкий", "средний", "высокий"],
+  "confidence": {
+    "low_if": { "n_eff_lt": 1, "words_lt": 5 },
+    "high_if": { "n_eff_gte": 3, "words_gte": 60, "sale_share_lte": 0.6 },
+    "dropped_share_gt": 0.3,
+    "labels": ["низкая", "средняя", "высокая"]
+  },
+  "counts": { "boasts": ["boast"] },
+  "types": [
+    { "key": "loud", "when": { "all": [{ "axis": "claims", "gte": 1 }] } },
+    { "key": "calm", "when": { "always": true } }
+  ],
+  "questions": [
+    {
+      "id": "q_proof",
+      "text": "Чем это подкреплено?",
+      "default": true,
+      "source": { "axis": "proof" },
+      "templates": {
+        "0": { "label": "почти не подкреплено", "text": "Подкрепления почти нет" },
+        "1": { "label": "кое-что подкреплено", "text": "Подкреплено местами: {n}" },
+        "2": { "label": "подкреплено", "text": "Подкреплено: {n}" }
+      },
+      "ask_seller": { "when": ["0"], "text": "Где это можно проверить?" }
+    }
+  ],
+  "seller_fallback": ["Первый общий вопрос?", "Второй общий вопрос?", "Третий общий вопрос?"],
+  "banned_words": []
+}

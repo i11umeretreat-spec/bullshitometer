@@ -5,11 +5,13 @@
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { loadRubric } from '../engine/assets.mjs';
+import { loadPack } from '../engine/packs.mjs';
 import { answers, normalizeSelection } from '../engine/answers.mjs';
 import { score } from '../engine/score.mjs';
 
-const rubric = loadRubric();
+const pack = loadPack('courses');
+const rubric = pack.rubric;
+const copy = pack.copy;
 const AXES = Object.keys(rubric.axes);
 
 // Результат подсчёта в той форме, в какой его отдаёт score(): оси с
@@ -175,7 +177,7 @@ test('на настоящем результате score(): каждая ссы�
     const r = score({
         findings: findings,
         texts_meta: texts.map(function (id, i) { return { id: id, genre: 'post', words: 400, cluster: i }; }),
-        scenario: 'course', rubric: rubric, dropped_quotes: 0, raw_findings: 4,
+        scenario: 'course', rubric: rubric, copy: copy, dropped_quotes: 0, raw_findings: 4,
     });
     const out = answers(r, rubric);
     for (const a of out.answers) {

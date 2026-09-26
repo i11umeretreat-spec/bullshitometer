@@ -70,10 +70,10 @@
     "ad":        { "pressure": 1.2 }
   },
   "scenario_meta": {
-    "course":    { "label": "покупаю курс",       "order": ["commerce", "promises", "pressure", "exclusivity", "verifiability", "integrity", "autonomy"] },
-    "therapist": { "label": "выбираю психолога",  "order": ["promises", "verifiability", "integrity", "pressure", "exclusivity", "autonomy", "commerce"] },
-    "teacher":   { "label": "читаю наставника",   "order": ["exclusivity", "autonomy", "integrity", "verifiability", "promises", "pressure", "commerce"] },
-    "ad":        { "label": "проверяю рекламу",   "order": ["pressure", "promises", "commerce", "verifiability", "exclusivity", "integrity", "autonomy"] }
+    "course":    { "order": ["commerce", "promises", "pressure", "exclusivity", "verifiability", "integrity", "autonomy"] },
+    "therapist": { "order": ["promises", "verifiability", "integrity", "pressure", "exclusivity", "autonomy", "commerce"] },
+    "teacher":   { "order": ["exclusivity", "autonomy", "integrity", "verifiability", "promises", "pressure", "commerce"] },
+    "ad":        { "order": ["pressure", "promises", "commerce", "verifiability", "exclusivity", "integrity", "autonomy"] }
   },
 
   "cap_per_signal_per_text": 3,
@@ -95,72 +95,44 @@
   },
 
   "types": [
-    { "key": "dark_matter", "title": "Тёмная материя",
-      "when": { "confidence_lte": 0 },
-      "line": "По этим текстам почти ничего не видно. Дай больше, или смирись, что словами это не ловится.",
-      "check": "Дать от 8 текстов разных жанров" },
+    { "key": "dark_matter",
+      "when": { "confidence_lte": 0 } },
 
-    { "key": "black_hole", "title": "Чёрная дыра",
+    { "key": "black_hole",
       "when": { "all": [
         { "axis": "exclusivity", "gte": 2 },
         { "axis": "autonomy", "lte": 0 },
         { "any": [ { "axis": "pressure", "gte": 1 }, { "axis": "commerce", "gte": 2 } ] }
-      ] },
-      "line": "Все дороги ведут внутрь, наружу информация не выходит.",
-      "check": "Можно ли уйти и что говорят ушедшие" },
+      ] } },
 
-    { "key": "pulsar", "title": "Пульсар",
+    { "key": "pulsar",
       "when": { "all": [
         { "signals": ["enemy_frame", "shame_doubt"], "count_gte": 3 },
         { "axis": "exclusivity", "gte": 1 }
-      ] },
-      "line": "Громко, в ритме и с врагами. Это заряд, а не масса.",
-      "check": "Что остаётся, если убрать врагов" },
+      ] } },
 
-    { "key": "feeder", "title": "Кормушка на орбите",
+    { "key": "feeder",
       "when": { "all": [
         { "axis": "commerce", "gte": 2 },
         { "axis": "autonomy", "lte": 0 }
-      ] },
-      "line": "Тебя не тащат, тебя кормят по кругу. Следующая ступень всегда главная.",
-      "check": "Сколько стоит весь путь, а не первая ступень" },
+      ] } },
 
-    { "key": "nebula", "title": "Туманность",
+    { "key": "nebula",
       "when": { "any": [
         { "all": [ { "axis": "verifiability", "lte": 0 }, { "axis": "promises", "gte": 1 } ] },
         { "signals": ["pseudo_science", "unfalsifiable", "vague_source"], "count_gte": 3 }
-      ] },
-      "line": "Красиво светится, почти ничего не весит. Проверить нечего.",
-      "check": "Какое утверждение можно проверить завтра" },
+      ] } },
 
-    { "key": "maneuver", "title": "Гравитационный манёвр",
+    { "key": "maneuver",
       "when": { "all": [
         { "axis": "autonomy", "gte": 1 },
         { "axis": "integrity", "gte": 1 },
         { "axis": "pressure", "lte": 1 },
         { "axis": "exclusivity", "lte": 0 }
-      ] },
-      "line": "Разгоняет и отпускает: говорит об ограничениях и отправляет к другим.",
-      "check": "Совпадают ли тексты с тем, что внутри курса" },
+      ] } },
 
-    { "key": "main_sequence", "title": "Звезда главной последовательности",
-      "when": { "always": true },
-      "line": "Обычная звезда: светит, продаёт в меру, чудес не обещает. Скучно, и это комплимент.",
-      "check": "Условия покупки и возврата" }
-  ],
-
-  "advocate": {
-    "sale_share": "Половина текстов продающие. Давление там в природе жанра.",
-    "templates": "Часть текстов написана под копирку. Считали их за один.",
-    "always": "Мы не видели лендинг, условия возврата и результаты учеников."
-  },
-
-  "unknowns": [
-    "Работает ли метод на самом деле",
-    "Какая у автора квалификация",
-    "Что в отзывах и судах",
-    "Кто писал тексты: автор или копирайтер",
-    "Какие условия покупки"
+    { "key": "main_sequence",
+      "when": { "always": true } }
   ],
 
   "questions": [
@@ -257,8 +229,6 @@
       "ask_seller": { "when": ["alarm", "silent"], "text": "Что происходит, если результата нет? Есть ли возврат и на каких условиях?" }
     }
   ],
-
-  "seller_intro": "Здравствуйте! Перед оплатой хочу уточнить несколько вещей:",
 
   "seller_fallback": [
     "Что входит в цену, а что оплачивается отдельно?",

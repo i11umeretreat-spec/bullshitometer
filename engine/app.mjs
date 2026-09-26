@@ -11,7 +11,7 @@
 // в две секунды. Синхронная функция Netlify живёт около 10 секунд, а
 // модели с размышлением на разметку даже трёх текстов нужно больше.
 
-import { loadRubric, loadPrompt } from './assets.mjs';
+import { loadPack, publicPack } from './packs.mjs';
 import { bump } from './store.mjs';
 import { score } from './score.mjs';
 import { answers, normalizeSelection } from './answers.mjs';
@@ -51,10 +51,9 @@ function messageFor(status, env, reason) {
     return 'Что-то сломалось на нашей стороне';
 }
 
+const DEFAULT_PACK = 'courses';
+
 export function createApp(deps) {
-    const rubric = loadRubric();
-    const prompt = loadPrompt();
-    const system = buildSystem(rubric, prompt.template);
     const env = deps.env;
     const stores = deps.stores;
 
@@ -83,7 +82,33 @@ export function createApp(deps) {
         return json(status, { error: status, message: messageFor(status, env, reason), reason: reason || undefined });
     }
 
-    const versions = { rubric: rubric.version, prompt: prompt.version, model: MODEL };
+    // Пакет домена по id. Всё, что зависит от домена (рубрика, промпт,
+    // строки), берётся отсюда; движок про домены ничего не знает.
+    // Пакет по умолчанию грузится сразу: сломанный пакет останавливает
+    // функцию на холодном старте, а не на первом разборе.
+    const packRoots = deps.packRoots || [];
+    const packs = new Map();
+    function packFor(domain) {
+        const id = domain === undefined || domain === null ? DEFAULT_PACK : domain;
+        let p;
+        try {
+            p = loadPack(id, { roots: packRoots });
+        } catch (e) {
+            if (e.code === 'PACK_NOT_FOUND') return null;
+            throw e;
+        }
+        if (!packs.has(p.id)) {
+            packs.set(p.id, {
+                pack: p,
+                rubric: p.rubric,
+                prompt: p.prompt,
+                system: buildSystem(p.rubric, p.prompt.template),
+                versions: { rubric: p.rubric.version, prompt: p.prompt.version, model: MODEL, pack: p.id + '@' + p.version },
+            });
+        }
+        return packs.get(p.id);
+    }
+    packFor(DEFAULT_PACK);
 
     // Без ключа разбор невозможен, а без соли хуже: String(undefined)
     // дал бы всем известную соль для хеша IP и подписи заданий.
@@ -91,31 +116,32 @@ export function createApp(deps) {
         return Boolean(env.ANTHROPIC_API_KEY) && Boolean(env.IP_SALT);
     }
 
-    // Ключ кэша: версия промпта, модель и пары «жанр, текст» в порядке
-    // ввода. Сценарий в ключ не входит: он влияет только на подсчёт,
-    // и смена сценария не должна стоить нового вызова модели.
-    function cacheKey(texts) {
-        return sha256(JSON.stringify([prompt.version, MODEL, texts.map(function (t) { return [t.genre, t.text]; })]));
+    // Ключ кэша: пакет, версия его промпта, модель и пары «жанр, текст»
+    // в порядке ввода. Сценарий в ключ не входит: он влияет только на
+    // подсчёт, и смена сценария не должна стоить нового вызова модели.
+    function cacheKey(ctx, texts) {
+        return sha256(JSON.stringify([ctx.pack.id, ctx.prompt.version, MODEL, texts.map(function (t) { return [t.genre, t.text]; })]));
     }
 
     // Разметка в кэше хранит тексты по порядковому номеру, а не по id:
     // одни и те же тексты с другими id должны попадать в тот же кэш.
     //
-    // Ответы на вопросы до оплаты считаются здесь же, поверх результата.
+    // Ответы на вопросы пакета считаются здесь же, поверх результата.
     // Выбор вопросов, как и сценарий, в ключ кэша не входит: от него
-    // зависит только порядок вопросов продавцу.
-    function scoreExtraction(ex, ids, scenario, questions) {
+    // зависит только порядок встречных вопросов.
+    function scoreExtraction(ctx, ex, ids, scenario, questions) {
         const findings = ex.findings.map(function (f) { return Object.assign({}, f, { text_id: ids[f.i] }); });
         const meta = ex.texts_meta.map(function (t) { return { id: ids[t.i], genre: t.genre, words: t.words, cluster: t.cluster }; });
         const result = score({
             findings: findings,
             texts_meta: meta,
             scenario: scenario,
-            rubric: rubric,
+            rubric: ctx.rubric,
+            copy: ctx.pack.copy,
             dropped_quotes: ex.dropped_quotes,
             raw_findings: ex.raw_findings,
         });
-        return Object.assign({ versions: versions }, result, answers(result, rubric, questions));
+        return Object.assign({ versions: ctx.versions }, result, answers(result, ctx.rubric, questions));
     }
 
     async function rateOk(prefix, ip, limit) {
@@ -145,10 +171,12 @@ export function createApp(deps) {
         let body;
         try { body = JSON.parse(raw); } catch (e) { return done(fail(400, 'тело запроса не JSON')); }
 
-        const checked = validateAnalyzeBody(body, rubric);
+        const ctx = packFor(body && typeof body === 'object' ? body.domain : undefined);
+        if (!ctx) return done(fail(400, 'неизвестный домен'));
+        const checked = validateAnalyzeBody(body, ctx.rubric);
         if (!checked.ok) return done(fail(checked.status, checked.reason));
         const input = checked.input;
-        const selection = normalizeSelection(body.questions, rubric);
+        const selection = normalizeSelection(body.questions, ctx.rubric);
         if (!selection.ok) return done(fail(400, selection.reason));
         texts = input.texts.length;
         chars = checked.chars;
@@ -156,13 +184,13 @@ export function createApp(deps) {
         const ip = clientIp(req, context);
         if (!(await rateOk('an', ip, numberEnv(env, 'HOURLY_PER_IP', 10)))) return done(fail(429));
 
-        const key = cacheKey(input.texts);
+        const key = cacheKey(ctx, input.texts);
         const ids = input.texts.map(function (t) { return t.id; });
 
         const ex = await stores.extractions.getJSON(key);
         if (ex && deps.now() - ex.created < CACHE_TTL_MS) {
             cache = 'HIT';
-            return done(json(200, scoreExtraction(ex, ids, input.scenario, selection.ids), { 'x-cache': 'HIT' }));
+            return done(json(200, scoreExtraction(ctx, ex, ids, input.scenario, selection.ids), { 'x-cache': 'HIT' }));
         }
 
         cache = 'MISS';
@@ -180,7 +208,7 @@ export function createApp(deps) {
         }
 
         const job = deps.uuid();
-        await stores.jobs.setJSON('job:' + job, { key: key, ids: ids, scenario: input.scenario, questions: selection.ids, status: 'pending', created: deps.now() });
+        await stores.jobs.setJSON('job:' + job, { key: key, domain: ctx.pack.id, ids: ids, scenario: input.scenario, questions: selection.ids, status: 'pending', created: deps.now() });
         await stores.jobs.setJSON('inflight:' + key, { job: job, created: deps.now() });
 
         // Не дозвонились до фоновой функции: задание сразу помечается
@@ -222,8 +250,9 @@ export function createApp(deps) {
         if (rec.status === 'error') return done(fail(rec.code || 502, rec.reason));
 
         const ex = await stores.extractions.getJSON(rec.key);
-        if (!ex) return done(fail(404));
-        return done(json(200, scoreExtraction(ex, rec.ids, rec.scenario, rec.questions), { 'x-cache': 'MISS' }), 'MISS');
+        const ctx = packFor(rec.domain);
+        if (!ex || !ctx) return done(fail(404));
+        return done(json(200, scoreExtraction(ctx, ex, rec.ids, rec.scenario, rec.questions), { 'x-cache': 'MISS' }), 'MISS');
     }
 
     // ── Фоновая разметка ────────────────────────────────────────────
@@ -250,7 +279,9 @@ export function createApp(deps) {
         // Тексты приходят в теле вызова и никуда не пишутся. Их хеш обязан
         // совпасть с заданием: подменить тексты по чужому номеру нельзя.
         const texts = Array.isArray(body.texts) ? body.texts : [];
-        if (cacheKey(texts) !== rec.key) return done(fail(403));
+        const ctx = packFor(rec.domain);
+        if (!ctx) return done(fail(404));
+        if (cacheKey(ctx, texts) !== rec.key) return done(fail(403));
 
         rec.status = 'running';
         await stores.jobs.setJSON('job:' + job, rec);
@@ -275,7 +306,7 @@ export function createApp(deps) {
                 fetch: deps.fetch,
                 sleep: deps.sleep,
                 apiKey: env.ANTHROPIC_API_KEY,
-                body: buildRequest(batch, rubric, system, effort),
+                body: buildRequest(batch, ctx.rubric, ctx.system, effort),
                 onAttempt: function () { return bump(stores.counters, callsKey); },
             });
         }));
@@ -298,15 +329,15 @@ export function createApp(deps) {
             }
         }
 
-        const checked = verifyFindings(allFindings, texts, rubric);
-        const meta = buildTextsMeta(texts, templateLike, rubric);
+        const checked = verifyFindings(allFindings, texts, ctx.rubric);
+        const meta = buildTextsMeta(texts, templateLike, ctx.rubric);
         const index = new Map(texts.map(function (t, i) { return [t.id, i]; }));
 
         // В кэш идёт разметка: короткие цитаты, сигналы, объяснения и
         // обезличенные метаданные текстов. Самих текстов тут нет.
         await stores.extractions.setJSON(rec.key, {
             created: deps.now(),
-            versions: { prompt: prompt.version, model: MODEL },
+            versions: { pack: ctx.pack.id, prompt: ctx.prompt.version, model: MODEL },
             findings: checked.kept.map(function (f) {
                 const out = Object.assign({ i: index.get(f.text_id) }, f);
                 delete out.text_id;
@@ -341,5 +372,17 @@ export function createApp(deps) {
         return new Response(null, { status: 204, headers: { 'cache-control': 'no-store' } });
     }
 
-    return { analyze: analyze, status: status, background: background, event: event, _httpError: httpError };
+    // ── GET /api/pack?domain=… ──────────────────────────────────────
+    // Публичная часть пакета для страницы: тексты, сценарии, жанры,
+    // вопросы. Весов и промпта в ней нет. Меняется только с деплоем,
+    // поэтому браузеру можно держать её час.
+    async function pack(req) {
+        if (req.method !== 'GET') return fail(405);
+        const domain = new URL(req.url).searchParams.get('domain');
+        const ctx = packFor(domain === null || domain === '' ? undefined : domain);
+        if (!ctx) return fail(400, 'неизвестный домен');
+        return json(200, publicPack(ctx.pack), { 'cache-control': 'public, max-age=3600' });
+    }
+
+    return { analyze: analyze, status: status, background: background, event: event, pack: pack, _httpError: httpError };
 }

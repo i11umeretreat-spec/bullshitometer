@@ -6,11 +6,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
-import { loadRubric } from '../engine/assets.mjs';
+import { loadPack } from '../engine/packs.mjs';
 import { validateAnalyzeBody } from '../engine/limits.mjs';
 import { countWords } from '../engine/verify.mjs';
 
-const rubric = loadRubric();
+const pack = loadPack('courses');
+const rubric = pack.rubric;
+const copy = pack.copy;
 const dir = new URL('../fixtures/', import.meta.url);
 const files = readdirSync(dir).filter(function (f) { return f.endsWith('.json'); }).sort();
 const fixtures = files.map(function (f) { return JSON.parse(readFileSync(new URL(f, dir), 'utf8')); });

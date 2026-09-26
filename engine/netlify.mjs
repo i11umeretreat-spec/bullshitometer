@@ -6,6 +6,11 @@ import { getStore } from '@netlify/blobs';
 import { randomUUID } from 'node:crypto';
 import { createApp } from './app.mjs';
 import { blobStore } from './store.mjs';
+import { loadPack } from './packs.mjs';
+
+// Пакет по умолчанию грузится при импорте, то есть на холодном старте:
+// сломанный пакет роняет функцию сразу и с понятной ошибкой в логе.
+loadPack('courses');
 
 let app = null;
 
