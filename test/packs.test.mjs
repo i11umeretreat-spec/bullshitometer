@@ -45,7 +45,7 @@ test('публичная часть: тексты, сценарии, жанры 
     assert.deepEqual(pub.copy, p.copy);
     assert.deepEqual(pub.scenarios, p.scenarios);
     assert.deepEqual(pub.questions, p.rubric.questions.map(function (q) { return { id: q.id, text: q.text, default: q.default }; }));
-    assert.deepEqual(pub.genres.map(function (g) { return g.id; }), Object.keys(p.rubric.genres));
+    assert.deepEqual(pub.genres.map(function (g) { return g.id; }), ['post', 'sale', 'lecture', 'answer', 'personal'], 'порядок интерфейса из pack.json');
     const raw = JSON.stringify(pub);
     for (const secret of ['"weight"', '"definition"', '"when"', '"source"', '"ask_seller"', '"override"', '"levels"', 'prompt-version', '{{SIGNALS}}']) {
         assert.equal(raw.indexOf(secret), -1, secret);
@@ -85,6 +85,7 @@ const CASES = [
     ['b-copy-type', 'copy.json', 'types.loud', function (f) { delete f['copy.json'].types.loud; }],
     ['b-evidence', 'pack.json', 'evidence.kind', function (f) { f['pack.json'].evidence.kind = 'measure'; }],
     ['b-scenario', 'pack.json', 'scenarios', function (f) { f['pack.json'].scenarios[0].id = 'other'; }],
+    ['b-genres', 'pack.json', 'genres', function (f) { f['pack.json'].genres = ['note']; }],
     ['b-counter', 'copy.json', 'card.counters', function (f) { f['copy.json'].card.counters[0].key = 'nope'; }],
 ];
 

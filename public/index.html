@@ -106,7 +106,7 @@ button, select, textarea, input { font: inherit; color: inherit; }
 fieldset { border: none; padding: 0; margin: 0; min-width: 0; }
 legend { font-size: 16px; color: var(--muted); padding: 0; margin-bottom: 8px; }
 .scenarios { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-/* «покупаю курс» главный сценарий среза: своя строка, остальные во
+/* Сценарий по умолчанию (в пакете он первый): своя строка, остальные во
    второй. Трём сценариям в одну строку на телефоне не хватает места
    на кружок радиокнопки: выбор у них виден рамкой, кружок скрыт
    только визуально и остаётся радиокнопкой для клавиатуры. */
@@ -123,7 +123,7 @@ legend { font-size: 16px; color: var(--muted); padding: 0; margin-bottom: 8px; }
 .scenario input { width: 20px; height: 20px; margin: 0; accent-color: var(--expand); flex: none; }
 .scenario:has(input:checked) { border-color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, transparent); }
 
-/* Вопросы до оплаты: обычные кнопки с aria-pressed. Отметка рисуется
+/* Вопросы пакета: обычные кнопки с aria-pressed. Отметка рисуется
    рамкой, а не символом, чтобы совпадать по толщине с остальным. */
 .qchips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .qchip {
@@ -236,7 +236,7 @@ footer { margin-top: 48px; font-size: 15px; color: var(--muted); border-top: 1px
 .flush { margin-top: 0; }
 .actions .flush { margin: 0; }
 
-/* ── Ответы до оплаты ─────────────────────────────────────────── */
+/* ── Ответы на вопросы ────────────────────────────────────────── */
 .answer { border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent); padding: 14px 0 12px; }
 .answer:first-child { border-top: none; padding-top: 4px; }
 .answer h3 { font-size: 19px; }
@@ -290,14 +290,14 @@ ol.seller li { margin: 6px 0; }
     </section>
 
     <section class="panel">
-      <h2 class="flush">Что хочешь понять до оплаты?</h2>
-      <p class="hint flush">Раз ты здесь, тебя что-то зацепило. Это нормально. Ответим по тем же текстам</p>
-      <div class="qchips" id="qchips" role="group" aria-label="Вопросы до оплаты"></div>
+      <h2 class="flush" id="q-title">Вопросы</h2>
+      <p class="hint flush" id="q-sub"></p>
+      <div class="qchips" id="qchips" role="group" aria-label="Вопросы"></div>
     </section>
 
     <section class="panel">
       <h2 class="flush">Тексты</h2>
-      <p class="hint">Вставь публичные посты, анонсы, расшифровки. Можно пачкой: строка из трёх дефисов <span class="mono">---</span> разделит её на отдельные тексты.</p>
+      <p class="hint" id="texts-hint">Вставь тексты. Можно пачкой: строка из трёх дефисов <span class="mono">---</span> разделит её на отдельные тексты.</p>
       <div id="blocks"></div>
       <button type="button" class="link" id="add-block">Добавить текст</button>
 
@@ -317,31 +317,31 @@ ol.seller li { margin: 6px 0; }
   <!-- ── Ожидание ─────────────────────────────────────────────── -->
   <section id="screen-wait" class="waiting" hidden aria-live="polite">
     <canvas id="wait-canvas" width="280" height="280" aria-hidden="true"></canvas>
-    <p class="wait-line" id="wait-line">Считаем дедлайны</p>
+    <p class="wait-line" id="wait-line"></p>
   </section>
 
   <!-- ── Результат ────────────────────────────────────────────── -->
   <section id="screen-result" hidden>
     <section class="panel">
-      <h2 class="flush">Ответы</h2>
+      <h2 class="flush" id="answers-title">Ответы</h2>
       <p class="hint flush" id="answers-prelim" hidden></p>
       <div id="answers"></div>
     </section>
 
     <section class="panel">
-      <h2 class="flush">Что говорит в пользу</h2>
+      <h2 class="flush" id="in-favor-title"></h2>
       <div id="in-favor"></div>
     </section>
 
     <section class="panel">
-      <h2 class="flush">Спроси до оплаты</h2>
+      <h2 class="flush" id="seller-title"></h2>
       <ol class="seller" id="seller"></ol>
-      <button type="button" class="btn" id="copy-seller">Скопировать вопросы</button>
+      <button type="button" class="btn" id="copy-seller">Скопировать</button>
       <p class="hint copy-status" id="copy-status" aria-live="polite"></p>
     </section>
 
     <section class="panel" id="more-panel">
-      <h2 class="flush">Ещё мы заметили</h2>
+      <h2 class="flush" id="more-title"></h2>
       <div id="more"></div>
     </section>
 
@@ -356,7 +356,7 @@ ol.seller li { margin: 6px 0; }
     <p class="confidence">Уверенность: <b id="conf-level"></b>. <span id="conf-reason"></span></p>
 
     <div class="panel">
-      <h2 class="flush">Семь осей</h2>
+      <h2 class="flush" id="axes-title">Оси</h2>
       <div id="axes"></div>
     </div>
 
@@ -408,9 +408,6 @@ ol.seller li { margin: 6px 0; }
   <footer>Разбор текстов, а не людей. Имена и ники не нужны и нигде не сохраняются.</footer>
 </div>
 
-<!-- Копия вопросов из engine/rubric.json: рубрика наружу не
-     публикуется. test/copy.test.mjs сверяет эту копию с рубрикой. -->
-<script type="application/json" id="questions-data">{"intro": "Здравствуйте! Перед оплатой хочу уточнить несколько вещей:", "questions": [{"id": "q_now", "text": "Почему решать нужно сегодня?", "default": true}, {"id": "q_promise", "text": "Что мне на самом деле обещают?", "default": true}, {"id": "q_fit", "text": "Сработает ли это для меня?", "default": false}, {"id": "q_check", "text": "Можно ли это проверить заранее?", "default": false}, {"id": "q_cost", "text": "Сколько это будет стоить в итоге?", "default": true}, {"id": "q_after", "text": "Смогу ли я потом без него?", "default": false}, {"id": "q_fail", "text": "Что будет, если не получится?", "default": false}]}</script>
 <script>
 (function () {
 'use strict';
@@ -418,22 +415,15 @@ ol.seller li { margin: 6px 0; }
 // ── Константы и справочники ─────────────────────────────────────
 var MAX_CHARS = 40000, MIN_CHARS = 300, MAX_TEXTS = 30;
 
-var SCENARIOS = [
-  { key: 'course', label: 'покупаю курс' },
-  { key: 'therapist', label: 'выбираю психолога' },
-  { key: 'teacher', label: 'читаю наставника' },
-  { key: 'ad', label: 'проверяю рекламу' }
-];
-var GENRES = [
-  { key: 'post', label: 'пост' },
-  { key: 'sale', label: 'продажа или анонс' },
-  { key: 'lecture', label: 'лекция или расшифровка' },
-  { key: 'answer', label: 'ответ на вопрос' },
-  { key: 'personal', label: 'личное' }
-];
-var WAIT_LINES = ['Считаем дедлайны', 'Ищем источники. Пока безуспешно', 'Сверяем цитаты с оригиналом', 'Взвешиваем обещания'];
-var GOOD_AXES = { verifiability: 1, integrity: 1, autonomy: 1 };
-var QDATA = JSON.parse(document.getElementById('questions-data').textContent);
+// Всё, что говорит про домен, приходит из пакета (/api/pack): сценарии,
+// жанры, вопросы и строки. Пакет выбирается параметром ?domain=, по
+// умолчанию сервер отдаёт свой пакет по умолчанию.
+var PACK = null;
+var COPY = null;
+var DOMAIN = (function () {
+  var m = /[?&]domain=([a-z0-9-]+)/.exec(location.search);
+  return m ? m[1] : '';
+})();
 
 function $(id) { return document.getElementById(id); }
 function el(tag, cls, text) {
@@ -466,21 +456,27 @@ function track(type) {
 
 // ── Экран ввода ─────────────────────────────────────────────────
 var scenarioBox = $('scenarios');
-SCENARIOS.forEach(function (s, i) {
-  var label = el('label', i === 0 ? 'scenario' : 'scenario alt');
-  var input = document.createElement('input');
-  input.type = 'radio'; input.name = 'scenario'; input.value = s.key;
-  if (i === 0) input.checked = true;
-  label.appendChild(input);
-  label.appendChild(document.createTextNode(s.label));
-  scenarioBox.appendChild(label);
-});
+function renderScenarios() {
+  // Сценарий по умолчанию идёт первым: у него своя строка.
+  var list = PACK.scenarios.filter(function (s) { return s.default; }).concat(PACK.scenarios.filter(function (s) { return !s.default; }));
+  list.forEach(function (s, i) {
+    var label = el('label', i === 0 ? 'scenario' : 'scenario alt');
+    var input = document.createElement('input');
+    input.type = 'radio'; input.name = 'scenario'; input.value = s.id;
+    if (i === 0) input.checked = true;
+    label.appendChild(input);
+    label.appendChild(document.createTextNode(s.label));
+    scenarioBox.appendChild(label);
+  });
+}
 
-// ── Вопросы до оплаты ───────────────────────────────────────────
+// ── Вопросы пакета ──────────────────────────────────────────────
 // Порядок выбора и есть порядок ответов на экране результата.
-var picked = QDATA.questions.filter(function (q) { return q.default; }).map(function (q) { return q.id; });
+var picked = [];
 var chipsBox = $('qchips');
-QDATA.questions.forEach(function (q) {
+function renderChips() {
+picked = PACK.questions.filter(function (q) { return q.default; }).map(function (q) { return q.id; });
+PACK.questions.forEach(function (q) {
   var b = el('button', 'qchip', q.text);
   b.type = 'button';
   b.setAttribute('aria-pressed', picked.indexOf(q.id) !== -1 ? 'true' : 'false');
@@ -492,6 +488,7 @@ QDATA.questions.forEach(function (q) {
   });
   chipsBox.appendChild(b);
 });
+}
 
 var blocksBox = $('blocks');
 
@@ -501,12 +498,12 @@ function makeBlock(text, genre) {
   var num = el('span', 'block-num');
   var sel = document.createElement('select');
   sel.setAttribute('aria-label', 'Жанр текста');
-  GENRES.forEach(function (g) {
+  PACK.genres.forEach(function (g) {
     var o = document.createElement('option');
-    o.value = g.key; o.textContent = g.label;
+    o.value = g.id; o.textContent = g.label;
     sel.appendChild(o);
   });
-  sel.value = genre || 'post';
+  sel.value = genre || PACK.genres[0].id;
   var rm = el('button', 'link', 'Убрать');
   rm.type = 'button';
   rm.addEventListener('click', function () {
@@ -517,7 +514,7 @@ function makeBlock(text, genre) {
 
   var ta = document.createElement('textarea');
   ta.setAttribute('aria-label', 'Текст');
-  ta.placeholder = 'Текст поста, анонса или расшифровки';
+  ta.placeholder = COPY.input.text_placeholder;
   ta.value = text || '';
   ta.addEventListener('input', function () { splitIfNeeded(b); refresh(); });
 
@@ -569,7 +566,8 @@ function refresh() {
   mt.classList.toggle('over', n > MAX_TEXTS);
 
   var hint = '';
-  if (!picked.length) hint = 'Выбери хотя бы один вопрос';
+  if (!PACK) hint = ' ';
+  else if (!picked.length) hint = COPY.input.questions_none;
   else if (chars < MIN_CHARS) hint = 'Нужно хотя бы 300 знаков';
   else if (chars > MAX_CHARS) hint = 'Больше 40 000 знаков, сократи';
   else if (n > MAX_TEXTS) hint = 'Больше 30 текстов, убери лишние';
@@ -579,14 +577,49 @@ function refresh() {
 }
 
 $('add-block').addEventListener('click', function () {
-  var nb = makeBlock('', 'post');
+  if (!PACK) return;
+  var nb = makeBlock('', PACK.genres[0].id);
   blocksBox.appendChild(nb);
   nb.querySelector('textarea').focus();
   refresh();
 });
 
-blocksBox.appendChild(makeBlock('', 'post'));
+// Строки пакета в разметку. Подсказка к полю текста держит разделитель
+// {sep}: на его место встаёт моноширинное «---» оболочки.
+function applyCopy() {
+  var ci = COPY.input, cr = COPY.result;
+  $('q-title').textContent = ci.questions_title;
+  $('q-sub').textContent = ci.questions_sub;
+  chipsBox.setAttribute('aria-label', ci.questions_aria);
+  var hint = $('texts-hint');
+  hint.textContent = '';
+  ci.texts_hint.split('{sep}').forEach(function (part, i) {
+    if (i > 0) hint.appendChild(el('span', 'mono', '---'));
+    hint.appendChild(document.createTextNode(part));
+  });
+  $('answers-title').textContent = cr.answers_title;
+  $('in-favor-title').textContent = cr.in_favor_title;
+  $('seller-title').textContent = cr.seller_title;
+  $('copy-seller').textContent = cr.seller_copy;
+  $('more-title').textContent = cr.more_title;
+  $('axes-title').textContent = cr.axes_title;
+}
+
 refresh();
+fetch('/api/pack' + (DOMAIN ? '?domain=' + DOMAIN : '')).then(function (res) {
+  if (!res.ok) throw new Error('pack ' + res.status);
+  return res.json();
+}).then(function (p) {
+  PACK = p;
+  COPY = p.copy;
+  applyCopy();
+  renderScenarios();
+  renderChips();
+  blocksBox.appendChild(makeBlock('', PACK.genres[0].id));
+  refresh();
+}).catch(function () {
+  $('input-error').textContent = 'Не получилось загрузить страницу. Обнови её';
+});
 
 // ── Экраны ──────────────────────────────────────────────────────
 function show(id) {
@@ -598,11 +631,12 @@ var waitTimer = null;
 function startWaiting() {
   show('screen-wait');
   var i = 0;
-  $('wait-line').textContent = WAIT_LINES[0];
+  var lines = COPY.input.wait_lines;
+  $('wait-line').textContent = lines[0];
   clearInterval(waitTimer);
   waitTimer = setInterval(function () {
-    i = (i + 1) % WAIT_LINES.length;
-    $('wait-line').textContent = WAIT_LINES[i];
+    i = (i + 1) % lines.length;
+    $('wait-line').textContent = lines[i];
   }, 3500);
   scene.start($('wait-canvas'), 'dark_matter', { size: 280 });
 }
@@ -625,7 +659,7 @@ $('run').addEventListener('click', async function () {
   var items = collect();
   var scenario = document.querySelector('input[name="scenario"]:checked').value;
   var texts = items.map(function (x, i) { return { id: 't' + (i + 1), genre: x.genre, text: x.text }; });
-  lastSubmitted = { scenario: scenario, texts: texts, questions: picked.slice() };
+  lastSubmitted = { domain: PACK.id, scenario: scenario, texts: texts, questions: picked.slice() };
   $('input-error').textContent = '';
   startWaiting();
 
@@ -661,7 +695,7 @@ var current = null;
 function textLabel(id) {
   var i = parseInt(String(id).slice(1), 10);
   var t = lastSubmitted && lastSubmitted.texts[i - 1];
-  var g = t && GENRES.filter(function (x) { return x.key === t.genre; })[0];
+  var g = t && PACK.genres.filter(function (x) { return x.id === t.genre; })[0];
   return 'текст ' + i + (g ? ', ' + g.label : '');
 }
 
@@ -702,6 +736,8 @@ function showResult(r) {
   var box = $('findings');
   box.textContent = '';
   if (!r.findings.length) box.appendChild(el('p', 'hint', 'Модель не нашла ни одного приёма из списка. Так тоже бывает.'));
+  var good = {};
+  r.axes.forEach(function (a) { if (a.polarity === 'pos') good[a.key] = 1; });
   r.axes.forEach(function (a) {
     var list = r.findings.filter(function (f) { return f.axis === a.key; });
     if (!list.length) return;
@@ -717,8 +753,8 @@ function showResult(r) {
     g.appendChild(el('h3', null, a.label));
     order.forEach(function (sig) {
       var grp = bySignal[sig];
-      var good = GOOD_AXES[a.key] && grp.items[0].points > 0;
-      var item = el('div', 'finding' + (good ? ' good' : ''));
+      var isGood = good[a.key] && grp.items[0].points > 0;
+      var item = el('div', 'finding' + (isGood ? ' good' : ''));
       var row = el('div', 'finding-row');
       var left = el('div');
       left.appendChild(el('div', 'finding-sig', grp.label));
@@ -781,7 +817,7 @@ function showResult(r) {
   card.prepare(r);
 }
 
-// ── Ответы до оплаты ────────────────────────────────────────────
+// ── Ответы на вопросы ───────────────────────────────────────────
 // Всё содержимое приходит с сервера. Страница только раскладывает:
 // выбранные вопросы наверх в порядке выбора, остальные ниже.
 function findingOf(r, id) { return r.findings[Number(String(id).slice(1))]; }
@@ -817,10 +853,10 @@ function answerBlock(r, a, inSummary) {
   }
   box.appendChild(meta);
   box.appendChild(quotes);
-  if (a.preliminary) box.appendChild(el('p', 'prelim', 'По такому объёму текстов ответ предварительный'));
+  if (a.preliminary) box.appendChild(el('p', 'prelim', COPY.result.answer_prelim));
   if (a.ask_seller) {
     var ask = el('p', 'ask');
-    ask.appendChild(el('i', null, 'Спроси продавца: '));
+    ask.appendChild(el('i', null, COPY.result.answer_ask));
     ask.appendChild(document.createTextNode(a.ask_seller));
     box.appendChild(ask);
   }
@@ -836,7 +872,7 @@ function renderAnswers(r) {
 
   var prelim = $('answers-prelim');
   prelim.hidden = r.confidence.level !== 0;
-  prelim.textContent = r.confidence.level === 0 ? 'Ответы предварительные: ' + r.confidence.reason + '.' : '';
+  prelim.textContent = r.confidence.level === 0 ? COPY.result.answers_prelim + r.confidence.reason + '.' : '';
 
   var box = $('answers');
   box.textContent = '';
@@ -847,13 +883,13 @@ function renderAnswers(r) {
   if (r.in_favor.length) {
     r.in_favor.forEach(function (id) { var f = findingOf(r, id); if (f) { var item = el('div', 'finding good'); item.appendChild(quoteBlock(f)); fav.appendChild(item); } });
   } else {
-    fav.appendChild(el('p', 'flush', 'В текстах мы не нашли, что говорит в пользу. Это не значит, что этого нет: просто в текстах этого не видно'));
+    fav.appendChild(el('p', 'flush', COPY.result.in_favor_empty));
   }
 
   var list = $('seller');
   list.textContent = '';
   r.seller_questions.forEach(function (q) { list.appendChild(el('li', null, q)); });
-  sellerText = QDATA.intro + '\n' + r.seller_questions.map(function (q, i) { return (i + 1) + '. ' + q; }).join('\n');
+  sellerText = COPY.result.seller_intro + '\n' + r.seller_questions.map(function (q, i) { return (i + 1) + '. ' + q; }).join('\n');
   $('copy-status').textContent = '';
 
   var more = $('more');
@@ -895,10 +931,10 @@ function copyText(text) {
 $('copy-seller').addEventListener('click', function () {
   if (!sellerText) return;
   copyText(sellerText).then(function () {
-    $('copy-status').textContent = 'Скопировано. Можно вставлять в чат с продавцом';
+    $('copy-status').textContent = COPY.result.seller_copied;
     track('seller_questions_copied');
   }, function () {
-    $('copy-status').textContent = 'Не получилось скопировать. Выдели вопросы выше и скопируй вручную';
+    $('copy-status').textContent = COPY.result.seller_copy_failed;
   });
 });
 
@@ -1091,7 +1127,7 @@ var game = (function () {
     var horizon = type === 'black_hole' ? 22 : 8;
     var capture = type === 'feeder' ? 60 * (1 + spend) : 0;
     var speed = 55 + 90 * doubt;
-    var angle = doubt * 1.2;              // скепсис уводит с лобового курса на касательную
+    var angle = doubt * 1.2;              // скепсис уводит с лобовой траектории на касательную
     var x = -185, y = 0;
     var vx = speed * Math.cos(angle), vy = -speed * Math.sin(angle);
     var path = [[x, y]], outcome = null, v0 = speed;
@@ -1168,13 +1204,12 @@ var game = (function () {
 var card = (function () {
   var blob = null, file = null;
 
+  // Счётчики и формы слов задаёт пакет.
   function counterLines(r) {
-    var p = r.counts.promises, d = r.counts.deadlines, s = r.counts.sources;
-    return [
-      p + ' ' + plural(p, 'обещание', 'обещания', 'обещаний'),
-      d + ' ' + plural(d, 'дедлайн', 'дедлайна', 'дедлайнов'),
-      s + ' ' + plural(s, 'источник', 'источника', 'источников')
-    ];
+    return COPY.card.counters.map(function (c) {
+      var n = r.counts[c.key] || 0;
+      return n + ' ' + plural(n, c.forms[0], c.forms[1], c.forms[2]);
+    });
   }
 
   function wrapText(c, text, x, y, maxW, lineH) {

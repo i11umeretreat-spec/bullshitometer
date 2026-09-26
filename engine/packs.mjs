@@ -1,6 +1,7 @@
 // Доменные пакеты. Движок один, домен — папка с данными:
 //
-//   packs/<id>/pack.json    паспорт: id, версия, язык, вид подкрепления, сценарии
+//   packs/<id>/pack.json    паспорт: id, версия, язык, вид подкрепления,
+//                           порядок жанров, сценарии
 //   packs/<id>/rubric.json  сигналы, оси, веса, пороги, типы, вопросы
 //   packs/<id>/prompt.md    промпт разметки, первая строка «prompt-version: N»
 //   packs/<id>/copy.json    строки интерфейса, которые говорят про домен
@@ -113,6 +114,7 @@ function readPack(id, dir) {
         title: passport.title,
         language: passport.language,
         evidence: passport.evidence,
+        genres: passport.genres,
         scenarios: passport.scenarios,
         rubric: rubric,
         prompt: { version: m[1], template: template },
@@ -128,6 +130,12 @@ function checkPassport(p, id, rubric, fail) {
     for (const k of ['version', 'title', 'language']) if (!isStr(p[k])) fail(F, k, 'нужна непустая строка');
     if (!p.evidence || SUPPORTED_EVIDENCE.indexOf(p.evidence.kind) === -1) {
         fail(F, 'evidence.kind', '«' + (p.evidence && p.evidence.kind) + '» не поддерживается, движок умеет: ' + SUPPORTED_EVIDENCE.join(', '));
+    }
+    // Порядок жанров в интерфейсе, первый — по умолчанию. Набор тот же,
+    // что в рубрике: жанр без весов или вес без жанра — ошибка пакета.
+    const gWant = Object.keys(rubric.genres || {});
+    if (!Array.isArray(p.genres) || p.genres.slice().sort().join() !== gWant.slice().sort().join()) {
+        fail(F, 'genres', '[' + (p.genres || []).join(', ') + '] не совпадает с rubric.genres [' + gWant.join(', ') + ']');
     }
     if (!Array.isArray(p.scenarios) || p.scenarios.length === 0) fail(F, 'scenarios', 'нужен хотя бы один сценарий');
     const ids = p.scenarios.map(function (s) { return s.id; });
@@ -190,7 +198,7 @@ function checkRubric(r, fail) {
     });
     if (!(r.types[r.types.length - 1].when || {}).always) fail(F, 'types[' + (r.types.length - 1) + '].when', 'последний тип должен срабатывать всегда');
 
-    // Вопросы: источник ответа, шаблоны и условия вопроса продавцу.
+    // Вопросы: источник ответа, шаблоны и условия встречного вопроса.
     if (!Array.isArray(r.questions) || !r.questions.length) fail(F, 'questions', 'нет вопросов');
     const qids = new Set();
     r.questions.forEach(function (q, i) {
@@ -255,7 +263,7 @@ export function publicPack(p) {
         language: p.language,
         evidence: { kind: p.evidence.kind },
         scenarios: p.scenarios,
-        genres: Object.keys(p.rubric.genres).map(function (g) { return { id: g, label: p.rubric.genres[g].label }; }),
+        genres: p.genres.map(function (g) { return { id: g, label: p.rubric.genres[g].label }; }),
         questions: p.rubric.questions.map(function (q) { return { id: q.id, text: q.text, default: q.default }; }),
         copy: p.copy,
     };

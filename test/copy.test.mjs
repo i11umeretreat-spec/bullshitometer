@@ -70,11 +70,9 @@ test('вопросы продавцу звучат как вопросы: зак
     for (const a of asks) assert.match(a, /\?$/, a);
 });
 
-test('копия вопросов на странице совпадает с рубрикой: id, тексты, выбор по умолчанию, вступление', () => {
+test('страница не держит копий пакета: вопросы, сценарии и строки приходят из /api/pack', () => {
     const html = readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
-    const m = html.match(/<script type="application\/json" id="questions-data">([\s\S]*?)<\/script>/);
-    assert.ok(m, 'нет блока questions-data');
-    const data = JSON.parse(m[1]);
-    assert.equal(data.intro, copy.result.seller_intro);
-    assert.deepEqual(data.questions, rubric.questions.map(function (q) { return { id: q.id, text: q.text, default: q.default }; }));
+    assert.equal(html.indexOf('questions-data'), -1);
+    assert.ok(html.indexOf("fetch('/api/pack'") !== -1);
+    for (const q of rubric.questions) assert.equal(html.indexOf(q.text), -1, q.text);
 });

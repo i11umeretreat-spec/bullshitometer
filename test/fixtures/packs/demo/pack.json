@@ -3,8 +3,18 @@
   "version": "demo-1",
   "title": "Игрушечный пакет для тестов",
   "language": "ru",
-  "evidence": { "kind": "quote" },
+  "evidence": {
+    "kind": "quote"
+  },
+  "genres": [
+    "note",
+    "sale"
+  ],
   "scenarios": [
-    { "id": "look", "label": "просто смотрю", "default": true }
+    {
+      "id": "look",
+      "label": "просто смотрю",
+      "default": true
+    }
   ]
 }

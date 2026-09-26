@@ -6,6 +6,13 @@
   "evidence": {
     "kind": "quote"
   },
+  "genres": [
+    "post",
+    "sale",
+    "lecture",
+    "answer",
+    "personal"
+  ],
   "scenarios": [
     {
       "id": "course",
