@@ -28,7 +28,7 @@ let rubricCache = null;
 let promptCache = null;
 
 export function loadRubric() {
-    if (!rubricCache) rubricCache = JSON.parse(readFileSync(find('engine/rubric.json'), 'utf8'));
+    if (!rubricCache) rubricCache = JSON.parse(readFileSync(find('packs/courses/rubric.json'), 'utf8'));
     return rubricCache;
 }
 
@@ -37,10 +37,10 @@ export function loadRubric() {
 // разметки жить ещё 30 дней.
 export function loadPrompt() {
     if (!promptCache) {
-        const raw = readFileSync(find('prompts/extract.md'), 'utf8');
+        const raw = readFileSync(find('packs/courses/prompt.md'), 'utf8');
         const first = raw.split('\n', 1)[0];
         const m = /^prompt-version:\s*(\S+)/.exec(first);
-        if (!m) throw new Error('prompts/extract.md: первая строка должна быть «prompt-version: N»');
+        if (!m) throw new Error('packs/courses/prompt.md: первая строка должна быть «prompt-version: N»');
         promptCache = { version: m[1], template: raw.slice(first.length + 1).trim() };
     }
     return promptCache;

@@ -35,7 +35,7 @@ test('строки типов, адвоката и «чего мы не знае
 });
 
 test('промпт разметки тоже чистый: модель не должна подхватить эти слова', () => {
-    const prompt = readFileSync(new URL('../prompts/extract.md', import.meta.url), 'utf8');
+    const prompt = readFileSync(new URL('../packs/courses/prompt.md', import.meta.url), 'utf8');
     assert.deepEqual(findBanned(prompt), []);
 });
 
