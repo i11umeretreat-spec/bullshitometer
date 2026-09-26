@@ -1,0 +1,1152 @@
+{
+  "default": {
+    "type": {
+      "key": "main_sequence",
+      "title": "Звезда главной последовательности",
+      "line": "Обычная звезда: светит, продаёт в меру, чудес не обещает. Скучно, и это комплимент.",
+      "check": "Условия покупки и возврата"
+    },
+    "confidence": {
+      "level": 1,
+      "label": "средняя",
+      "reason": "10 текстов, 3 из них продающие"
+    },
+    "axes": [
+      {
+        "key": "commerce",
+        "label": "Коммерция",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.232,
+        "raw": 1.06,
+        "multiplier": 1.2,
+        "top": [
+          {
+            "signal": "price_ladder",
+            "label": "ступени",
+            "points": 0.58
+          },
+          {
+            "signal": "upsell",
+            "label": "допродажа",
+            "points": 0.36
+          },
+          {
+            "signal": "vague_social_proof",
+            "label": "непроверяемые масштабы",
+            "points": 0.12
+          }
+        ]
+      },
+      {
+        "key": "promises",
+        "label": "Обещания",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.113,
+        "raw": 0.48,
+        "multiplier": 1.2,
+        "top": [
+          {
+            "signal": "outcome_promise",
+            "label": "обещание результата",
+            "points": 0.48
+          }
+        ]
+      },
+      {
+        "key": "pressure",
+        "label": "Давление",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.181,
+        "raw": 0.8,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "urgency",
+            "label": "дедлайн",
+            "points": 0.4
+          },
+          {
+            "signal": "shame_doubt",
+            "label": "стыдит за сомнения",
+            "points": 0.3
+          },
+          {
+            "signal": "scarcity",
+            "label": "дефицит",
+            "points": 0.1
+          }
+        ]
+      },
+      {
+        "key": "exclusivity",
+        "label": "Эксклюзивность",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      },
+      {
+        "key": "verifiability",
+        "label": "Проверяемость",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      },
+      {
+        "key": "integrity",
+        "label": "Добросовестность",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.154,
+        "raw": 0.5,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "conditions_stated",
+            "label": "названы условия",
+            "points": 0.3
+          },
+          {
+            "signal": "limitation_stated",
+            "label": "названы ограничения",
+            "points": 0.2
+          }
+        ]
+      },
+      {
+        "key": "autonomy",
+        "label": "Автономия",
+        "polarity": "pos",
+        "level": 1,
+        "level_label": "средний",
+        "v": 0.259,
+        "raw": 0.9,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "referral",
+            "label": "отправляет к другим",
+            "points": 0.4
+          },
+          {
+            "signal": "open_method",
+            "label": "метод открыт",
+            "points": 0.3
+          },
+          {
+            "signal": "verification_invite",
+            "label": "предлагает проверить",
+            "points": 0.2
+          }
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "text_id": "t1",
+        "quote": "В программе видео каждой тренировки, чат группы и разбор техники по видео раз в неделю.",
+        "signal": "conditions_stated",
+        "signal_label": "названы условия",
+        "axis": "integrity",
+        "axis_label": "Добросовестность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t1",
+        "quote": "Открыт набор в осенний поток «Сильная спина».",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.4,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t1",
+        "quote": "Стоимость 6 900 рублей, до пятницы действует ранняя цена 5 900.",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "Самое простое упражнение: ягодичный мостик.",
+        "signal": "open_method",
+        "signal_label": "метод открыт",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Сегодня короткая тренировка на пятнадцать минут, если нет времени на полную.",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "По минуте на каждое упражнение, между ними тридцать секунд отдыха, два круга.",
+        "signal": "open_method",
+        "signal_label": "метод открыт",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Если боль острая или появилась недавно, сначала к врачу, не ко мне.",
+        "signal": "limitation_stated",
+        "signal_label": "названы ограничения",
+        "axis": "integrity",
+        "axis_label": "Добросовестность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Если боль острая или появилась недавно, сначала к врачу, не ко мне.",
+        "signal": "referral",
+        "signal_label": "отправляет к другим",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Если сомневаетесь, посмотрите бесплатную неделю тренировок на моём канале и решите, нравится ли Вам формат.",
+        "signal": "shame_doubt",
+        "signal_label": "стыдит за сомнения",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 3,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Если сомневаетесь, посмотрите бесплатную неделю тренировок на моём канале и решите, нравится ли Вам формат.",
+        "signal": "verification_invite",
+        "signal_label": "предлагает проверить",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Напоминаю: до пятницы ранняя цена на «Сильную спину».",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "После пятницы курс не исчезнет, просто будет стоить на тысячу больше.",
+        "signal": "vague_social_proof",
+        "signal_label": "непроверяемые масштабы",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t6",
+        "quote": "Начинала в обычном фитнес-клубе, потом ушла в онлайн, когда родился сын и стало неудобно ездить.",
+        "signal": "upsell",
+        "signal_label": "допродажа",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Это и есть нормальный результат за шесть недель.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Отзыв Ольги после прошлого потока: «Шесть недель назад я не могла отжаться ни разу, сейчас делаю пять от пола.",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Для тех, кто прошёл «Сильную спину»: следующий курс «Сильные ноги» стартует в ноябре.",
+        "signal": "upsell",
+        "signal_label": "допродажа",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "В «Сильных ногах» будет больше работы с гантелями и отдельный блок про растяжку, по просьбам прошлого потока.",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.4,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Места в группе ограничены чатом, поэтому запись открою сначала для выпускниц.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 6",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Я не составляю меню и не советую добавки.",
+        "signal": "referral",
+        "signal_label": "отправляет к другим",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Вопрос: сколько нужно заниматься, чтобы увидеть результат?",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Если заниматься раз в неделю, прогресс будет, но медленный.",
+        "signal": "conditions_stated",
+        "signal_label": "названы условия",
+        "axis": "integrity",
+        "axis_label": "Добросовестность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      }
+    ],
+    "counts": {
+      "promises": 2,
+      "deadlines": 4,
+      "sources": 0
+    },
+    "advocate": [
+      "Мы не видели лендинг, условия возврата и результаты учеников."
+    ],
+    "unknowns": [
+      "Работает ли метод на самом деле",
+      "Какая у автора квалификация",
+      "Что в отзывах и судах",
+      "Кто писал тексты: автор или копирайтер",
+      "Какие условия покупки",
+      "Уверенность средняя: 10 текстов, 3 из них продающие"
+    ],
+    "stats": {
+      "n": 10,
+      "n_eff": 10,
+      "words": 818,
+      "sale_share": 0.3,
+      "dropped_quotes": 0
+    },
+    "answers": [
+      {
+        "id": "q_now",
+        "question": "Почему решать нужно сегодня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "почти не торопят",
+        "text": "Тебя почти не торопят: сроки и «последние места» почти не встречаются. Можно спокойно подумать",
+        "count": 5,
+        "evidence": [
+          "f8",
+          "f4",
+          "f2"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_promise",
+        "question": "Что мне на самом деле обещают?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "обещаний почти нет",
+        "text": "Конкретных обещаний почти нет. Тогда стоит спросить, что именно ты получишь",
+        "count": 2,
+        "evidence": [
+          "f13",
+          "f19"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_fit",
+        "question": "Сработает ли это для меня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "почти не сказано, кому не подойдёт",
+        "text": "Почти нигде не сказано, кому это не подойдёт. Когда подходит всем, сложно понять, подходит ли тебе",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Для кого эта программа не подходит?",
+        "preliminary": false
+      },
+      {
+        "id": "q_check",
+        "question": "Можно ли это проверить заранее?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "проверить почти нечего",
+        "text": "Проверить почти нечего: источников мало или утверждения устроены так, что их не опровергнуть",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "На какие источники или исследования вы опираетесь? Можно ссылки?",
+        "preliminary": false
+      },
+      {
+        "id": "q_cost",
+        "question": "Сколько это будет стоить в итоге?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "лестницы почти не видно",
+        "text": "Признаков лестницы допродаж и скрытых условий почти не видно",
+        "count": 6,
+        "evidence": [
+          "f14",
+          "f12",
+          "f15"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_after",
+        "question": "Смогу ли я потом без него?",
+        "template": "1",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "кое-где учат без автора",
+        "text": "Кое-где тебя учат обходиться без автора: 5",
+        "count": 5,
+        "evidence": [
+          "f7",
+          "f9",
+          "f18"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_fail",
+        "question": "Что будет, если не получится?",
+        "template": "alarm",
+        "level": 2,
+        "alarm": 2,
+        "level_word": "виноват покупатель",
+        "text": "На случай неудачи в текстах уже готово объяснение, и виноват в нём покупатель: 1",
+        "count": 1,
+        "evidence": [
+          "f8"
+        ],
+        "ask_seller": "Что происходит, если результата нет? Есть ли возврат и на каких условиях?",
+        "preliminary": false
+      }
+    ],
+    "seller_questions": [
+      "Для кого эта программа не подходит?",
+      "На какие источники или исследования вы опираетесь? Можно ссылки?",
+      "Что происходит, если результата нет? Есть ли возврат и на каких условиях?"
+    ],
+    "in_favor": [
+      "f6",
+      "f7",
+      "f9"
+    ]
+  },
+  "reversed": {
+    "type": {
+      "key": "main_sequence",
+      "title": "Звезда главной последовательности",
+      "line": "Обычная звезда: светит, продаёт в меру, чудес не обещает. Скучно, и это комплимент.",
+      "check": "Условия покупки и возврата"
+    },
+    "confidence": {
+      "level": 1,
+      "label": "средняя",
+      "reason": "10 текстов, 3 из них продающие"
+    },
+    "axes": [
+      {
+        "key": "commerce",
+        "label": "Коммерция",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.232,
+        "raw": 1.06,
+        "multiplier": 1.2,
+        "top": [
+          {
+            "signal": "price_ladder",
+            "label": "ступени",
+            "points": 0.58
+          },
+          {
+            "signal": "upsell",
+            "label": "допродажа",
+            "points": 0.36
+          },
+          {
+            "signal": "vague_social_proof",
+            "label": "непроверяемые масштабы",
+            "points": 0.12
+          }
+        ]
+      },
+      {
+        "key": "promises",
+        "label": "Обещания",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.113,
+        "raw": 0.48,
+        "multiplier": 1.2,
+        "top": [
+          {
+            "signal": "outcome_promise",
+            "label": "обещание результата",
+            "points": 0.48
+          }
+        ]
+      },
+      {
+        "key": "pressure",
+        "label": "Давление",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.181,
+        "raw": 0.8,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "urgency",
+            "label": "дедлайн",
+            "points": 0.4
+          },
+          {
+            "signal": "shame_doubt",
+            "label": "стыдит за сомнения",
+            "points": 0.3
+          },
+          {
+            "signal": "scarcity",
+            "label": "дефицит",
+            "points": 0.1
+          }
+        ]
+      },
+      {
+        "key": "exclusivity",
+        "label": "Эксклюзивность",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      },
+      {
+        "key": "verifiability",
+        "label": "Проверяемость",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      },
+      {
+        "key": "integrity",
+        "label": "Добросовестность",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.154,
+        "raw": 0.5,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "conditions_stated",
+            "label": "названы условия",
+            "points": 0.3
+          },
+          {
+            "signal": "limitation_stated",
+            "label": "названы ограничения",
+            "points": 0.2
+          }
+        ]
+      },
+      {
+        "key": "autonomy",
+        "label": "Автономия",
+        "polarity": "pos",
+        "level": 1,
+        "level_label": "средний",
+        "v": 0.259,
+        "raw": 0.9,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "referral",
+            "label": "отправляет к другим",
+            "points": 0.4
+          },
+          {
+            "signal": "open_method",
+            "label": "метод открыт",
+            "points": 0.3
+          },
+          {
+            "signal": "verification_invite",
+            "label": "предлагает проверить",
+            "points": 0.2
+          }
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "text_id": "t1",
+        "quote": "В программе видео каждой тренировки, чат группы и разбор техники по видео раз в неделю.",
+        "signal": "conditions_stated",
+        "signal_label": "названы условия",
+        "axis": "integrity",
+        "axis_label": "Добросовестность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t1",
+        "quote": "Открыт набор в осенний поток «Сильная спина».",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.4,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t1",
+        "quote": "Стоимость 6 900 рублей, до пятницы действует ранняя цена 5 900.",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "Самое простое упражнение: ягодичный мостик.",
+        "signal": "open_method",
+        "signal_label": "метод открыт",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Сегодня короткая тренировка на пятнадцать минут, если нет времени на полную.",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "По минуте на каждое упражнение, между ними тридцать секунд отдыха, два круга.",
+        "signal": "open_method",
+        "signal_label": "метод открыт",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Если боль острая или появилась недавно, сначала к врачу, не ко мне.",
+        "signal": "limitation_stated",
+        "signal_label": "названы ограничения",
+        "axis": "integrity",
+        "axis_label": "Добросовестность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Если боль острая или появилась недавно, сначала к врачу, не ко мне.",
+        "signal": "referral",
+        "signal_label": "отправляет к другим",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Если сомневаетесь, посмотрите бесплатную неделю тренировок на моём канале и решите, нравится ли Вам формат.",
+        "signal": "shame_doubt",
+        "signal_label": "стыдит за сомнения",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 3,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Если сомневаетесь, посмотрите бесплатную неделю тренировок на моём канале и решите, нравится ли Вам формат.",
+        "signal": "verification_invite",
+        "signal_label": "предлагает проверить",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Напоминаю: до пятницы ранняя цена на «Сильную спину».",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "После пятницы курс не исчезнет, просто будет стоить на тысячу больше.",
+        "signal": "vague_social_proof",
+        "signal_label": "непроверяемые масштабы",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t6",
+        "quote": "Начинала в обычном фитнес-клубе, потом ушла в онлайн, когда родился сын и стало неудобно ездить.",
+        "signal": "upsell",
+        "signal_label": "допродажа",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Это и есть нормальный результат за шесть недель.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Отзыв Ольги после прошлого потока: «Шесть недель назад я не могла отжаться ни разу, сейчас делаю пять от пола.",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Для тех, кто прошёл «Сильную спину»: следующий курс «Сильные ноги» стартует в ноябре.",
+        "signal": "upsell",
+        "signal_label": "допродажа",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "В «Сильных ногах» будет больше работы с гантелями и отдельный блок про растяжку, по просьбам прошлого потока.",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.4,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Места в группе ограничены чатом, поэтому запись открою сначала для выпускниц.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 6",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Я не составляю меню и не советую добавки.",
+        "signal": "referral",
+        "signal_label": "отправляет к другим",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Вопрос: сколько нужно заниматься, чтобы увидеть результат?",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Если заниматься раз в неделю, прогресс будет, но медленный.",
+        "signal": "conditions_stated",
+        "signal_label": "названы условия",
+        "axis": "integrity",
+        "axis_label": "Добросовестность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      }
+    ],
+    "counts": {
+      "promises": 2,
+      "deadlines": 4,
+      "sources": 0
+    },
+    "advocate": [
+      "Мы не видели лендинг, условия возврата и результаты учеников."
+    ],
+    "unknowns": [
+      "Работает ли метод на самом деле",
+      "Какая у автора квалификация",
+      "Что в отзывах и судах",
+      "Кто писал тексты: автор или копирайтер",
+      "Какие условия покупки",
+      "Уверенность средняя: 10 текстов, 3 из них продающие"
+    ],
+    "stats": {
+      "n": 10,
+      "n_eff": 10,
+      "words": 818,
+      "sale_share": 0.3,
+      "dropped_quotes": 0
+    },
+    "answers": [
+      {
+        "id": "q_now",
+        "question": "Почему решать нужно сегодня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "почти не торопят",
+        "text": "Тебя почти не торопят: сроки и «последние места» почти не встречаются. Можно спокойно подумать",
+        "count": 5,
+        "evidence": [
+          "f8",
+          "f4",
+          "f2"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_promise",
+        "question": "Что мне на самом деле обещают?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "обещаний почти нет",
+        "text": "Конкретных обещаний почти нет. Тогда стоит спросить, что именно ты получишь",
+        "count": 2,
+        "evidence": [
+          "f13",
+          "f19"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_fit",
+        "question": "Сработает ли это для меня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "почти не сказано, кому не подойдёт",
+        "text": "Почти нигде не сказано, кому это не подойдёт. Когда подходит всем, сложно понять, подходит ли тебе",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Для кого эта программа не подходит?",
+        "preliminary": false
+      },
+      {
+        "id": "q_check",
+        "question": "Можно ли это проверить заранее?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "проверить почти нечего",
+        "text": "Проверить почти нечего: источников мало или утверждения устроены так, что их не опровергнуть",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "На какие источники или исследования вы опираетесь? Можно ссылки?",
+        "preliminary": false
+      },
+      {
+        "id": "q_cost",
+        "question": "Сколько это будет стоить в итоге?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "лестницы почти не видно",
+        "text": "Признаков лестницы допродаж и скрытых условий почти не видно",
+        "count": 6,
+        "evidence": [
+          "f14",
+          "f12",
+          "f15"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_after",
+        "question": "Смогу ли я потом без него?",
+        "template": "1",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "кое-где учат без автора",
+        "text": "Кое-где тебя учат обходиться без автора: 5",
+        "count": 5,
+        "evidence": [
+          "f7",
+          "f9",
+          "f18"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_fail",
+        "question": "Что будет, если не получится?",
+        "template": "alarm",
+        "level": 2,
+        "alarm": 2,
+        "level_word": "виноват покупатель",
+        "text": "На случай неудачи в текстах уже готово объяснение, и виноват в нём покупатель: 1",
+        "count": 1,
+        "evidence": [
+          "f8"
+        ],
+        "ask_seller": "Что происходит, если результата нет? Есть ли возврат и на каких условиях?",
+        "preliminary": false
+      }
+    ],
+    "seller_questions": [
+      "Что происходит, если результата нет? Есть ли возврат и на каких условиях?",
+      "На какие источники или исследования вы опираетесь? Можно ссылки?",
+      "Для кого эта программа не подходит?"
+    ],
+    "in_favor": [
+      "f6",
+      "f7",
+      "f9"
+    ]
+  }
+}

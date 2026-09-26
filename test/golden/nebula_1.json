@@ -1,0 +1,1438 @@
+{
+  "default": {
+    "type": {
+      "key": "nebula",
+      "title": "Туманность",
+      "line": "Красиво светится, почти ничего не весит. Проверить нечего.",
+      "check": "Какое утверждение можно проверить завтра"
+    },
+    "confidence": {
+      "level": 1,
+      "label": "средняя",
+      "reason": "10 текстов, 1 из них продающий"
+    },
+    "axes": [
+      {
+        "key": "promises",
+        "label": "Обещания",
+        "polarity": "neg",
+        "level": 1,
+        "level_label": "средний",
+        "v": 0.528,
+        "raw": 3,
+        "multiplier": 1.5,
+        "top": [
+          {
+            "signal": "miracle_claim",
+            "label": "чудо",
+            "points": 2.4
+          },
+          {
+            "signal": "outcome_promise",
+            "label": "обещание результата",
+            "points": 0.6
+          }
+        ]
+      },
+      {
+        "key": "verifiability",
+        "label": "Проверяемость",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": -3.38,
+        "multiplier": 1.3,
+        "top": [
+          {
+            "signal": "pseudo_science",
+            "label": "псевдонаука",
+            "points": -2.34
+          },
+          {
+            "signal": "vague_source",
+            "label": "источник без имени",
+            "points": -1.04
+          }
+        ]
+      },
+      {
+        "key": "integrity",
+        "label": "Добросовестность",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      },
+      {
+        "key": "pressure",
+        "label": "Давление",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.161,
+        "raw": 0.7,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "scarcity",
+            "label": "дефицит",
+            "points": 0.4
+          },
+          {
+            "signal": "shame_doubt",
+            "label": "стыдит за сомнения",
+            "points": 0.3
+          }
+        ]
+      },
+      {
+        "key": "exclusivity",
+        "label": "Эксклюзивность",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.139,
+        "raw": 0.6,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "enemy_frame",
+            "label": "образ врага",
+            "points": 0.6
+          }
+        ]
+      },
+      {
+        "key": "autonomy",
+        "label": "Автономия",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.168,
+        "raw": 0.55,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "exit_ok",
+            "label": "уйти можно",
+            "points": 0.4
+          },
+          {
+            "signal": "open_method",
+            "label": "метод открыт",
+            "points": 0.15
+          }
+        ]
+      },
+      {
+        "key": "commerce",
+        "label": "Коммерция",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.118,
+        "raw": 0.5,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "vague_social_proof",
+            "label": "непроверяемые масштабы",
+            "points": 0.3
+          },
+          {
+            "signal": "price_ladder",
+            "label": "ступени",
+            "points": 0.2
+          }
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "text_id": "t1",
+        "quote": "Тело знает, как исцелиться, ему нужно только вернуть свою частоту.",
+        "signal": "miracle_claim",
+        "signal_label": "чудо",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 4,
+        "context_note": "фраза 7",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t1",
+        "quote": "Приходите почувствовать это сами.",
+        "signal": "exit_ok",
+        "signal_label": "уйти можно",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t1",
+        "quote": "Учёные уже доказали, что каждая клетка нашего тела излучает свою частоту.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t1",
+        "quote": "Учёные уже доказали, что каждая клетка нашего тела излучает свою частоту.",
+        "signal": "vague_source",
+        "signal_label": "источник без имени",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "Когда вы меняете свою внутреннюю частоту, вода в клетках перестраивается, и тело начинает восстанавливаться.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 7",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "Вода обладает памятью, это давно установлено исследованиями.",
+        "signal": "vague_source",
+        "signal_label": "источник без имени",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Тело не может исцелиться, пока душа держится за прошлое.",
+        "signal": "miracle_claim",
+        "signal_label": "чудо",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 4,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Чаще всего это обида, которую вы пока не готовы отпустить.",
+        "signal": "shame_doubt",
+        "signal_label": "стыдит за сомнения",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 3,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Если результата нет, значит, внутри ещё есть блок, который держит старую частоту.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Если результата нет, значит, внутри ещё есть блок, который держит старую частоту.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Когда вы слушаете эту частоту, ваше сердце начинает биться в унисон с землёй, клетки обновляются, а уровень энергии растёт.",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Исследования показывают, что медитация на определённых частотах меняет структуру ДНК.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Исследования показывают, что медитация на определённых частотах меняет структуру ДНК.",
+        "signal": "vague_source",
+        "signal_label": "источник без имени",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Современная наука наконец догоняет то, что древние практики знали тысячелетиями.",
+        "signal": "vague_social_proof",
+        "signal_label": "непроверяемые масштабы",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Десять лет назад мне поставили диагноз, после которого врачи не давали никаких гарантий.",
+        "signal": "miracle_claim",
+        "signal_label": "чудо",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 4,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Десять лет назад мне поставили диагноз, после которого врачи не давали никаких гарантий.",
+        "signal": "enemy_frame",
+        "signal_label": "образ врага",
+        "axis": "exclusivity",
+        "axis_label": "Эксклюзивность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Каждый день я работала со своей частотой, слушала звук, дышала, пила структурированную воду.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Через год анализы стали лучше, а через три от болезни не осталось и следа.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t6",
+        "quote": "Открыта запись на индивидуальные сеансы частотной настройки.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Врачи называют это ухудшением, а на самом деле это исцеление в процессе.",
+        "signal": "miracle_claim",
+        "signal_label": "чудо",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 4,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Врачи называют это ухудшением, а на самом деле это исцеление в процессе.",
+        "signal": "enemy_frame",
+        "signal_label": "образ врага",
+        "axis": "exclusivity",
+        "axis_label": "Эксклюзивность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Кто прошёл через это, знает, насколько сильным бывает результат.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Страх это низкая частота, примерно двадцать герц, если переводить на язык физики.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Исследования показывают, что всего двадцать минут на высокой частоте в день способны полностью перестроить эмоциональный фон за месяц.",
+        "signal": "vague_source",
+        "signal_label": "источник без имени",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 6",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Упражнение простое: закройте глаза, представьте золотой свет в районе сердца и дышите в него.",
+        "signal": "open_method",
+        "signal_label": "метод открыт",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 7",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Радость и любовь звучат на частотах в сотни раз выше.",
+        "signal": "vague_social_proof",
+        "signal_label": "непроверяемые масштабы",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Некоторые врачи поначалу удивляются, а потом признают, что анализы стали лучше.",
+        "signal": "enemy_frame",
+        "signal_label": "образ врага",
+        "axis": "exclusivity",
+        "axis_label": "Эксклюзивность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Когда частота тела восстанавливается, у организма просто пропадает потребность в химической поддержке.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Вопрос: «Можно ли совмещать ваши сеансы с приёмом лекарств?» Решение о лекарствах принимаете вы вместе с вашим врачом, я здесь не советчик.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Отзывы моих клиентов говорят сами за себя.",
+        "signal": "exit_ok",
+        "signal_label": "уйти можно",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Сотни людей по всему миру уже почувствовали на себе силу частотной настройки.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Сотни людей по всему миру уже почувствовали на себе силу частотной настройки.",
+        "signal": "vague_social_proof",
+        "signal_label": "непроверяемые масштабы",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      }
+    ],
+    "counts": {
+      "promises": 6,
+      "deadlines": 2,
+      "sources": 0
+    },
+    "advocate": [
+      "может быть честным описанием",
+      "Мы не видели лендинг, условия возврата и результаты учеников."
+    ],
+    "unknowns": [
+      "Работает ли метод на самом деле",
+      "Какая у автора квалификация",
+      "Что в отзывах и судах",
+      "Кто писал тексты: автор или копирайтер",
+      "Какие условия покупки",
+      "Уверенность средняя: 10 текстов, 1 из них продающий"
+    ],
+    "stats": {
+      "n": 10,
+      "n_eff": 10,
+      "words": 821,
+      "sale_share": 0.1,
+      "dropped_quotes": 0
+    },
+    "answers": [
+      {
+        "id": "q_now",
+        "question": "Почему решать нужно сегодня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "почти не торопят",
+        "text": "Тебя почти не торопят: сроки и «последние места» почти не встречаются. Можно спокойно подумать",
+        "count": 3,
+        "evidence": [
+          "f7",
+          "f17",
+          "f28"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_promise",
+        "question": "Что мне на самом деле обещают?",
+        "template": "1",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "обещания с условиями",
+        "text": "Обещаний 6, часть с условиями. Выпиши их: с ними потом можно будет сверить результат",
+        "count": 6,
+        "evidence": [
+          "f0",
+          "f6",
+          "f14"
+        ],
+        "ask_seller": "Что именно считается результатом и как его измеряют? Сколько участников его не получили?",
+        "preliminary": false
+      },
+      {
+        "id": "q_fit",
+        "question": "Сработает ли это для меня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "почти не сказано, кому не подойдёт",
+        "text": "Почти нигде не сказано, кому это не подойдёт. Когда подходит всем, сложно понять, подходит ли тебе",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Для кого эта программа не подходит?",
+        "preliminary": false
+      },
+      {
+        "id": "q_check",
+        "question": "Можно ли это проверить заранее?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "проверить почти нечего",
+        "text": "Проверить почти нечего: источников мало или утверждения устроены так, что их не опровергнуть",
+        "count": 13,
+        "evidence": [
+          "f2",
+          "f3",
+          "f4"
+        ],
+        "ask_seller": "На какие источники или исследования вы опираетесь? Можно ссылки?",
+        "preliminary": false
+      },
+      {
+        "id": "q_cost",
+        "question": "Сколько это будет стоить в итоге?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "лестницы почти не видно",
+        "text": "Признаков лестницы допродаж и скрытых условий почти не видно",
+        "count": 4,
+        "evidence": [
+          "f10",
+          "f13",
+          "f25"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_after",
+        "question": "Смогу ли я потом без него?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "тексты почти молчат",
+        "text": "Про самостоятельность после программы тексты почти молчат",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Что я смогу делать сам после программы, без вас?",
+        "preliminary": false
+      },
+      {
+        "id": "q_fail",
+        "question": "Что будет, если не получится?",
+        "template": "alarm",
+        "level": 2,
+        "alarm": 2,
+        "level_word": "виноват покупатель",
+        "text": "На случай неудачи в текстах уже готово объяснение, и виноват в нём покупатель: 1",
+        "count": 1,
+        "evidence": [
+          "f7"
+        ],
+        "ask_seller": "Что происходит, если результата нет? Есть ли возврат и на каких условиях?",
+        "preliminary": false
+      }
+    ],
+    "seller_questions": [
+      "Что именно считается результатом и как его измеряют? Сколько участников его не получили?",
+      "Для кого эта программа не подходит?",
+      "На какие источники или исследования вы опираетесь? Можно ссылки?",
+      "Что я смогу делать сам после программы, без вас?",
+      "Что происходит, если результата нет? Есть ли возврат и на каких условиях?"
+    ],
+    "in_favor": [
+      "f1",
+      "f29",
+      "f24"
+    ]
+  },
+  "reversed": {
+    "type": {
+      "key": "nebula",
+      "title": "Туманность",
+      "line": "Красиво светится, почти ничего не весит. Проверить нечего.",
+      "check": "Какое утверждение можно проверить завтра"
+    },
+    "confidence": {
+      "level": 1,
+      "label": "средняя",
+      "reason": "10 текстов, 1 из них продающий"
+    },
+    "axes": [
+      {
+        "key": "promises",
+        "label": "Обещания",
+        "polarity": "neg",
+        "level": 1,
+        "level_label": "средний",
+        "v": 0.528,
+        "raw": 3,
+        "multiplier": 1.5,
+        "top": [
+          {
+            "signal": "miracle_claim",
+            "label": "чудо",
+            "points": 2.4
+          },
+          {
+            "signal": "outcome_promise",
+            "label": "обещание результата",
+            "points": 0.6
+          }
+        ]
+      },
+      {
+        "key": "verifiability",
+        "label": "Проверяемость",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": -3.38,
+        "multiplier": 1.3,
+        "top": [
+          {
+            "signal": "pseudo_science",
+            "label": "псевдонаука",
+            "points": -2.34
+          },
+          {
+            "signal": "vague_source",
+            "label": "источник без имени",
+            "points": -1.04
+          }
+        ]
+      },
+      {
+        "key": "integrity",
+        "label": "Добросовестность",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      },
+      {
+        "key": "pressure",
+        "label": "Давление",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.161,
+        "raw": 0.7,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "scarcity",
+            "label": "дефицит",
+            "points": 0.4
+          },
+          {
+            "signal": "shame_doubt",
+            "label": "стыдит за сомнения",
+            "points": 0.3
+          }
+        ]
+      },
+      {
+        "key": "exclusivity",
+        "label": "Эксклюзивность",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.139,
+        "raw": 0.6,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "enemy_frame",
+            "label": "образ врага",
+            "points": 0.6
+          }
+        ]
+      },
+      {
+        "key": "autonomy",
+        "label": "Автономия",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.168,
+        "raw": 0.55,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "exit_ok",
+            "label": "уйти можно",
+            "points": 0.4
+          },
+          {
+            "signal": "open_method",
+            "label": "метод открыт",
+            "points": 0.15
+          }
+        ]
+      },
+      {
+        "key": "commerce",
+        "label": "Коммерция",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.118,
+        "raw": 0.5,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "vague_social_proof",
+            "label": "непроверяемые масштабы",
+            "points": 0.3
+          },
+          {
+            "signal": "price_ladder",
+            "label": "ступени",
+            "points": 0.2
+          }
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "text_id": "t1",
+        "quote": "Тело знает, как исцелиться, ему нужно только вернуть свою частоту.",
+        "signal": "miracle_claim",
+        "signal_label": "чудо",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 4,
+        "context_note": "фраза 7",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t1",
+        "quote": "Приходите почувствовать это сами.",
+        "signal": "exit_ok",
+        "signal_label": "уйти можно",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t1",
+        "quote": "Учёные уже доказали, что каждая клетка нашего тела излучает свою частоту.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t1",
+        "quote": "Учёные уже доказали, что каждая клетка нашего тела излучает свою частоту.",
+        "signal": "vague_source",
+        "signal_label": "источник без имени",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "Когда вы меняете свою внутреннюю частоту, вода в клетках перестраивается, и тело начинает восстанавливаться.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 7",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "Вода обладает памятью, это давно установлено исследованиями.",
+        "signal": "vague_source",
+        "signal_label": "источник без имени",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Тело не может исцелиться, пока душа держится за прошлое.",
+        "signal": "miracle_claim",
+        "signal_label": "чудо",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 4,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Чаще всего это обида, которую вы пока не готовы отпустить.",
+        "signal": "shame_doubt",
+        "signal_label": "стыдит за сомнения",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 3,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Если результата нет, значит, внутри ещё есть блок, который держит старую частоту.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Если результата нет, значит, внутри ещё есть блок, который держит старую частоту.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Когда вы слушаете эту частоту, ваше сердце начинает биться в унисон с землёй, клетки обновляются, а уровень энергии растёт.",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Исследования показывают, что медитация на определённых частотах меняет структуру ДНК.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Исследования показывают, что медитация на определённых частотах меняет структуру ДНК.",
+        "signal": "vague_source",
+        "signal_label": "источник без имени",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Современная наука наконец догоняет то, что древние практики знали тысячелетиями.",
+        "signal": "vague_social_proof",
+        "signal_label": "непроверяемые масштабы",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Десять лет назад мне поставили диагноз, после которого врачи не давали никаких гарантий.",
+        "signal": "miracle_claim",
+        "signal_label": "чудо",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 4,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Десять лет назад мне поставили диагноз, после которого врачи не давали никаких гарантий.",
+        "signal": "enemy_frame",
+        "signal_label": "образ врага",
+        "axis": "exclusivity",
+        "axis_label": "Эксклюзивность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Каждый день я работала со своей частотой, слушала звук, дышала, пила структурированную воду.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Через год анализы стали лучше, а через три от болезни не осталось и следа.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t6",
+        "quote": "Открыта запись на индивидуальные сеансы частотной настройки.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Врачи называют это ухудшением, а на самом деле это исцеление в процессе.",
+        "signal": "miracle_claim",
+        "signal_label": "чудо",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 4,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Врачи называют это ухудшением, а на самом деле это исцеление в процессе.",
+        "signal": "enemy_frame",
+        "signal_label": "образ врага",
+        "axis": "exclusivity",
+        "axis_label": "Эксклюзивность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Кто прошёл через это, знает, насколько сильным бывает результат.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Страх это низкая частота, примерно двадцать герц, если переводить на язык физики.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Исследования показывают, что всего двадцать минут на высокой частоте в день способны полностью перестроить эмоциональный фон за месяц.",
+        "signal": "vague_source",
+        "signal_label": "источник без имени",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 6",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Упражнение простое: закройте глаза, представьте золотой свет в районе сердца и дышите в него.",
+        "signal": "open_method",
+        "signal_label": "метод открыт",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 7",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Радость и любовь звучат на частотах в сотни раз выше.",
+        "signal": "vague_social_proof",
+        "signal_label": "непроверяемые масштабы",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Некоторые врачи поначалу удивляются, а потом признают, что анализы стали лучше.",
+        "signal": "enemy_frame",
+        "signal_label": "образ врага",
+        "axis": "exclusivity",
+        "axis_label": "Эксклюзивность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Когда частота тела восстанавливается, у организма просто пропадает потребность в химической поддержке.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Вопрос: «Можно ли совмещать ваши сеансы с приёмом лекарств?» Решение о лекарствах принимаете вы вместе с вашим врачом, я здесь не советчик.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Отзывы моих клиентов говорят сами за себя.",
+        "signal": "exit_ok",
+        "signal_label": "уйти можно",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Сотни людей по всему миру уже почувствовали на себе силу частотной настройки.",
+        "signal": "pseudo_science",
+        "signal_label": "псевдонаука",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Сотни людей по всему миру уже почувствовали на себе силу частотной настройки.",
+        "signal": "vague_social_proof",
+        "signal_label": "непроверяемые масштабы",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      }
+    ],
+    "counts": {
+      "promises": 6,
+      "deadlines": 2,
+      "sources": 0
+    },
+    "advocate": [
+      "может быть честным описанием",
+      "Мы не видели лендинг, условия возврата и результаты учеников."
+    ],
+    "unknowns": [
+      "Работает ли метод на самом деле",
+      "Какая у автора квалификация",
+      "Что в отзывах и судах",
+      "Кто писал тексты: автор или копирайтер",
+      "Какие условия покупки",
+      "Уверенность средняя: 10 текстов, 1 из них продающий"
+    ],
+    "stats": {
+      "n": 10,
+      "n_eff": 10,
+      "words": 821,
+      "sale_share": 0.1,
+      "dropped_quotes": 0
+    },
+    "answers": [
+      {
+        "id": "q_now",
+        "question": "Почему решать нужно сегодня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "почти не торопят",
+        "text": "Тебя почти не торопят: сроки и «последние места» почти не встречаются. Можно спокойно подумать",
+        "count": 3,
+        "evidence": [
+          "f7",
+          "f17",
+          "f28"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_promise",
+        "question": "Что мне на самом деле обещают?",
+        "template": "1",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "обещания с условиями",
+        "text": "Обещаний 6, часть с условиями. Выпиши их: с ними потом можно будет сверить результат",
+        "count": 6,
+        "evidence": [
+          "f0",
+          "f6",
+          "f14"
+        ],
+        "ask_seller": "Что именно считается результатом и как его измеряют? Сколько участников его не получили?",
+        "preliminary": false
+      },
+      {
+        "id": "q_fit",
+        "question": "Сработает ли это для меня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "почти не сказано, кому не подойдёт",
+        "text": "Почти нигде не сказано, кому это не подойдёт. Когда подходит всем, сложно понять, подходит ли тебе",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Для кого эта программа не подходит?",
+        "preliminary": false
+      },
+      {
+        "id": "q_check",
+        "question": "Можно ли это проверить заранее?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "проверить почти нечего",
+        "text": "Проверить почти нечего: источников мало или утверждения устроены так, что их не опровергнуть",
+        "count": 13,
+        "evidence": [
+          "f2",
+          "f3",
+          "f4"
+        ],
+        "ask_seller": "На какие источники или исследования вы опираетесь? Можно ссылки?",
+        "preliminary": false
+      },
+      {
+        "id": "q_cost",
+        "question": "Сколько это будет стоить в итоге?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "лестницы почти не видно",
+        "text": "Признаков лестницы допродаж и скрытых условий почти не видно",
+        "count": 4,
+        "evidence": [
+          "f10",
+          "f13",
+          "f25"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_after",
+        "question": "Смогу ли я потом без него?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "тексты почти молчат",
+        "text": "Про самостоятельность после программы тексты почти молчат",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Что я смогу делать сам после программы, без вас?",
+        "preliminary": false
+      },
+      {
+        "id": "q_fail",
+        "question": "Что будет, если не получится?",
+        "template": "alarm",
+        "level": 2,
+        "alarm": 2,
+        "level_word": "виноват покупатель",
+        "text": "На случай неудачи в текстах уже готово объяснение, и виноват в нём покупатель: 1",
+        "count": 1,
+        "evidence": [
+          "f7"
+        ],
+        "ask_seller": "Что происходит, если результата нет? Есть ли возврат и на каких условиях?",
+        "preliminary": false
+      }
+    ],
+    "seller_questions": [
+      "Что происходит, если результата нет? Есть ли возврат и на каких условиях?",
+      "Что я смогу делать сам после программы, без вас?",
+      "На какие источники или исследования вы опираетесь? Можно ссылки?",
+      "Для кого эта программа не подходит?",
+      "Что именно считается результатом и как его измеряют? Сколько участников его не получили?"
+    ],
+    "in_favor": [
+      "f1",
+      "f29",
+      "f24"
+    ]
+  }
+}

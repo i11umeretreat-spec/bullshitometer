@@ -1,0 +1,538 @@
+{
+  "default": {
+    "type": {
+      "key": "dark_matter",
+      "title": "Тёмная материя",
+      "line": "По этим текстам почти ничего не видно. Дай больше, или смирись, что словами это не ловится.",
+      "check": "Дать от 8 текстов разных жанров"
+    },
+    "confidence": {
+      "level": 0,
+      "label": "низкая",
+      "reason": "Всего 95 слов. Для выводов мало"
+    },
+    "axes": [
+      {
+        "key": "promises",
+        "label": "Обещания",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1.5,
+        "top": []
+      },
+      {
+        "key": "verifiability",
+        "label": "Проверяемость",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1.3,
+        "top": []
+      },
+      {
+        "key": "integrity",
+        "label": "Добросовестность",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      },
+      {
+        "key": "pressure",
+        "label": "Давление",
+        "polarity": "neg",
+        "level": 1,
+        "level_label": "средний",
+        "v": 0.393,
+        "raw": 2,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "urgency",
+            "label": "дедлайн",
+            "points": 2
+          }
+        ]
+      },
+      {
+        "key": "exclusivity",
+        "label": "Эксклюзивность",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      },
+      {
+        "key": "autonomy",
+        "label": "Автономия",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      },
+      {
+        "key": "commerce",
+        "label": "Коммерция",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      }
+    ],
+    "findings": [
+      {
+        "text_id": "t1",
+        "quote": "Сегодня напоминаю: забота о себе начинается с малого.",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "Сегодня напоминаю: забота о себе начинается с малого.",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Сегодня напоминаю: забота о себе начинается с малого.",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      }
+    ],
+    "counts": {
+      "promises": 0,
+      "deadlines": 3,
+      "sources": 0
+    },
+    "advocate": [
+      "может быть честным описанием",
+      "Мы не видели лендинг, условия возврата и результаты учеников."
+    ],
+    "unknowns": [
+      "Работает ли метод на самом деле",
+      "Какая у автора квалификация",
+      "Что в отзывах и судах",
+      "Кто писал тексты: автор или копирайтер",
+      "Какие условия покупки",
+      "Уверенность низкая: Всего 95 слов. Для выводов мало"
+    ],
+    "stats": {
+      "n": 3,
+      "n_eff": 3,
+      "words": 95,
+      "sale_share": 0,
+      "dropped_quotes": 0
+    },
+    "answers": [
+      {
+        "id": "q_now",
+        "question": "Почему решать нужно сегодня?",
+        "template": "1",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "торопят умеренно",
+        "text": "Торопят умеренно: 3 упоминаний сроков или ограниченных мест. Обычный приём продаж, но решение от него зависеть не должно",
+        "count": 3,
+        "evidence": [
+          "f0",
+          "f1",
+          "f2"
+        ],
+        "ask_seller": "Что будет, если я решу через неделю? Цена и место сохранятся?",
+        "preliminary": true
+      },
+      {
+        "id": "q_promise",
+        "question": "Что мне на самом деле обещают?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "обещаний почти нет",
+        "text": "Конкретных обещаний почти нет. Тогда стоит спросить, что именно ты получишь",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": null,
+        "preliminary": true
+      },
+      {
+        "id": "q_fit",
+        "question": "Сработает ли это для меня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "почти не сказано, кому не подойдёт",
+        "text": "Почти нигде не сказано, кому это не подойдёт. Когда подходит всем, сложно понять, подходит ли тебе",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Для кого эта программа не подходит?",
+        "preliminary": true
+      },
+      {
+        "id": "q_check",
+        "question": "Можно ли это проверить заранее?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "проверить почти нечего",
+        "text": "Проверить почти нечего: источников мало или утверждения устроены так, что их не опровергнуть",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "На какие источники или исследования вы опираетесь? Можно ссылки?",
+        "preliminary": true
+      },
+      {
+        "id": "q_cost",
+        "question": "Сколько это будет стоить в итоге?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "лестницы почти не видно",
+        "text": "Признаков лестницы допродаж и скрытых условий почти не видно",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": null,
+        "preliminary": true
+      },
+      {
+        "id": "q_after",
+        "question": "Смогу ли я потом без него?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "тексты почти молчат",
+        "text": "Про самостоятельность после программы тексты почти молчат",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Что я смогу делать сам после программы, без вас?",
+        "preliminary": true
+      },
+      {
+        "id": "q_fail",
+        "question": "Что будет, если не получится?",
+        "template": "silent",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "тексты молчат",
+        "text": "Про неудачу тексты молчат. Это вопрос, который точно стоит задать",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Что происходит, если результата нет? Есть ли возврат и на каких условиях?",
+        "preliminary": true
+      }
+    ],
+    "seller_questions": [
+      "Что будет, если я решу через неделю? Цена и место сохранятся?",
+      "Для кого эта программа не подходит?",
+      "На какие источники или исследования вы опираетесь? Можно ссылки?",
+      "Что я смогу делать сам после программы, без вас?",
+      "Что происходит, если результата нет? Есть ли возврат и на каких условиях?"
+    ],
+    "in_favor": []
+  },
+  "reversed": {
+    "type": {
+      "key": "dark_matter",
+      "title": "Тёмная материя",
+      "line": "По этим текстам почти ничего не видно. Дай больше, или смирись, что словами это не ловится.",
+      "check": "Дать от 8 текстов разных жанров"
+    },
+    "confidence": {
+      "level": 0,
+      "label": "низкая",
+      "reason": "Всего 95 слов. Для выводов мало"
+    },
+    "axes": [
+      {
+        "key": "promises",
+        "label": "Обещания",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1.5,
+        "top": []
+      },
+      {
+        "key": "verifiability",
+        "label": "Проверяемость",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1.3,
+        "top": []
+      },
+      {
+        "key": "integrity",
+        "label": "Добросовестность",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      },
+      {
+        "key": "pressure",
+        "label": "Давление",
+        "polarity": "neg",
+        "level": 1,
+        "level_label": "средний",
+        "v": 0.393,
+        "raw": 2,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "urgency",
+            "label": "дедлайн",
+            "points": 2
+          }
+        ]
+      },
+      {
+        "key": "exclusivity",
+        "label": "Эксклюзивность",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      },
+      {
+        "key": "autonomy",
+        "label": "Автономия",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      },
+      {
+        "key": "commerce",
+        "label": "Коммерция",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      }
+    ],
+    "findings": [
+      {
+        "text_id": "t1",
+        "quote": "Сегодня напоминаю: забота о себе начинается с малого.",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "Сегодня напоминаю: забота о себе начинается с малого.",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Сегодня напоминаю: забота о себе начинается с малого.",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      }
+    ],
+    "counts": {
+      "promises": 0,
+      "deadlines": 3,
+      "sources": 0
+    },
+    "advocate": [
+      "может быть честным описанием",
+      "Мы не видели лендинг, условия возврата и результаты учеников."
+    ],
+    "unknowns": [
+      "Работает ли метод на самом деле",
+      "Какая у автора квалификация",
+      "Что в отзывах и судах",
+      "Кто писал тексты: автор или копирайтер",
+      "Какие условия покупки",
+      "Уверенность низкая: Всего 95 слов. Для выводов мало"
+    ],
+    "stats": {
+      "n": 3,
+      "n_eff": 3,
+      "words": 95,
+      "sale_share": 0,
+      "dropped_quotes": 0
+    },
+    "answers": [
+      {
+        "id": "q_now",
+        "question": "Почему решать нужно сегодня?",
+        "template": "1",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "торопят умеренно",
+        "text": "Торопят умеренно: 3 упоминаний сроков или ограниченных мест. Обычный приём продаж, но решение от него зависеть не должно",
+        "count": 3,
+        "evidence": [
+          "f0",
+          "f1",
+          "f2"
+        ],
+        "ask_seller": "Что будет, если я решу через неделю? Цена и место сохранятся?",
+        "preliminary": true
+      },
+      {
+        "id": "q_promise",
+        "question": "Что мне на самом деле обещают?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "обещаний почти нет",
+        "text": "Конкретных обещаний почти нет. Тогда стоит спросить, что именно ты получишь",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": null,
+        "preliminary": true
+      },
+      {
+        "id": "q_fit",
+        "question": "Сработает ли это для меня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "почти не сказано, кому не подойдёт",
+        "text": "Почти нигде не сказано, кому это не подойдёт. Когда подходит всем, сложно понять, подходит ли тебе",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Для кого эта программа не подходит?",
+        "preliminary": true
+      },
+      {
+        "id": "q_check",
+        "question": "Можно ли это проверить заранее?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "проверить почти нечего",
+        "text": "Проверить почти нечего: источников мало или утверждения устроены так, что их не опровергнуть",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "На какие источники или исследования вы опираетесь? Можно ссылки?",
+        "preliminary": true
+      },
+      {
+        "id": "q_cost",
+        "question": "Сколько это будет стоить в итоге?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "лестницы почти не видно",
+        "text": "Признаков лестницы допродаж и скрытых условий почти не видно",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": null,
+        "preliminary": true
+      },
+      {
+        "id": "q_after",
+        "question": "Смогу ли я потом без него?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "тексты почти молчат",
+        "text": "Про самостоятельность после программы тексты почти молчат",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Что я смогу делать сам после программы, без вас?",
+        "preliminary": true
+      },
+      {
+        "id": "q_fail",
+        "question": "Что будет, если не получится?",
+        "template": "silent",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "тексты молчат",
+        "text": "Про неудачу тексты молчат. Это вопрос, который точно стоит задать",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Что происходит, если результата нет? Есть ли возврат и на каких условиях?",
+        "preliminary": true
+      }
+    ],
+    "seller_questions": [
+      "Что я смогу делать сам после программы, без вас?",
+      "На какие источники или исследования вы опираетесь? Можно ссылки?",
+      "Для кого эта программа не подходит?",
+      "Что происходит, если результата нет? Есть ли возврат и на каких условиях?",
+      "Что будет, если я решу через неделю? Цена и место сохранятся?"
+    ],
+    "in_favor": []
+  }
+}

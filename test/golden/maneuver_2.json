@@ -1,0 +1,1090 @@
+{
+  "default": {
+    "type": {
+      "key": "main_sequence",
+      "title": "Звезда главной последовательности",
+      "line": "Обычная звезда: светит, продаёт в меру, чудес не обещает. Скучно, и это комплимент.",
+      "check": "Условия покупки и возврата"
+    },
+    "confidence": {
+      "level": 1,
+      "label": "средняя",
+      "reason": "10 текстов, 1 из них продающий"
+    },
+    "axes": [
+      {
+        "key": "exclusivity",
+        "label": "Эксклюзивность",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.093,
+        "raw": 0.39,
+        "multiplier": 1.3,
+        "top": [
+          {
+            "signal": "only_me",
+            "label": "только я",
+            "points": 0.39
+          }
+        ]
+      },
+      {
+        "key": "autonomy",
+        "label": "Автономия",
+        "polarity": "pos",
+        "level": 1,
+        "level_label": "средний",
+        "v": 0.337,
+        "raw": 1.24,
+        "multiplier": 1.3,
+        "top": [
+          {
+            "signal": "exit_ok",
+            "label": "уйти можно",
+            "points": 0.52
+          },
+          {
+            "signal": "referral",
+            "label": "отправляет к другим",
+            "points": 0.26
+          },
+          {
+            "signal": "verification_invite",
+            "label": "предлагает проверить",
+            "points": 0.26
+          }
+        ]
+      },
+      {
+        "key": "integrity",
+        "label": "Добросовестность",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.154,
+        "raw": 0.5,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "negative_case",
+            "label": "неудачный случай",
+            "points": 0.2
+          },
+          {
+            "signal": "self_correction",
+            "label": "признание ошибки",
+            "points": 0.2
+          },
+          {
+            "signal": "handles_objection",
+            "label": "разбор возражения",
+            "points": 0.1
+          }
+        ]
+      },
+      {
+        "key": "verifiability",
+        "label": "Проверяемость",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": -0.25,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "vague_source",
+            "label": "источник без имени",
+            "points": -0.4
+          },
+          {
+            "signal": "checkable_claim",
+            "label": "проверяемое утверждение",
+            "points": 0.15
+          }
+        ]
+      },
+      {
+        "key": "promises",
+        "label": "Обещания",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.139,
+        "raw": 0.6,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "outcome_promise",
+            "label": "обещание результата",
+            "points": 0.6
+          }
+        ]
+      },
+      {
+        "key": "pressure",
+        "label": "Давление",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.049,
+        "raw": 0.2,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "scarcity",
+            "label": "дефицит",
+            "points": 0.2
+          }
+        ]
+      },
+      {
+        "key": "commerce",
+        "label": "Коммерция",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.072,
+        "raw": 0.3,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "price_ladder",
+            "label": "ступени",
+            "points": 0.2
+          },
+          {
+            "signal": "vague_social_proof",
+            "label": "непроверяемые масштабы",
+            "points": 0.1
+          }
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "text_id": "t2",
+        "quote": "Если важен результат сейчас, Present Perfect.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Теперь правило такое: сначала пробуете сами, потом проверяете.",
+        "signal": "exit_ok",
+        "signal_label": "уйти можно",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Я ошибался.",
+        "signal": "self_correction",
+        "signal_label": "признание ошибки",
+        "axis": "integrity",
+        "axis_label": "Добросовестность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Потом прочитал исследования про осмысленное использование перевода и попробовал сам: ученики, которые сверялись с переводчиком после попытки, запоминали больше.",
+        "signal": "vague_source",
+        "signal_label": "источник без имени",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "За месяц я не успею поднять общий уровень, а натаскивать на формат экзамена лучше умеют те, кто этим специально занимается.",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Посмотрите официальные материалы на сайте IELTS и пробные тесты Кембриджа.",
+        "signal": "verification_invite",
+        "signal_label": "предлагает проверить",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Результат зависит от Вас: без двадцати минут самостоятельной работы в день прогресс будет медленным.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 6",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Я работаю с уровнями от A2 до B2, для начинающих с нуля советую коллегу, её контакт дам по запросу.",
+        "signal": "referral",
+        "signal_label": "отправляет к другим",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t6",
+        "quote": "Была ученица, с которой мы занимались полтора года, и прогресса почти не было.",
+        "signal": "negative_case",
+        "signal_label": "неудачный случай",
+        "axis": "integrity",
+        "axis_label": "Добросовестность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t6",
+        "quote": "С тех пор я на третьем месяце занятий спрашиваю у каждого ученика, видит ли он прогресс, и если нет, мы вместе решаем, что менять, в том числе и преподавателя.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Бесплатный план на месяц для тех, кто хочет заниматься сам.",
+        "signal": "open_method",
+        "signal_label": "метод открыт",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Бывает и наоборот: человек занимается сам годами и упирается в потолок, потому что никто не поправляет одни и те же ошибки.",
+        "signal": "only_me",
+        "signal_label": "только я",
+        "axis": "exclusivity",
+        "axis_label": "Эксклюзивность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 3,
+        "context_note": "фраза 6",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Если у Вас хватает дисциплины и есть собеседник, можно обойтись без меня.",
+        "signal": "exit_ok",
+        "signal_label": "уйти можно",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Спрашивают, зачем тогда платить, если можно самому.",
+        "signal": "handles_objection",
+        "signal_label": "разбор возражения",
+        "axis": "integrity",
+        "axis_label": "Добросовестность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Запишите результат и повторите тест через три месяца занятий.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Проверьте свой словарный запас.",
+        "signal": "checkable_claim",
+        "signal_label": "проверяемое утверждение",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Для сравнения: носители языка знают двадцать тысяч слов и больше, а для спокойного разговора хватает трёх или четырёх тысяч.",
+        "signal": "vague_social_proof",
+        "signal_label": "непроверяемые масштабы",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Исследования Мюррея Манро и Трейси Дервинга показали, что слушатели понимают речь с сильным акцентом, если ударения и паузы стоят правильно.",
+        "signal": "vague_source",
+        "signal_label": "источник без имени",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      }
+    ],
+    "counts": {
+      "promises": 3,
+      "deadlines": 1,
+      "sources": 0
+    },
+    "advocate": [
+      "Мы не видели лендинг, условия возврата и результаты учеников."
+    ],
+    "unknowns": [
+      "Работает ли метод на самом деле",
+      "Какая у автора квалификация",
+      "Что в отзывах и судах",
+      "Кто писал тексты: автор или копирайтер",
+      "Какие условия покупки",
+      "Уверенность средняя: 10 текстов, 1 из них продающий"
+    ],
+    "stats": {
+      "n": 10,
+      "n_eff": 10,
+      "words": 828,
+      "sale_share": 0.1,
+      "dropped_quotes": 0
+    },
+    "answers": [
+      {
+        "id": "q_now",
+        "question": "Почему решать нужно сегодня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "почти не торопят",
+        "text": "Тебя почти не торопят: сроки и «последние места» почти не встречаются. Можно спокойно подумать",
+        "count": 1,
+        "evidence": [
+          "f9"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_promise",
+        "question": "Что мне на самом деле обещают?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "обещаний почти нет",
+        "text": "Конкретных обещаний почти нет. Тогда стоит спросить, что именно ты получишь",
+        "count": 3,
+        "evidence": [
+          "f0",
+          "f6",
+          "f14"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_fit",
+        "question": "Сработает ли это для меня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "почти не сказано, кому не подойдёт",
+        "text": "Почти нигде не сказано, кому это не подойдёт. Когда подходит всем, сложно понять, подходит ли тебе",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Для кого эта программа не подходит?",
+        "preliminary": false
+      },
+      {
+        "id": "q_check",
+        "question": "Можно ли это проверить заранее?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "проверить почти нечего",
+        "text": "Проверить почти нечего: источников мало или утверждения устроены так, что их не опровергнуть",
+        "count": 2,
+        "evidence": [
+          "f3",
+          "f17"
+        ],
+        "ask_seller": "На какие источники или исследования вы опираетесь? Можно ссылки?",
+        "preliminary": false
+      },
+      {
+        "id": "q_cost",
+        "question": "Сколько это будет стоить в итоге?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "лестницы почти не видно",
+        "text": "Признаков лестницы допродаж и скрытых условий почти не видно",
+        "count": 2,
+        "evidence": [
+          "f4",
+          "f16"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_after",
+        "question": "Смогу ли я потом без него?",
+        "template": "1",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "кое-где учат без автора",
+        "text": "Кое-где тебя учат обходиться без автора: 5",
+        "count": 5,
+        "evidence": [
+          "f1",
+          "f5",
+          "f7"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_fail",
+        "question": "Что будет, если не получится?",
+        "template": "good",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "о неудачах говорят",
+        "text": "Автор рассказывает о случаях, когда не получилось. Значит, неудача тут не табу",
+        "count": 1,
+        "evidence": [
+          "f8"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      }
+    ],
+    "seller_questions": [
+      "Для кого эта программа не подходит?",
+      "На какие источники или исследования вы опираетесь? Можно ссылки?",
+      "Что входит в цену, а что оплачивается отдельно?"
+    ],
+    "in_favor": [
+      "f1",
+      "f2",
+      "f5"
+    ]
+  },
+  "reversed": {
+    "type": {
+      "key": "main_sequence",
+      "title": "Звезда главной последовательности",
+      "line": "Обычная звезда: светит, продаёт в меру, чудес не обещает. Скучно, и это комплимент.",
+      "check": "Условия покупки и возврата"
+    },
+    "confidence": {
+      "level": 1,
+      "label": "средняя",
+      "reason": "10 текстов, 1 из них продающий"
+    },
+    "axes": [
+      {
+        "key": "exclusivity",
+        "label": "Эксклюзивность",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.093,
+        "raw": 0.39,
+        "multiplier": 1.3,
+        "top": [
+          {
+            "signal": "only_me",
+            "label": "только я",
+            "points": 0.39
+          }
+        ]
+      },
+      {
+        "key": "autonomy",
+        "label": "Автономия",
+        "polarity": "pos",
+        "level": 1,
+        "level_label": "средний",
+        "v": 0.337,
+        "raw": 1.24,
+        "multiplier": 1.3,
+        "top": [
+          {
+            "signal": "exit_ok",
+            "label": "уйти можно",
+            "points": 0.52
+          },
+          {
+            "signal": "referral",
+            "label": "отправляет к другим",
+            "points": 0.26
+          },
+          {
+            "signal": "verification_invite",
+            "label": "предлагает проверить",
+            "points": 0.26
+          }
+        ]
+      },
+      {
+        "key": "integrity",
+        "label": "Добросовестность",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.154,
+        "raw": 0.5,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "negative_case",
+            "label": "неудачный случай",
+            "points": 0.2
+          },
+          {
+            "signal": "self_correction",
+            "label": "признание ошибки",
+            "points": 0.2
+          },
+          {
+            "signal": "handles_objection",
+            "label": "разбор возражения",
+            "points": 0.1
+          }
+        ]
+      },
+      {
+        "key": "verifiability",
+        "label": "Проверяемость",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": -0.25,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "vague_source",
+            "label": "источник без имени",
+            "points": -0.4
+          },
+          {
+            "signal": "checkable_claim",
+            "label": "проверяемое утверждение",
+            "points": 0.15
+          }
+        ]
+      },
+      {
+        "key": "promises",
+        "label": "Обещания",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.139,
+        "raw": 0.6,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "outcome_promise",
+            "label": "обещание результата",
+            "points": 0.6
+          }
+        ]
+      },
+      {
+        "key": "pressure",
+        "label": "Давление",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.049,
+        "raw": 0.2,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "scarcity",
+            "label": "дефицит",
+            "points": 0.2
+          }
+        ]
+      },
+      {
+        "key": "commerce",
+        "label": "Коммерция",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.072,
+        "raw": 0.3,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "price_ladder",
+            "label": "ступени",
+            "points": 0.2
+          },
+          {
+            "signal": "vague_social_proof",
+            "label": "непроверяемые масштабы",
+            "points": 0.1
+          }
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "text_id": "t2",
+        "quote": "Если важен результат сейчас, Present Perfect.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Теперь правило такое: сначала пробуете сами, потом проверяете.",
+        "signal": "exit_ok",
+        "signal_label": "уйти можно",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Я ошибался.",
+        "signal": "self_correction",
+        "signal_label": "признание ошибки",
+        "axis": "integrity",
+        "axis_label": "Добросовестность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Потом прочитал исследования про осмысленное использование перевода и попробовал сам: ученики, которые сверялись с переводчиком после попытки, запоминали больше.",
+        "signal": "vague_source",
+        "signal_label": "источник без имени",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "За месяц я не успею поднять общий уровень, а натаскивать на формат экзамена лучше умеют те, кто этим специально занимается.",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Посмотрите официальные материалы на сайте IELTS и пробные тесты Кембриджа.",
+        "signal": "verification_invite",
+        "signal_label": "предлагает проверить",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Результат зависит от Вас: без двадцати минут самостоятельной работы в день прогресс будет медленным.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 6",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Я работаю с уровнями от A2 до B2, для начинающих с нуля советую коллегу, её контакт дам по запросу.",
+        "signal": "referral",
+        "signal_label": "отправляет к другим",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t6",
+        "quote": "Была ученица, с которой мы занимались полтора года, и прогресса почти не было.",
+        "signal": "negative_case",
+        "signal_label": "неудачный случай",
+        "axis": "integrity",
+        "axis_label": "Добросовестность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t6",
+        "quote": "С тех пор я на третьем месяце занятий спрашиваю у каждого ученика, видит ли он прогресс, и если нет, мы вместе решаем, что менять, в том числе и преподавателя.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Бесплатный план на месяц для тех, кто хочет заниматься сам.",
+        "signal": "open_method",
+        "signal_label": "метод открыт",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Бывает и наоборот: человек занимается сам годами и упирается в потолок, потому что никто не поправляет одни и те же ошибки.",
+        "signal": "only_me",
+        "signal_label": "только я",
+        "axis": "exclusivity",
+        "axis_label": "Эксклюзивность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 3,
+        "context_note": "фраза 6",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Если у Вас хватает дисциплины и есть собеседник, можно обойтись без меня.",
+        "signal": "exit_ok",
+        "signal_label": "уйти можно",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Спрашивают, зачем тогда платить, если можно самому.",
+        "signal": "handles_objection",
+        "signal_label": "разбор возражения",
+        "axis": "integrity",
+        "axis_label": "Добросовестность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Запишите результат и повторите тест через три месяца занятий.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Проверьте свой словарный запас.",
+        "signal": "checkable_claim",
+        "signal_label": "проверяемое утверждение",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Для сравнения: носители языка знают двадцать тысяч слов и больше, а для спокойного разговора хватает трёх или четырёх тысяч.",
+        "signal": "vague_social_proof",
+        "signal_label": "непроверяемые масштабы",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Исследования Мюррея Манро и Трейси Дервинга показали, что слушатели понимают речь с сильным акцентом, если ударения и паузы стоят правильно.",
+        "signal": "vague_source",
+        "signal_label": "источник без имени",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      }
+    ],
+    "counts": {
+      "promises": 3,
+      "deadlines": 1,
+      "sources": 0
+    },
+    "advocate": [
+      "Мы не видели лендинг, условия возврата и результаты учеников."
+    ],
+    "unknowns": [
+      "Работает ли метод на самом деле",
+      "Какая у автора квалификация",
+      "Что в отзывах и судах",
+      "Кто писал тексты: автор или копирайтер",
+      "Какие условия покупки",
+      "Уверенность средняя: 10 текстов, 1 из них продающий"
+    ],
+    "stats": {
+      "n": 10,
+      "n_eff": 10,
+      "words": 828,
+      "sale_share": 0.1,
+      "dropped_quotes": 0
+    },
+    "answers": [
+      {
+        "id": "q_now",
+        "question": "Почему решать нужно сегодня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "почти не торопят",
+        "text": "Тебя почти не торопят: сроки и «последние места» почти не встречаются. Можно спокойно подумать",
+        "count": 1,
+        "evidence": [
+          "f9"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_promise",
+        "question": "Что мне на самом деле обещают?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "обещаний почти нет",
+        "text": "Конкретных обещаний почти нет. Тогда стоит спросить, что именно ты получишь",
+        "count": 3,
+        "evidence": [
+          "f0",
+          "f6",
+          "f14"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_fit",
+        "question": "Сработает ли это для меня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "почти не сказано, кому не подойдёт",
+        "text": "Почти нигде не сказано, кому это не подойдёт. Когда подходит всем, сложно понять, подходит ли тебе",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Для кого эта программа не подходит?",
+        "preliminary": false
+      },
+      {
+        "id": "q_check",
+        "question": "Можно ли это проверить заранее?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "проверить почти нечего",
+        "text": "Проверить почти нечего: источников мало или утверждения устроены так, что их не опровергнуть",
+        "count": 2,
+        "evidence": [
+          "f3",
+          "f17"
+        ],
+        "ask_seller": "На какие источники или исследования вы опираетесь? Можно ссылки?",
+        "preliminary": false
+      },
+      {
+        "id": "q_cost",
+        "question": "Сколько это будет стоить в итоге?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "лестницы почти не видно",
+        "text": "Признаков лестницы допродаж и скрытых условий почти не видно",
+        "count": 2,
+        "evidence": [
+          "f4",
+          "f16"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_after",
+        "question": "Смогу ли я потом без него?",
+        "template": "1",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "кое-где учат без автора",
+        "text": "Кое-где тебя учат обходиться без автора: 5",
+        "count": 5,
+        "evidence": [
+          "f1",
+          "f5",
+          "f7"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_fail",
+        "question": "Что будет, если не получится?",
+        "template": "good",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "о неудачах говорят",
+        "text": "Автор рассказывает о случаях, когда не получилось. Значит, неудача тут не табу",
+        "count": 1,
+        "evidence": [
+          "f8"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      }
+    ],
+    "seller_questions": [
+      "На какие источники или исследования вы опираетесь? Можно ссылки?",
+      "Для кого эта программа не подходит?",
+      "Что входит в цену, а что оплачивается отдельно?"
+    ],
+    "in_favor": [
+      "f1",
+      "f2",
+      "f5"
+    ]
+  }
+}

@@ -1,0 +1,962 @@
+{
+  "default": {
+    "type": {
+      "key": "main_sequence",
+      "title": "Звезда главной последовательности",
+      "line": "Обычная звезда: светит, продаёт в меру, чудес не обещает. Скучно, и это комплимент.",
+      "check": "Условия покупки и возврата"
+    },
+    "confidence": {
+      "level": 1,
+      "label": "средняя",
+      "reason": "10 текстов, 3 из них продающие"
+    },
+    "axes": [
+      {
+        "key": "commerce",
+        "label": "Коммерция",
+        "polarity": "neg",
+        "level": 1,
+        "level_label": "средний",
+        "v": 0.257,
+        "raw": 1.19,
+        "multiplier": 1.2,
+        "top": [
+          {
+            "signal": "price_ladder",
+            "label": "ступени",
+            "points": 0.89
+          },
+          {
+            "signal": "upsell",
+            "label": "допродажа",
+            "points": 0.18
+          },
+          {
+            "signal": "vague_social_proof",
+            "label": "непроверяемые масштабы",
+            "points": 0.12
+          }
+        ]
+      },
+      {
+        "key": "promises",
+        "label": "Обещания",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1.2,
+        "top": []
+      },
+      {
+        "key": "pressure",
+        "label": "Давление",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.139,
+        "raw": 0.6,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "scarcity",
+            "label": "дефицит",
+            "points": 0.6
+          }
+        ]
+      },
+      {
+        "key": "exclusivity",
+        "label": "Эксклюзивность",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.049,
+        "raw": 0.2,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "secret_knowledge",
+            "label": "тайное знание",
+            "points": 0.2
+          }
+        ]
+      },
+      {
+        "key": "verifiability",
+        "label": "Проверяемость",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": -0.3,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "unfalsifiable",
+            "label": "неопровержимое",
+            "points": -0.3
+          }
+        ]
+      },
+      {
+        "key": "integrity",
+        "label": "Добросовестность",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      },
+      {
+        "key": "autonomy",
+        "label": "Автономия",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.168,
+        "raw": 0.55,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "exit_ok",
+            "label": "уйти можно",
+            "points": 0.2
+          },
+          {
+            "signal": "referral",
+            "label": "отправляет к другим",
+            "points": 0.2
+          },
+          {
+            "signal": "open_method",
+            "label": "метод открыт",
+            "points": 0.15
+          }
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "text_id": "t1",
+        "quote": "Марафон это знакомство, первая ступенька.",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.4,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t1",
+        "quote": "Приходите с друзьями, вместе проходить интереснее, а за каждого приглашённого вы получите бонусный урок.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "Для этого есть конкретные приёмы: смена темпа, вопрос в зал, история вместо сухих фактов.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Количество мест ограничено залом.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Каждая ступень опирается на предыдущую.",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 7",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Стоимость программы раскрываем на личной встрече, потому что она зависит от ваших целей и формата участия.",
+        "signal": "secret_knowledge",
+        "signal_label": "тайное знание",
+        "axis": "exclusivity",
+        "axis_label": "Эксклюзивность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t6",
+        "quote": "Потом он будет доступен уже в составе интенсива.",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t6",
+        "quote": "Пакет продаётся только вместе с курсом и только до конца недели.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 7",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Ссылки на оба формата в профиле, но советую идти по порядку.",
+        "signal": "referral",
+        "signal_label": "отправляет к другим",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 7",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Простое упражнение: перед выходом на сцену сделайте четыре медленных вдоха животом, задерживая воздух на две секунды.",
+        "signal": "open_method",
+        "signal_label": "метод открыт",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "А дальше вы сами почувствуете, куда идти.",
+        "signal": "exit_ok",
+        "signal_label": "уйти можно",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Что делать?» Это очень частая ситуация и отличный знак: значит, вы переросли базовый уровень.",
+        "signal": "unfalsifiable",
+        "signal_label": "неопровержимое",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -3,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Что делать?» Это очень частая ситуация и отличный знак: значит, вы переросли базовый уровень.",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Осенью запускаем новый формат для тех, кто уже прошёл годовую программу: клуб спикеров с выездными сессиями.",
+        "signal": "upsell",
+        "signal_label": "допродажа",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Больше двух тысяч человек прошли бесплатный марафон, четыреста пошли на курс «Сцена», около ста дошли до интенсива, и тридцать человек сейчас в годовой программе.",
+        "signal": "vague_social_proof",
+        "signal_label": "непроверяемые масштабы",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      }
+    ],
+    "counts": {
+      "promises": 0,
+      "deadlines": 4,
+      "sources": 0
+    },
+    "advocate": [
+      "может быть честным описанием",
+      "Мы не видели лендинг, условия возврата и результаты учеников."
+    ],
+    "unknowns": [
+      "Работает ли метод на самом деле",
+      "Какая у автора квалификация",
+      "Что в отзывах и судах",
+      "Кто писал тексты: автор или копирайтер",
+      "Какие условия покупки",
+      "Уверенность средняя: 10 текстов, 3 из них продающие"
+    ],
+    "stats": {
+      "n": 10,
+      "n_eff": 10,
+      "words": 876,
+      "sale_share": 0.3,
+      "dropped_quotes": 0
+    },
+    "answers": [
+      {
+        "id": "q_now",
+        "question": "Почему решать нужно сегодня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "почти не торопят",
+        "text": "Тебя почти не торопят: сроки и «последние места» почти не встречаются. Можно спокойно подумать",
+        "count": 4,
+        "evidence": [
+          "f2",
+          "f7",
+          "f1"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_promise",
+        "question": "Что мне на самом деле обещают?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "обещаний почти нет",
+        "text": "Конкретных обещаний почти нет. Тогда стоит спросить, что именно ты получишь",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_fit",
+        "question": "Сработает ли это для меня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "почти не сказано, кому не подойдёт",
+        "text": "Почти нигде не сказано, кому это не подойдёт. Когда подходит всем, сложно понять, подходит ли тебе",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Для кого эта программа не подходит?",
+        "preliminary": false
+      },
+      {
+        "id": "q_check",
+        "question": "Можно ли это проверить заранее?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "проверить почти нечего",
+        "text": "Проверить почти нечего: источников мало или утверждения устроены так, что их не опровергнуть",
+        "count": 1,
+        "evidence": [
+          "f11"
+        ],
+        "ask_seller": "На какие источники или исследования вы опираетесь? Можно ссылки?",
+        "preliminary": false
+      },
+      {
+        "id": "q_cost",
+        "question": "Сколько это будет стоить в итоге?",
+        "template": "1",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "есть следующие ступени",
+        "text": "Есть следующие ступени или допродажи: 6. Первая цена может оказаться не последней",
+        "count": 6,
+        "evidence": [
+          "f4",
+          "f6",
+          "f12"
+        ],
+        "ask_seller": "Сколько стоит весь путь до результата, со всеми ступенями?",
+        "preliminary": false
+      },
+      {
+        "id": "q_after",
+        "question": "Смогу ли я потом без него?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "тексты почти молчат",
+        "text": "Про самостоятельность после программы тексты почти молчат",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Что я смогу делать сам после программы, без вас?",
+        "preliminary": false
+      },
+      {
+        "id": "q_fail",
+        "question": "Что будет, если не получится?",
+        "template": "alarm",
+        "level": 2,
+        "alarm": 2,
+        "level_word": "виноват покупатель",
+        "text": "На случай неудачи в текстах уже готово объяснение, и виноват в нём покупатель: 1",
+        "count": 1,
+        "evidence": [
+          "f11"
+        ],
+        "ask_seller": "Что происходит, если результата нет? Есть ли возврат и на каких условиях?",
+        "preliminary": false
+      }
+    ],
+    "seller_questions": [
+      "Сколько стоит весь путь до результата, со всеми ступенями?",
+      "Для кого эта программа не подходит?",
+      "На какие источники или исследования вы опираетесь? Можно ссылки?",
+      "Что я смогу делать сам после программы, без вас?",
+      "Что происходит, если результата нет? Есть ли возврат и на каких условиях?"
+    ],
+    "in_favor": [
+      "f8",
+      "f10",
+      "f9"
+    ]
+  },
+  "reversed": {
+    "type": {
+      "key": "main_sequence",
+      "title": "Звезда главной последовательности",
+      "line": "Обычная звезда: светит, продаёт в меру, чудес не обещает. Скучно, и это комплимент.",
+      "check": "Условия покупки и возврата"
+    },
+    "confidence": {
+      "level": 1,
+      "label": "средняя",
+      "reason": "10 текстов, 3 из них продающие"
+    },
+    "axes": [
+      {
+        "key": "commerce",
+        "label": "Коммерция",
+        "polarity": "neg",
+        "level": 1,
+        "level_label": "средний",
+        "v": 0.257,
+        "raw": 1.19,
+        "multiplier": 1.2,
+        "top": [
+          {
+            "signal": "price_ladder",
+            "label": "ступени",
+            "points": 0.89
+          },
+          {
+            "signal": "upsell",
+            "label": "допродажа",
+            "points": 0.18
+          },
+          {
+            "signal": "vague_social_proof",
+            "label": "непроверяемые масштабы",
+            "points": 0.12
+          }
+        ]
+      },
+      {
+        "key": "promises",
+        "label": "Обещания",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1.2,
+        "top": []
+      },
+      {
+        "key": "pressure",
+        "label": "Давление",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.139,
+        "raw": 0.6,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "scarcity",
+            "label": "дефицит",
+            "points": 0.6
+          }
+        ]
+      },
+      {
+        "key": "exclusivity",
+        "label": "Эксклюзивность",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.049,
+        "raw": 0.2,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "secret_knowledge",
+            "label": "тайное знание",
+            "points": 0.2
+          }
+        ]
+      },
+      {
+        "key": "verifiability",
+        "label": "Проверяемость",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": -0.3,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "unfalsifiable",
+            "label": "неопровержимое",
+            "points": -0.3
+          }
+        ]
+      },
+      {
+        "key": "integrity",
+        "label": "Добросовестность",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      },
+      {
+        "key": "autonomy",
+        "label": "Автономия",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.168,
+        "raw": 0.55,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "exit_ok",
+            "label": "уйти можно",
+            "points": 0.2
+          },
+          {
+            "signal": "referral",
+            "label": "отправляет к другим",
+            "points": 0.2
+          },
+          {
+            "signal": "open_method",
+            "label": "метод открыт",
+            "points": 0.15
+          }
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "text_id": "t1",
+        "quote": "Марафон это знакомство, первая ступенька.",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.4,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t1",
+        "quote": "Приходите с друзьями, вместе проходить интереснее, а за каждого приглашённого вы получите бонусный урок.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "Для этого есть конкретные приёмы: смена темпа, вопрос в зал, история вместо сухих фактов.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Количество мест ограничено залом.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Каждая ступень опирается на предыдущую.",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 7",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t5",
+        "quote": "Стоимость программы раскрываем на личной встрече, потому что она зависит от ваших целей и формата участия.",
+        "signal": "secret_knowledge",
+        "signal_label": "тайное знание",
+        "axis": "exclusivity",
+        "axis_label": "Эксклюзивность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t6",
+        "quote": "Потом он будет доступен уже в составе интенсива.",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t6",
+        "quote": "Пакет продаётся только вместе с курсом и только до конца недели.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 7",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Ссылки на оба формата в профиле, но советую идти по порядку.",
+        "signal": "referral",
+        "signal_label": "отправляет к другим",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 7",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Простое упражнение: перед выходом на сцену сделайте четыре медленных вдоха животом, задерживая воздух на две секунды.",
+        "signal": "open_method",
+        "signal_label": "метод открыт",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "А дальше вы сами почувствуете, куда идти.",
+        "signal": "exit_ok",
+        "signal_label": "уйти можно",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Что делать?» Это очень частая ситуация и отличный знак: значит, вы переросли базовый уровень.",
+        "signal": "unfalsifiable",
+        "signal_label": "неопровержимое",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -3,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Что делать?» Это очень частая ситуация и отличный знак: значит, вы переросли базовый уровень.",
+        "signal": "price_ladder",
+        "signal_label": "ступени",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Осенью запускаем новый формат для тех, кто уже прошёл годовую программу: клуб спикеров с выездными сессиями.",
+        "signal": "upsell",
+        "signal_label": "допродажа",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Больше двух тысяч человек прошли бесплатный марафон, четыреста пошли на курс «Сцена», около ста дошли до интенсива, и тридцать человек сейчас в годовой программе.",
+        "signal": "vague_social_proof",
+        "signal_label": "непроверяемые масштабы",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1,
+        "context_note": "фраза 2",
+        "alt_explanation": "может быть честным описанием"
+      }
+    ],
+    "counts": {
+      "promises": 0,
+      "deadlines": 4,
+      "sources": 0
+    },
+    "advocate": [
+      "может быть честным описанием",
+      "Мы не видели лендинг, условия возврата и результаты учеников."
+    ],
+    "unknowns": [
+      "Работает ли метод на самом деле",
+      "Какая у автора квалификация",
+      "Что в отзывах и судах",
+      "Кто писал тексты: автор или копирайтер",
+      "Какие условия покупки",
+      "Уверенность средняя: 10 текстов, 3 из них продающие"
+    ],
+    "stats": {
+      "n": 10,
+      "n_eff": 10,
+      "words": 876,
+      "sale_share": 0.3,
+      "dropped_quotes": 0
+    },
+    "answers": [
+      {
+        "id": "q_now",
+        "question": "Почему решать нужно сегодня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "почти не торопят",
+        "text": "Тебя почти не торопят: сроки и «последние места» почти не встречаются. Можно спокойно подумать",
+        "count": 4,
+        "evidence": [
+          "f2",
+          "f7",
+          "f1"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_promise",
+        "question": "Что мне на самом деле обещают?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "обещаний почти нет",
+        "text": "Конкретных обещаний почти нет. Тогда стоит спросить, что именно ты получишь",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_fit",
+        "question": "Сработает ли это для меня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "почти не сказано, кому не подойдёт",
+        "text": "Почти нигде не сказано, кому это не подойдёт. Когда подходит всем, сложно понять, подходит ли тебе",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Для кого эта программа не подходит?",
+        "preliminary": false
+      },
+      {
+        "id": "q_check",
+        "question": "Можно ли это проверить заранее?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "проверить почти нечего",
+        "text": "Проверить почти нечего: источников мало или утверждения устроены так, что их не опровергнуть",
+        "count": 1,
+        "evidence": [
+          "f11"
+        ],
+        "ask_seller": "На какие источники или исследования вы опираетесь? Можно ссылки?",
+        "preliminary": false
+      },
+      {
+        "id": "q_cost",
+        "question": "Сколько это будет стоить в итоге?",
+        "template": "1",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "есть следующие ступени",
+        "text": "Есть следующие ступени или допродажи: 6. Первая цена может оказаться не последней",
+        "count": 6,
+        "evidence": [
+          "f4",
+          "f6",
+          "f12"
+        ],
+        "ask_seller": "Сколько стоит весь путь до результата, со всеми ступенями?",
+        "preliminary": false
+      },
+      {
+        "id": "q_after",
+        "question": "Смогу ли я потом без него?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "тексты почти молчат",
+        "text": "Про самостоятельность после программы тексты почти молчат",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Что я смогу делать сам после программы, без вас?",
+        "preliminary": false
+      },
+      {
+        "id": "q_fail",
+        "question": "Что будет, если не получится?",
+        "template": "alarm",
+        "level": 2,
+        "alarm": 2,
+        "level_word": "виноват покупатель",
+        "text": "На случай неудачи в текстах уже готово объяснение, и виноват в нём покупатель: 1",
+        "count": 1,
+        "evidence": [
+          "f11"
+        ],
+        "ask_seller": "Что происходит, если результата нет? Есть ли возврат и на каких условиях?",
+        "preliminary": false
+      }
+    ],
+    "seller_questions": [
+      "Что происходит, если результата нет? Есть ли возврат и на каких условиях?",
+      "Что я смогу делать сам после программы, без вас?",
+      "На какие источники или исследования вы опираетесь? Можно ссылки?",
+      "Для кого эта программа не подходит?",
+      "Сколько стоит весь путь до результата, со всеми ступенями?"
+    ],
+    "in_favor": [
+      "f8",
+      "f10",
+      "f9"
+    ]
+  }
+}

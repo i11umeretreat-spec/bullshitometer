@@ -1,0 +1,1182 @@
+{
+  "default": {
+    "type": {
+      "key": "nebula",
+      "title": "Туманность",
+      "line": "Красиво светится, почти ничего не весит. Проверить нечего.",
+      "check": "Какое утверждение можно проверить завтра"
+    },
+    "confidence": {
+      "level": 1,
+      "label": "средняя",
+      "reason": "10 текстов, 1 из них продающий"
+    },
+    "axes": [
+      {
+        "key": "promises",
+        "label": "Обещания",
+        "polarity": "neg",
+        "level": 1,
+        "level_label": "средний",
+        "v": 0.259,
+        "raw": 1.2,
+        "multiplier": 1.5,
+        "top": [
+          {
+            "signal": "outcome_promise",
+            "label": "обещание результата",
+            "points": 1.2
+          }
+        ]
+      },
+      {
+        "key": "verifiability",
+        "label": "Проверяемость",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": -0.39,
+        "multiplier": 1.3,
+        "top": [
+          {
+            "signal": "unfalsifiable",
+            "label": "неопровержимое",
+            "points": -0.39
+          }
+        ]
+      },
+      {
+        "key": "integrity",
+        "label": "Добросовестность",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      },
+      {
+        "key": "pressure",
+        "label": "Давление",
+        "polarity": "neg",
+        "level": 1,
+        "level_label": "средний",
+        "v": 0.295,
+        "raw": 1.4,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "shame_doubt",
+            "label": "стыдит за сомнения",
+            "points": 0.6
+          },
+          {
+            "signal": "urgency",
+            "label": "дедлайн",
+            "points": 0.6
+          },
+          {
+            "signal": "scarcity",
+            "label": "дефицит",
+            "points": 0.2
+          }
+        ]
+      },
+      {
+        "key": "exclusivity",
+        "label": "Эксклюзивность",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.221,
+        "raw": 1,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "only_me",
+            "label": "только я",
+            "points": 0.6
+          },
+          {
+            "signal": "forbid_others",
+            "label": "запрет на других",
+            "points": 0.4
+          }
+        ]
+      },
+      {
+        "key": "autonomy",
+        "label": "Автономия",
+        "polarity": "pos",
+        "level": 1,
+        "level_label": "средний",
+        "v": 0.362,
+        "raw": 1.35,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "exit_ok",
+            "label": "уйти можно",
+            "points": 0.4
+          },
+          {
+            "signal": "referral",
+            "label": "отправляет к другим",
+            "points": 0.4
+          },
+          {
+            "signal": "verification_invite",
+            "label": "предлагает проверить",
+            "points": 0.4
+          }
+        ]
+      },
+      {
+        "key": "commerce",
+        "label": "Коммерция",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.049,
+        "raw": 0.2,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "hidden_terms",
+            "label": "скрытые условия",
+            "points": 0.2
+          }
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "text_id": "t1",
+        "quote": "Думать больно, но это единственный путь.",
+        "signal": "only_me",
+        "signal_label": "только я",
+        "axis": "exclusivity",
+        "axis_label": "Эксклюзивность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 3,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t1",
+        "quote": "Я годами наблюдаю, как люди сами разрушают себя, потому что верят этой системе.",
+        "signal": "exit_ok",
+        "signal_label": "уйти можно",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "А я отвечу: имею, потому что у меня есть результат, а у вас нет.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "И вам советую.",
+        "signal": "referral",
+        "signal_label": "отправляет к другим",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "Эти люди всегда нападают первыми, когда чувствуют угрозу своему месту.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "Получила сегодня гневное письмо от человека с медицинским образованием.",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Дальше решайте сами, что с этим делать.",
+        "signal": "exit_ok",
+        "signal_label": "уйти можно",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Если вы так боитесь задать своему врачу неудобный вопрос, значит, вы уже не хозяйка своему здоровью.",
+        "signal": "unfalsifiable",
+        "signal_label": "неопровержимое",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -3,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t6",
+        "quote": "Я прошла кучу обследований, и никто ничего не нашёл.",
+        "signal": "only_me",
+        "signal_label": "только я",
+        "axis": "exclusivity",
+        "axis_label": "Эксклюзивность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 3,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t6",
+        "quote": "Сегодня семь лет, как я поменяла питание.",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Если сомневаетесь, нужно ли вам это, скорее всего пока не нужно, приходите, когда будете готовы.",
+        "signal": "shame_doubt",
+        "signal_label": "стыдит за сомнения",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 3,
+        "context_note": "фраза 6",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Если вы в одной из этих групп, никаких экспериментов без врача, даже если очень хочется быстрого результата.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Они знают вашу психологию лучше вас.",
+        "signal": "forbid_others",
+        "signal_label": "запрет на других",
+        "axis": "exclusivity",
+        "axis_label": "Эксклюзивность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 4,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "И пока вы доверяете картинке, они зарабатывают на вашем здоровье.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Сделайте сегодня одно действие: возьмите три продукта из холодильника и прочитайте состав.",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 7",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Посмотрите на полки любого супермаркета.",
+        "signal": "verification_invite",
+        "signal_label": "предлагает проверить",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Сделайте сегодня одно действие: возьмите три продукта из холодильника и прочитайте состав.",
+        "signal": "open_method",
+        "signal_label": "метод открыт",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 7",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Если на фоне опыта станет хуже, прекратите и сходите к врачу, это не повод терпеть.",
+        "signal": "referral",
+        "signal_label": "отправляет к другим",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 10",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Но посмотрите, кто спонсировал эти кампании: производители молока.",
+        "signal": "verification_invite",
+        "signal_label": "предлагает проверить",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Сомневаться нормально.",
+        "signal": "shame_doubt",
+        "signal_label": "стыдит за сомнения",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 3,
+        "context_note": "фраза 9",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Мне в личку пишут: «Ирма, вы же понимаете, что вас читают люди, которые бросят лечение?» Понимаю, и поэтому всегда повторяю: не бросайте ничего, не поговорив со своим врачом.",
+        "signal": "hidden_terms",
+        "signal_label": "скрытые условия",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Ненормально перестать думать и отдать своё здоровье на откуп тем, кто на нём зарабатывает.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 10",
+        "alt_explanation": "может быть честным описанием"
+      }
+    ],
+    "counts": {
+      "promises": 4,
+      "deadlines": 4,
+      "sources": 0
+    },
+    "advocate": [
+      "может быть честным описанием",
+      "Мы не видели лендинг, условия возврата и результаты учеников."
+    ],
+    "unknowns": [
+      "Работает ли метод на самом деле",
+      "Какая у автора квалификация",
+      "Что в отзывах и судах",
+      "Кто писал тексты: автор или копирайтер",
+      "Какие условия покупки",
+      "Уверенность средняя: 10 текстов, 1 из них продающий"
+    ],
+    "stats": {
+      "n": 10,
+      "n_eff": 10,
+      "words": 835,
+      "sale_share": 0.1,
+      "dropped_quotes": 0
+    },
+    "answers": [
+      {
+        "id": "q_now",
+        "question": "Почему решать нужно сегодня?",
+        "template": "1",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "торопят умеренно",
+        "text": "Торопят умеренно: 6 упоминаний сроков или ограниченных мест. Обычный приём продаж, но решение от него зависеть не должно",
+        "count": 6,
+        "evidence": [
+          "f10",
+          "f19",
+          "f4"
+        ],
+        "ask_seller": "Что будет, если я решу через неделю? Цена и место сохранятся?",
+        "preliminary": false
+      },
+      {
+        "id": "q_promise",
+        "question": "Что мне на самом деле обещают?",
+        "template": "1",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "обещания с условиями",
+        "text": "Обещаний 4, часть с условиями. Выпиши их: с ними потом можно будет сверить результат",
+        "count": 4,
+        "evidence": [
+          "f2",
+          "f11",
+          "f13"
+        ],
+        "ask_seller": "Что именно считается результатом и как его измеряют? Сколько участников его не получили?",
+        "preliminary": false
+      },
+      {
+        "id": "q_fit",
+        "question": "Сработает ли это для меня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "почти не сказано, кому не подойдёт",
+        "text": "Почти нигде не сказано, кому это не подойдёт. Когда подходит всем, сложно понять, подходит ли тебе",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Для кого эта программа не подходит?",
+        "preliminary": false
+      },
+      {
+        "id": "q_check",
+        "question": "Можно ли это проверить заранее?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "проверить почти нечего",
+        "text": "Проверить почти нечего: источников мало или утверждения устроены так, что их не опровергнуть",
+        "count": 1,
+        "evidence": [
+          "f7"
+        ],
+        "ask_seller": "На какие источники или исследования вы опираетесь? Можно ссылки?",
+        "preliminary": false
+      },
+      {
+        "id": "q_cost",
+        "question": "Сколько это будет стоить в итоге?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "лестницы почти не видно",
+        "text": "Признаков лестницы допродаж и скрытых условий почти не видно",
+        "count": 1,
+        "evidence": [
+          "f20"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_after",
+        "question": "Смогу ли я потом без него?",
+        "template": "1",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "кое-где учат без автора",
+        "text": "Кое-где тебя учат обходиться без автора: 7",
+        "count": 7,
+        "evidence": [
+          "f1",
+          "f3",
+          "f6"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_fail",
+        "question": "Что будет, если не получится?",
+        "template": "alarm",
+        "level": 2,
+        "alarm": 2,
+        "level_word": "виноват покупатель",
+        "text": "На случай неудачи в текстах уже готово объяснение, и виноват в нём покупатель: 4",
+        "count": 4,
+        "evidence": [
+          "f7",
+          "f10",
+          "f19"
+        ],
+        "ask_seller": "Что происходит, если результата нет? Есть ли возврат и на каких условиях?",
+        "preliminary": false
+      }
+    ],
+    "seller_questions": [
+      "Что будет, если я решу через неделю? Цена и место сохранятся?",
+      "Что именно считается результатом и как его измеряют? Сколько участников его не получили?",
+      "Для кого эта программа не подходит?",
+      "На какие источники или исследования вы опираетесь? Можно ссылки?",
+      "Что происходит, если результата нет? Есть ли возврат и на каких условиях?"
+    ],
+    "in_favor": [
+      "f1",
+      "f3",
+      "f6"
+    ]
+  },
+  "reversed": {
+    "type": {
+      "key": "nebula",
+      "title": "Туманность",
+      "line": "Красиво светится, почти ничего не весит. Проверить нечего.",
+      "check": "Какое утверждение можно проверить завтра"
+    },
+    "confidence": {
+      "level": 1,
+      "label": "средняя",
+      "reason": "10 текстов, 1 из них продающий"
+    },
+    "axes": [
+      {
+        "key": "promises",
+        "label": "Обещания",
+        "polarity": "neg",
+        "level": 1,
+        "level_label": "средний",
+        "v": 0.259,
+        "raw": 1.2,
+        "multiplier": 1.5,
+        "top": [
+          {
+            "signal": "outcome_promise",
+            "label": "обещание результата",
+            "points": 1.2
+          }
+        ]
+      },
+      {
+        "key": "verifiability",
+        "label": "Проверяемость",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": -0.39,
+        "multiplier": 1.3,
+        "top": [
+          {
+            "signal": "unfalsifiable",
+            "label": "неопровержимое",
+            "points": -0.39
+          }
+        ]
+      },
+      {
+        "key": "integrity",
+        "label": "Добросовестность",
+        "polarity": "pos",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0,
+        "raw": 0,
+        "multiplier": 1,
+        "top": []
+      },
+      {
+        "key": "pressure",
+        "label": "Давление",
+        "polarity": "neg",
+        "level": 1,
+        "level_label": "средний",
+        "v": 0.295,
+        "raw": 1.4,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "shame_doubt",
+            "label": "стыдит за сомнения",
+            "points": 0.6
+          },
+          {
+            "signal": "urgency",
+            "label": "дедлайн",
+            "points": 0.6
+          },
+          {
+            "signal": "scarcity",
+            "label": "дефицит",
+            "points": 0.2
+          }
+        ]
+      },
+      {
+        "key": "exclusivity",
+        "label": "Эксклюзивность",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.221,
+        "raw": 1,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "only_me",
+            "label": "только я",
+            "points": 0.6
+          },
+          {
+            "signal": "forbid_others",
+            "label": "запрет на других",
+            "points": 0.4
+          }
+        ]
+      },
+      {
+        "key": "autonomy",
+        "label": "Автономия",
+        "polarity": "pos",
+        "level": 1,
+        "level_label": "средний",
+        "v": 0.362,
+        "raw": 1.35,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "exit_ok",
+            "label": "уйти можно",
+            "points": 0.4
+          },
+          {
+            "signal": "referral",
+            "label": "отправляет к другим",
+            "points": 0.4
+          },
+          {
+            "signal": "verification_invite",
+            "label": "предлагает проверить",
+            "points": 0.4
+          }
+        ]
+      },
+      {
+        "key": "commerce",
+        "label": "Коммерция",
+        "polarity": "neg",
+        "level": 0,
+        "level_label": "низкий",
+        "v": 0.049,
+        "raw": 0.2,
+        "multiplier": 1,
+        "top": [
+          {
+            "signal": "hidden_terms",
+            "label": "скрытые условия",
+            "points": 0.2
+          }
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "text_id": "t1",
+        "quote": "Думать больно, но это единственный путь.",
+        "signal": "only_me",
+        "signal_label": "только я",
+        "axis": "exclusivity",
+        "axis_label": "Эксклюзивность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 3,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t1",
+        "quote": "Я годами наблюдаю, как люди сами разрушают себя, потому что верят этой системе.",
+        "signal": "exit_ok",
+        "signal_label": "уйти можно",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "А я отвечу: имею, потому что у меня есть результат, а у вас нет.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "И вам советую.",
+        "signal": "referral",
+        "signal_label": "отправляет к другим",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "Эти люди всегда нападают первыми, когда чувствуют угрозу своему месту.",
+        "signal": "scarcity",
+        "signal_label": "дефицит",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t2",
+        "quote": "Получила сегодня гневное письмо от человека с медицинским образованием.",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t3",
+        "quote": "Дальше решайте сами, что с этим делать.",
+        "signal": "exit_ok",
+        "signal_label": "уйти можно",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t4",
+        "quote": "Если вы так боитесь задать своему врачу неудобный вопрос, значит, вы уже не хозяйка своему здоровью.",
+        "signal": "unfalsifiable",
+        "signal_label": "неопровержимое",
+        "axis": "verifiability",
+        "axis_label": "Проверяемость",
+        "strength": 2,
+        "modifiers": [],
+        "points": -3,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t6",
+        "quote": "Я прошла кучу обследований, и никто ничего не нашёл.",
+        "signal": "only_me",
+        "signal_label": "только я",
+        "axis": "exclusivity",
+        "axis_label": "Эксклюзивность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 3,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t6",
+        "quote": "Сегодня семь лет, как я поменяла питание.",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Если сомневаетесь, нужно ли вам это, скорее всего пока не нужно, приходите, когда будете готовы.",
+        "signal": "shame_doubt",
+        "signal_label": "стыдит за сомнения",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 3,
+        "context_note": "фраза 6",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t7",
+        "quote": "Если вы в одной из этих групп, никаких экспериментов без врача, даже если очень хочется быстрого результата.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 8",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Они знают вашу психологию лучше вас.",
+        "signal": "forbid_others",
+        "signal_label": "запрет на других",
+        "axis": "exclusivity",
+        "axis_label": "Эксклюзивность",
+        "strength": 2,
+        "modifiers": [],
+        "points": 4,
+        "context_note": "фраза 4",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "И пока вы доверяете картинке, они зарабатывают на вашем здоровье.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 5",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Сделайте сегодня одно действие: возьмите три продукта из холодильника и прочитайте состав.",
+        "signal": "urgency",
+        "signal_label": "дедлайн",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 7",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Посмотрите на полки любого супермаркета.",
+        "signal": "verification_invite",
+        "signal_label": "предлагает проверить",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t8",
+        "quote": "Сделайте сегодня одно действие: возьмите три продукта из холодильника и прочитайте состав.",
+        "signal": "open_method",
+        "signal_label": "метод открыт",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 1.5,
+        "context_note": "фраза 7",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Если на фоне опыта станет хуже, прекратите и сходите к врачу, это не повод терпеть.",
+        "signal": "referral",
+        "signal_label": "отправляет к другим",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 10",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t9",
+        "quote": "Но посмотрите, кто спонсировал эти кампании: производители молока.",
+        "signal": "verification_invite",
+        "signal_label": "предлагает проверить",
+        "axis": "autonomy",
+        "axis_label": "Автономия",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 3",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Сомневаться нормально.",
+        "signal": "shame_doubt",
+        "signal_label": "стыдит за сомнения",
+        "axis": "pressure",
+        "axis_label": "Давление",
+        "strength": 2,
+        "modifiers": [],
+        "points": 3,
+        "context_note": "фраза 9",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Мне в личку пишут: «Ирма, вы же понимаете, что вас читают люди, которые бросят лечение?» Понимаю, и поэтому всегда повторяю: не бросайте ничего, не поговорив со своим врачом.",
+        "signal": "hidden_terms",
+        "signal_label": "скрытые условия",
+        "axis": "commerce",
+        "axis_label": "Коммерция",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 1",
+        "alt_explanation": "может быть честным описанием"
+      },
+      {
+        "text_id": "t10",
+        "quote": "Ненормально перестать думать и отдать своё здоровье на откуп тем, кто на нём зарабатывает.",
+        "signal": "outcome_promise",
+        "signal_label": "обещание результата",
+        "axis": "promises",
+        "axis_label": "Обещания",
+        "strength": 2,
+        "modifiers": [],
+        "points": 2,
+        "context_note": "фраза 10",
+        "alt_explanation": "может быть честным описанием"
+      }
+    ],
+    "counts": {
+      "promises": 4,
+      "deadlines": 4,
+      "sources": 0
+    },
+    "advocate": [
+      "может быть честным описанием",
+      "Мы не видели лендинг, условия возврата и результаты учеников."
+    ],
+    "unknowns": [
+      "Работает ли метод на самом деле",
+      "Какая у автора квалификация",
+      "Что в отзывах и судах",
+      "Кто писал тексты: автор или копирайтер",
+      "Какие условия покупки",
+      "Уверенность средняя: 10 текстов, 1 из них продающий"
+    ],
+    "stats": {
+      "n": 10,
+      "n_eff": 10,
+      "words": 835,
+      "sale_share": 0.1,
+      "dropped_quotes": 0
+    },
+    "answers": [
+      {
+        "id": "q_now",
+        "question": "Почему решать нужно сегодня?",
+        "template": "1",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "торопят умеренно",
+        "text": "Торопят умеренно: 6 упоминаний сроков или ограниченных мест. Обычный приём продаж, но решение от него зависеть не должно",
+        "count": 6,
+        "evidence": [
+          "f10",
+          "f19",
+          "f4"
+        ],
+        "ask_seller": "Что будет, если я решу через неделю? Цена и место сохранятся?",
+        "preliminary": false
+      },
+      {
+        "id": "q_promise",
+        "question": "Что мне на самом деле обещают?",
+        "template": "1",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "обещания с условиями",
+        "text": "Обещаний 4, часть с условиями. Выпиши их: с ними потом можно будет сверить результат",
+        "count": 4,
+        "evidence": [
+          "f2",
+          "f11",
+          "f13"
+        ],
+        "ask_seller": "Что именно считается результатом и как его измеряют? Сколько участников его не получили?",
+        "preliminary": false
+      },
+      {
+        "id": "q_fit",
+        "question": "Сработает ли это для меня?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "почти не сказано, кому не подойдёт",
+        "text": "Почти нигде не сказано, кому это не подойдёт. Когда подходит всем, сложно понять, подходит ли тебе",
+        "count": 0,
+        "evidence": [],
+        "ask_seller": "Для кого эта программа не подходит?",
+        "preliminary": false
+      },
+      {
+        "id": "q_check",
+        "question": "Можно ли это проверить заранее?",
+        "template": "0",
+        "level": 0,
+        "alarm": 2,
+        "level_word": "проверить почти нечего",
+        "text": "Проверить почти нечего: источников мало или утверждения устроены так, что их не опровергнуть",
+        "count": 1,
+        "evidence": [
+          "f7"
+        ],
+        "ask_seller": "На какие источники или исследования вы опираетесь? Можно ссылки?",
+        "preliminary": false
+      },
+      {
+        "id": "q_cost",
+        "question": "Сколько это будет стоить в итоге?",
+        "template": "0",
+        "level": 0,
+        "alarm": 0,
+        "level_word": "лестницы почти не видно",
+        "text": "Признаков лестницы допродаж и скрытых условий почти не видно",
+        "count": 1,
+        "evidence": [
+          "f20"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_after",
+        "question": "Смогу ли я потом без него?",
+        "template": "1",
+        "level": 1,
+        "alarm": 1,
+        "level_word": "кое-где учат без автора",
+        "text": "Кое-где тебя учат обходиться без автора: 7",
+        "count": 7,
+        "evidence": [
+          "f1",
+          "f3",
+          "f6"
+        ],
+        "ask_seller": null,
+        "preliminary": false
+      },
+      {
+        "id": "q_fail",
+        "question": "Что будет, если не получится?",
+        "template": "alarm",
+        "level": 2,
+        "alarm": 2,
+        "level_word": "виноват покупатель",
+        "text": "На случай неудачи в текстах уже готово объяснение, и виноват в нём покупатель: 4",
+        "count": 4,
+        "evidence": [
+          "f7",
+          "f10",
+          "f19"
+        ],
+        "ask_seller": "Что происходит, если результата нет? Есть ли возврат и на каких условиях?",
+        "preliminary": false
+      }
+    ],
+    "seller_questions": [
+      "Что происходит, если результата нет? Есть ли возврат и на каких условиях?",
+      "На какие источники или исследования вы опираетесь? Можно ссылки?",
+      "Для кого эта программа не подходит?",
+      "Что именно считается результатом и как его измеряют? Сколько участников его не получили?",
+      "Что будет, если я решу через неделю? Цена и место сохранятся?"
+    ],
+    "in_favor": [
+      "f1",
+      "f3",
+      "f6"
+    ]
+  }
+}

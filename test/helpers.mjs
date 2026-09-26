@@ -163,3 +163,64 @@ export function body3(scenario) {
         ],
     };
 }
+
+// Модель по ключевым словам: детерминированная, но разнообразная.
+// Нужна снимкам движка: у модели по умолчанию каждый текст даёт один
+// дедлайн, и снимки 14 фикстур вышли бы почти одинаковыми. Здесь в
+// каждом тексте ищется первая фраза с ключом сигнала, одна находка на
+// сигнал. Таблица ключей — часть стенда: не менять, иначе снимки в
+// test/golden придётся переписывать.
+const KEYWORDS = [
+    ['urgency', ['сегодня', 'до пятницы', 'закрывается', 'дедлайн']],
+    ['scarcity', ['осталось', 'мест']],
+    ['fear_loss', ['упустит', 'ещё год', 'мимо']],
+    ['shame_doubt', ['сомнева', 'не готов']],
+    ['outcome_promise', ['результат', 'доход', 'зарабатыва']],
+    ['miracle_claim', ['навсегда', 'гарант', 'исцел']],
+    ['only_me', ['только я', 'никто', 'единствен']],
+    ['secret_knowledge', ['скрыва', 'тайн', 'посвящ']],
+    ['forbid_others', ['не ходите', 'психолог']],
+    ['enemy_frame', ['врачи', 'система', 'корпорац']],
+    ['dependency', ['без меня не', 'сами не', 'проводник']],
+    ['price_ladder', ['ступен', 'уровень', 'поток']],
+    ['upsell', ['клуб', 'наставничеств', 'следующий курс']],
+    ['hidden_terms', ['в личк', 'условия расскажу']],
+    ['vague_social_proof', ['тысяч', 'сотни']],
+    ['named_source', ['книга', 'руководств', 'опубликова']],
+    ['checkable_claim', ['засеките', 'замерьте', 'проверьте']],
+    ['vague_source', ['исследовани', 'учёные']],
+    ['unfalsifiable', ['не сработало', 'не переписалась', 'значит, вы']],
+    ['pseudo_science', ['частот', 'вибрац', 'квант']],
+    ['limitation_stated', ['не подходит', 'противопоказ', 'сначала к врачу']],
+    ['conditions_stated', ['если заниматься', 'при выполнении', 'раз в неделю']],
+    ['self_correction', ['ошибал', 'свою ошибку']],
+    ['negative_case', ['не помогла', 'прогресса почти не было', 'не сработал']],
+    ['handles_objection', ['это дорого', 'зачем тогда платить']],
+    ['referral', ['к врачу', 'коллегу', 'советую']],
+    ['verification_invite', ['не верьте мне', 'посмотрите']],
+    ['open_method', ['упражнение', 'бесплатный план', 'делайте']],
+    ['exit_ok', ['без меня', 'заканчивается', 'сами']],
+];
+
+export function keywordModel(body) {
+    const texts = textsFromModelRequest(body);
+    const findings = [];
+    for (const t of texts) {
+        const sentences = t.text.split(/(?<=[.!?…])\s+/);
+        for (const [signal, keys] of KEYWORDS) {
+            const s = sentences.find(function (x) {
+                const low = x.toLowerCase();
+                return keys.some(function (k) { return low.indexOf(k) !== -1; });
+            });
+            if (!s) continue;
+            findings.push({
+                text_id: t.id, quote: s.slice(0, 200), signal: signal, strength: 2, modifiers: [],
+                context_note: 'фраза ' + (sentences.indexOf(s) + 1), alt_explanation: 'может быть честным описанием',
+            });
+        }
+    }
+    return toolReply({
+        findings: findings,
+        texts_meta: texts.map(function (t) { return { text_id: t.id, template_like: false }; }),
+    });
+}
